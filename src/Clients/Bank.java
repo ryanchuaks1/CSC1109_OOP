@@ -1,21 +1,26 @@
 package Clients;
 
-import Interfaces.IBank;
+import Models.Account;
 
-public class Bank implements IBank {
+public class Bank {
+    Account account;
+
+    public Bank(Account account) {
+        this.account = account;
+    }
+
     public void CloseAccount() {
     }
 
-    public void Transfer(String receiverBankNo, double amount) {
+    public void Transfer(int receiverBankNo, double amount) {
     }
 
-    @Override
     public void Withdraw(double amount) {
     }
-    @Override
+
     public void Deposit(double amount) {
     }
-    @Override
+
     public void GetBalance() {
     }
 }

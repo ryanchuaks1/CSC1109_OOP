@@ -3,6 +3,7 @@ package Models;
 
 public class Account {
     public int AccountNo;
+    public String AccountName;
     public double Balance;
 
     // Create new account

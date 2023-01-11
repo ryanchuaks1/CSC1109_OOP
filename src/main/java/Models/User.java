@@ -1,9 +1,12 @@
 package Models;
 
+import Clients.Bank;
+
 public class User {
     public Account[] Accounts;
     public double TransferLimit;
     public double OverseasTransferLimit;
+<<<<<<< HEAD:src/Models/User.java
 
     User() {
         // Accounts = new Account();
@@ -33,4 +36,7 @@ public class User {
     public double setOverseasTransferLimit(double newOverseasTransferLimit) {
         return OverseasTransferLimit = newOverseasTransferLimit;
     }
+=======
+    public Bank bank;
+>>>>>>> 65b6519 (Added Maven to install Dependency):src/main/java/Models/User.java
 }

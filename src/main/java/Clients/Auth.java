@@ -1,13 +1,15 @@
 package Clients;
 
 import Interfaces.IAuth;
+import Models.User;
 
 public class Auth implements IAuth {
     @Override
-    public void Login(String username, String password) {
+    public User Login(String username, String password) {
         //Hash the password and crosscheck the hash with the database
 
-        //Upon success return a BankClient
+        //Upon success return a Bank
+        return null;
     }
 
     @Override

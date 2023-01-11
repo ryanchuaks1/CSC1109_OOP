@@ -5,8 +5,20 @@ import Models.Account;
 public class Bank {
     Account account;
 
-    public Bank(Account account) {
-        this.account = account;
+    public Bank() {
+    }
+
+    public boolean IsLoggedIn()
+    {
+        if (this.account != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void OpenAccount()
+    {
+
     }
 
     public void CloseAccount() {

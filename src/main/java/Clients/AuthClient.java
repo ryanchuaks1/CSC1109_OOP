@@ -3,7 +3,7 @@ package Clients;
 import Interfaces.IAuth;
 import Models.User;
 
-public class Auth implements IAuth {
+public class AuthClient implements IAuth {
     @Override
     public User Login(String username, String password) {
         //Hash the password and crosscheck the hash with the database

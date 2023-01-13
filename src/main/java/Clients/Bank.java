@@ -1,6 +1,7 @@
 package Clients;
 
 import Models.Account;
+import jdk.jshell.spi.ExecutionControl;
 
 public class Bank {
     Account account;
@@ -10,9 +11,6 @@ public class Bank {
 
     public boolean IsLoggedIn()
     {
-        if (this.account != null) {
-            return true;
-        }
         return false;
     }
 

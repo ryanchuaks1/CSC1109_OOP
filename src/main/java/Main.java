@@ -1,5 +1,13 @@
+import Clients.AuthClient;
 import Helpers.DBUtil;
+import Models.User;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -18,5 +26,15 @@ public class Main {
             System.out.print("Please enter your selection: ");
             optSelection = scanner.nextInt();
         } while (optSelection != 1 && optSelection != 2);
+
+
+        // Testing out how the flow would work like
+        AuthClient client = new AuthClient();
+        String dateString = "1999-08-18";
+        Date date = Date.valueOf(dateString);
+
+        var test = client.Login("xavieroyj1999", "trickster123");
+        // Creating an account
+
     }
 }

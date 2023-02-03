@@ -9,13 +9,11 @@ public class Bank {
     public Bank() {
     }
 
-    public boolean IsLoggedIn()
-    {
+    public boolean IsLoggedIn() {
         return false;
     }
 
-    public void OpenAccount()
-    {
+    public void OpenAccount() {
 
     }
 

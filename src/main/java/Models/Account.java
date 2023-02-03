@@ -1,6 +1,5 @@
 package Models;
 
-
 public class Account {
     public int AccountNo;
     public String AccountName;

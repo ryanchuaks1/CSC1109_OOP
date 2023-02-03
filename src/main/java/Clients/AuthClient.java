@@ -14,8 +14,8 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 
 public class AuthClient implements IAuth {
-    //TODO: Return a User object.
-    //TODO: Handle exceptions more graceful?
+    // TODO: Return a User object.
+    // TODO: Handle exceptions more graceful?
     @Override
     public User Login(String username, String password) {
         User user;
@@ -28,9 +28,8 @@ public class AuthClient implements IAuth {
                 throw new UserNotFoundException();
             }
             String hashPass = results.getString("Password");
-            if (Password.check(password, hashPass).withArgon2())
-            {
-                //Get all the data out from table to the user object
+            if (Password.check(password, hashPass).withArgon2()) {
+                // Get all the data out from table to the user object
                 System.out.println("Successfully login");
             }
             return null;
@@ -40,16 +39,18 @@ public class AuthClient implements IAuth {
         return null;
     }
 
-    // TODO: Move parameters to a DTO class so there's no need for massive parameters
-    // TODO: Validation check to see if it clashes with any other username (Although database is already listed as unique)
+    // TODO: Move parameters to a DTO class so there's no need for massive
+    // parameters
+    // TODO: Validation check to see if it clashes with any other username (Although
+    // database is already listed as unique)
     @Override
-    public boolean Register(String Username, String Pass, String Email, String FirstName, String LastName, String CountryCode, int PhoneNo, Date DateOfBirth)
-    {
+    public boolean Register(String Username, String Pass, String Email, String FirstName, String LastName,
+            String CountryCode, int PhoneNo, Date DateOfBirth) {
         Hash hashPass = Password.hash(Pass).addRandomSalt().withArgon2();
         try {
             // We are ignoring some parameter first.
             String sqlQuery = "INSERT INTO User(Email, Username ,Password, FirstName, LastName, DOB) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt =  DBUtil.DBConnection.prepareStatement(sqlQuery);
+            PreparedStatement stmt = DBUtil.DBConnection.prepareStatement(sqlQuery);
             stmt.setString(1, Email);
             stmt.setString(2, Username);
             stmt.setString(3, hashPass.getResult());
@@ -57,21 +58,19 @@ public class AuthClient implements IAuth {
             stmt.setString(5, LastName);
             stmt.setDate(6, DateOfBirth);
 
-            //Maybe check on the number of rows affected by the query
-            //Maybe also automatically login by passing it a user object
+            // Maybe check on the number of rows affected by the query
+            // Maybe also automatically login by passing it a user object
             stmt.executeUpdate();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 
-
-        //Generate a salt. Hash it and place the salt + hashed value in the database.
+        // Generate a salt. Hash it and place the salt + hashed value in the database.
         return false;
     }
 
-    //TODO: SMTP implementation
-    //TODO: Just find some library to do TOTP/HOTP
+    // TODO: SMTP implementation
+    // TODO: Just find some library to do TOTP/HOTP
     @Override
     public void ResetPassword(String email) {
         // Throw invalid account exception if there's no user.

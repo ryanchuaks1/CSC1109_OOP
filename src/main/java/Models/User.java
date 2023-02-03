@@ -18,7 +18,8 @@ public class User {
     private float DebtInterestRate;
     private Date DateOfBirth;
 
-    public User(int userID, String email, String username, String password, String firstName, String lastName, String countryCode, int phoneNo, BigDecimal maximumDebt, float debtInterestRate, Date dateOfBirth) {
+    public User(int userID, String email, String username, String password, String firstName, String lastName,
+            String countryCode, int phoneNo, BigDecimal maximumDebt, float debtInterestRate, Date dateOfBirth) {
         UserID = userID;
         Email = email;
         Username = username;

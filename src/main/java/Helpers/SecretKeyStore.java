@@ -2,6 +2,7 @@ package Helpers;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+
 public class SecretKeyStore {
     private static final HashMap<String, String> apiKeys = new HashMap<>();
     static {

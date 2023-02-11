@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PubScene.MainWindowController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="720.0" style="-fx-background-color: #2b7cb3;">
+         <children>
+            <JFXHamburger fx:id="hamburger" layoutY="3.0" prefHeight="32.0" prefWidth="39.0" />
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" prefHeight="582.0" prefWidth="720.0" style="-fx-background-color: #A1D6E2;">
+         <children>
+            <AnchorPane prefHeight="523.0" prefWidth="720.0" style="-fx-background-color: #bdd5fc;">
+               <children>
+                  <JFXButton fx:id="LGButton" layoutX="310.0" layoutY="457.0" onMouseClicked="#LoginPage" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: #6495ED; -fx-background-radius: 45;" text="Login" textOverrun="CENTER_ELLIPSIS" />
+                  <JFXButton fx:id="RGButton" layoutX="310.0" layoutY="505.0" onMouseClicked="#RegistrationPage" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: #6495ED; -fx-background-radius: 45;" text="Registration" />
+                  
+                  <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="420.0" prefWidth="702.0" style="-fx-border-color: black;">
+                     <children>
+                        <StackPane fx:id="stack" layoutX="7.0" layoutY="5.0" prefHeight="408.0" prefWidth="689.0" />
+                        <JFXButton fx:id="next" layoutX="676.0" layoutY="199.0" text="&gt;" />
+                        <JFXButton fx:id="previous" layoutX="-5.0" layoutY="198.0" text="&lt;" />
+                     </children>
+                  </AnchorPane>
+                  <JFXDrawer fx:id="drawer" defaultDrawerSize="190.0" layoutX="-2.0" prefHeight="266.0" prefWidth="11.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

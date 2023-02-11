@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="720.0" style="-fx-background-color: #A1D6E2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PubScene.LoginController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="720.0" style="-fx-background-color: #2b7cb3;">
+         <children>
+            <JFXHamburger fx:id="hamburger" layoutX="7.0" layoutY="5.0" prefHeight="32.0" prefWidth="39.0" />
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" prefHeight="559.0" prefWidth="720.0" style="-fx-background-color: #bdd5fc;">
+         <children>
+            <AnchorPane prefHeight="509.0" prefWidth="626.0">
+               <children>
+                  <AnchorPane layoutX="31.0" layoutY="49.0" prefHeight="377.0" prefWidth="565.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <Text layoutX="114.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="email" layoutX="243.0" layoutY="106.0" />
+                        <Text layoutX="114.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <JFXButton fx:id="login" layoutX="468.0" layoutY="274.0" onAction="#handleLoginButtonAction" style="-fx-border-color: black;" text="Login" />
+                        <PasswordField fx:id="password" layoutX="243.0" layoutY="161.0" />
+                        <JFXButton fx:id="createAcc" layoutX="31.0" layoutY="315.0" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="109.0" text="Create Accounts" underline="true" />
+                        <JFXButton fx:id="forgetPassword" layoutX="430.0" layoutY="316.0" onAction="#handleButtonAction" prefHeight="20.0" prefWidth="123.0" text="Forget Password?" underline="true" />
+                     </children>
+                  </AnchorPane>
+                  <JFXDrawer fx:id="drawer" defaultDrawerSize="190.0" prefHeight="251.0" prefWidth="36.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

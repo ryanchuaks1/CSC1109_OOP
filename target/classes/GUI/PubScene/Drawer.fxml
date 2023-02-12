@@ -9,7 +9,8 @@
    <children>
       <ImageView fitHeight="212.0" fitWidth="193.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/Desmond/Documents/GitHub/CSC1109_OOP/Resources/image/cupid.jpg" />
+            <!-- need to find a way to change this -->
+            <Image url="file:/c:/Users/Desmond/Documents/GitHub/CSC1109_OOP/Resources/image/cupid.jpg" />
          </image>
       </ImageView>
       <JFXButton fx:id="Home" onAction="#handleButtonAction" prefHeight="64.0" prefWidth="193.0" style="-fx-background-color: #F0FFFF; -fx-border-color: black;" text="Home" />

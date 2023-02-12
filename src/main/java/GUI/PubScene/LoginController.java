@@ -92,15 +92,15 @@ public class LoginController implements Initializable {
             root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
         }
         //forget password
-        else if (event.getSource()== forgetPassword){
+        else if (event.getSource() == forgetPassword){
             stage=(Stage)  forgetPassword.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("ForgotPassword.fxml"));
             }
         //create a new scene with root and set the stage
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML
     ////to be completed need to rework User Object First

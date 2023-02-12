@@ -1,9 +1,6 @@
-package MainApp;
-
 import Clients.AuthClient;
 import Helpers.DBUtil;
 import Models.User;
-
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -50,19 +47,19 @@ public class Mainapp extends Application{
 		try {
             
 			FXMLLoader loader=new FXMLLoader(); // to load view
-			loader.setLocation(getClass().getResource("../GUI/PubScene/MainWindow.fxml"));
+			loader.setLocation(getClass().getResource("GUI/PubScene/MainWindow.fxml"));
             VBox root = loader.load();
 			
-			//controller
-			MainWindowController LOECtrl=loader.getController();
-			LOECtrl.setMainApp(this);
+			// //controller
+			// MainWindowController LOECtrl=loader.getController();
+			// LOECtrl.setMainApp(this);
 
 			Path dPath = FileSystems.getDefault().getPath("Resources/image/","maxresdefault.jpg");
 			Scene scene = new Scene(root);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			primaryStage.setTitle("Banking Sucks");
+			primaryStage.setTitle("Banking");
 			primaryStage.getIcons().add(new Image(dPath.toUri().toString()));
 		} catch(IOException e) {
 			e.printStackTrace();

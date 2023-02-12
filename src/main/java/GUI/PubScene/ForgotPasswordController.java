@@ -42,7 +42,7 @@ public class ForgotPasswordController implements Initializable{
 		
 		VBox box;
 		try {
-			box = FXMLLoader.load(getClass().getResource("/CSGO/PubView/Drawer.fxml"));
+			box = FXMLLoader.load(getClass().getResource("Drawer.fxml"));
 			drawer.setSidePane(box);
 			drawer.setMinWidth(-100);
 			HamburgerBackArrowBasicTransition burgerTask2 = new HamburgerBackArrowBasicTransition(hamburger);

@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
-import MainApp.Mainapp;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,11 +19,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.*;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainWindowController implements Initializable{
@@ -54,16 +56,34 @@ public class MainWindowController implements Initializable{
     int numberOfSlides;
     int currentSlide;
 
-    private Mainapp mainApp;
 
     @FXML
-    void LoginPage(MouseEvent event) {
-
+    void handleLoginPage(MouseEvent event) throws IOException{
+		Stage stage = null; 
+        Parent root = null;
+        //create personal account
+        
+		stage=(Stage)  LGButton.getScene().getWindow();
+		root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void RegistrationPage(MouseEvent event) {
+    void handleRegistrationPage(MouseEvent event) throws IOException{
+		Stage stage = null; 
+        Parent root = null;
+        //Registration page
 
+		stage=(Stage)  RGButton.getScene().getWindow();
+		root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+
+		Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 	public void initialize(URL location, ResourceBundle resources) {
@@ -218,14 +238,5 @@ public class MainWindowController implements Initializable{
 	// Path dPath = FileSystems.getDefault().getPath("Resources/image/profile.jpg");
 	// private String imageUrl = dPath.toAbsolutePath().toString();
 	
-     // getter for mainApp
-     public Mainapp getMainApp() {
-        return mainApp;
-    }
-
-    // setter for mainApp
-    public void setMainApp(Mainapp testmainApp) {
-        this.mainApp = testmainApp;
-    }
-
+   
 }

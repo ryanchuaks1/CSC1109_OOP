@@ -20,9 +20,9 @@
       </AnchorPane>
       <HBox alignment="CENTER" prefHeight="559.0" prefWidth="720.0" style="-fx-background-color: #bdd5fc;">
          <children>
-            <AnchorPane prefHeight="509.0" prefWidth="626.0">
+            <AnchorPane prefHeight="557.0" prefWidth="748.0">
                <children>
-                  <AnchorPane layoutX="31.0" layoutY="49.0" prefHeight="377.0" prefWidth="565.0" style="-fx-background-color: #FFFFFF;">
+                  <AnchorPane layoutX="78.0" layoutY="68.0" prefHeight="377.0" prefWidth="565.0" style="-fx-background-color: #FFFFFF;">
                      <children>
                         <Text layoutX="114.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
                            <font>
@@ -41,7 +41,7 @@
                         <JFXButton fx:id="forgetPassword" layoutX="430.0" layoutY="316.0" onAction="#handleButtonAction" prefHeight="20.0" prefWidth="123.0" text="Forget Password?" underline="true" />
                      </children>
                   </AnchorPane>
-                  <JFXDrawer fx:id="drawer" defaultDrawerSize="190.0" prefHeight="251.0" prefWidth="36.0" />
+                  <JFXDrawer fx:id="drawer" alignment="CENTER_LEFT" defaultDrawerSize="190.0" prefHeight="212.0" prefWidth="26.0" />
                </children>
             </AnchorPane>
          </children>

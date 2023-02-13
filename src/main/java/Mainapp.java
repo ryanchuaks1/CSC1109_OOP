@@ -32,7 +32,6 @@ public class Mainapp extends Application{
     //         optSelection = scanner.nextInt();
     //     } while (optSelection != 1 && optSelection != 2);
 
-
     //     // Testing out how the flow would work like
     //     AuthClient client = new AuthClient();
     //     String dateString = "1999-08-18";

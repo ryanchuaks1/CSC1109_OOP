@@ -78,3 +78,16 @@ fabric.properties
 
 # Never commit SecretKeyStore.java every again
 src/main/java/Helpers/SecretKeyStore.java
+
+target/classes/Mainapp.class
+target/classes/Clients/AuthClient.class
+target/classes/Clients/Bank.class
+target/classes/Exceptions/UserNotFoundException.class
+target/classes/GUI/PubScene/DrawerController.class
+target/classes/GUI/PubScene/ForgotPasswordController.class
+target/classes/GUI/PubScene/LoginController.class
+target/classes/GUI/PubScene/RegistrationController.class
+target/classes/Helpers/DBUtil.class
+target/classes/Helpers/SecretKeyStore.class
+target/classes/Models/Account.class
+target/classes/Models/User.class

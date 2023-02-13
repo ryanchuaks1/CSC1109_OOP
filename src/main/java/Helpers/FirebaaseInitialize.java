@@ -14,10 +14,11 @@ public class FirebaaseInitialize {
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://rjdxbanking-719f9.firebaseio.com")
                     .build();
     
             FirebaseApp.initializeApp(options);
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }

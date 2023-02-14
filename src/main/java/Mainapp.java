@@ -10,14 +10,12 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 // UI imports
-import GUI.PubScene.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.jfoenix.controls.JFXButton;
 
 public class Mainapp extends Application {
     // public static void main(String[] args) {
@@ -73,5 +71,4 @@ public class Mainapp extends Application {
             e.printStackTrace();
         }
     }
-
 }

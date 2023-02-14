@@ -2,7 +2,6 @@ package GUI.PubScene;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Base64;
 import java.util.ResourceBundle;
 
 
@@ -12,7 +11,6 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
 import Clients.AuthClient;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +27,12 @@ import javafx.stage.Stage;
 
 
 public class LoginController implements Initializable {
+
+    @FXML
+    private JFXButton LGButton;
+
+    @FXML
+    private JFXButton RGButton;
 
     @FXML
     private JFXButton createAcc;
@@ -81,6 +85,35 @@ public class LoginController implements Initializable {
 		}
 		
 	}
+
+    @FXML
+    void handleLoginPage(MouseEvent event) throws IOException{
+		Stage stage = null; 
+        Parent root = null;
+        //create personal account
+        
+		stage=(Stage)  LGButton.getScene().getWindow();
+		root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void handleRegistrationPage(MouseEvent event) throws IOException{
+		Stage stage = null; 
+        Parent root = null;
+        //Registration page
+
+		stage=(Stage)  RGButton.getScene().getWindow();
+		root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+
+		Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException{

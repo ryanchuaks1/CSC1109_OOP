@@ -37,6 +37,12 @@ public class RegistrationController implements Initializable{
     private JFXButton confirmButton;
 
     @FXML
+    private JFXButton LGButton;
+
+    @FXML
+    private JFXButton RGButton;
+
+    @FXML
     private TextField countryCode;
 
     @FXML
@@ -93,6 +99,35 @@ public class RegistrationController implements Initializable{
 		}
 		
 	}
+
+    @FXML
+    void handleLoginPage(MouseEvent event) throws IOException{
+		Stage stage = null; 
+        Parent root = null;
+        //create personal account
+        
+		stage=(Stage)  LGButton.getScene().getWindow();
+		root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void handleRegistrationPage(MouseEvent event) throws IOException{
+		Stage stage = null; 
+        Parent root = null;
+        //Registration page
+
+		stage=(Stage)  RGButton.getScene().getWindow();
+		root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+
+		Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML
     void handleConfirmButtonAction(ActionEvent event) throws IOException {

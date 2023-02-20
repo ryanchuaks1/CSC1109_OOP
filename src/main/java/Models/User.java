@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class User {
-    private int UserID;
+    private String UserID;
     private String Email;
     private String Username;
     private String Password;
@@ -18,7 +18,7 @@ public class User {
     private float DebtInterestRate;
     private Date DateOfBirth;
 
-    public User(int userID, String email, String username, String password, String firstName, String lastName,
+    public User(String userID, String email, String username, String password, String firstName, String lastName,
             String countryCode, int phoneNo, BigDecimal maximumDebt, float debtInterestRate, Date dateOfBirth) {
         UserID = userID;
         Email = email;
@@ -31,5 +31,9 @@ public class User {
         MaximumDebt = maximumDebt;
         DebtInterestRate = debtInterestRate;
         DateOfBirth = dateOfBirth;
+    }
+
+    public String getUserID() {
+        return UserID;
     }
 }

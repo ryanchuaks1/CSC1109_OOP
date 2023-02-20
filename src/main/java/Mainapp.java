@@ -1,6 +1,6 @@
 import Clients.AuthClient;
 import Helpers.DBUtil;
-import Helpers.FirebaaseInitialize;
+import Helpers.FirebaseInitialize;
 import Models.User;
 
 import java.io.FileInputStream;
@@ -51,7 +51,7 @@ public class Mainapp extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         try {
-            // initDatabase();
+            FirebaseInitialize.initDatabase();
             FXMLLoader loader = new FXMLLoader(); // to load view
             loader.setLocation(getClass().getResource("GUI/PubScene/MainWindow.fxml"));
             VBox root = loader.load();

@@ -5,6 +5,8 @@ import Clients.Bank;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.google.type.Decimal;
+
 public class User {
     private String UserID;
     private String Email;
@@ -14,12 +16,22 @@ public class User {
     private String LastName;
     private String CountryCode;
     private int PhoneNo;
-    private BigDecimal MaximumDebt;
-    private float DebtInterestRate;
+    private double MaximumDebt;
+    private double DebtInterestRate;
     private Date DateOfBirth;
 
-    public User(String userID, String email, String username, String password, String firstName, String lastName,
-            String countryCode, int phoneNo, BigDecimal maximumDebt, float debtInterestRate, Date dateOfBirth) {
+    public User(
+            String userID,
+            String email,
+            String username,
+            String password,
+            String firstName,
+            String lastName,
+            String countryCode,
+            int phoneNo,
+            Double maximumDebt,
+            Double debtInterest) {
+
         UserID = userID;
         Email = email;
         Username = username;
@@ -29,11 +41,51 @@ public class User {
         CountryCode = countryCode;
         PhoneNo = phoneNo;
         MaximumDebt = maximumDebt;
-        DebtInterestRate = debtInterestRate;
-        DateOfBirth = dateOfBirth;
+        DebtInterestRate = debtInterest;
     }
-
+    
     public String getUserID() {
         return UserID;
     }
+
+    public String getEmail() {
+        return Email;
+    }
+    public String getUsername() {
+        return Username;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public String getCountryCode() {
+        return CountryCode;
+    }
+
+    public int getPhoneNo() {
+        return PhoneNo;
+    }
+
+    public double getMaximumDebt() {
+        return MaximumDebt;
+    }
+
+    public double getDebtInterestRate() {
+        return DebtInterestRate;
+    }
+
+    public Date getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+
 }

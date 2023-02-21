@@ -18,7 +18,8 @@ public class UserService {
 
     // Ser the user into the database
 	public String saveUserDetails(User user) throws InterruptedException, ExecutionException {
-        ApiFuture<WriteResult> future = db.collection("users").document(user.getUserID()).set(user);
+		System.out.print(user);
+        ApiFuture<WriteResult> future = db.collection("users").document().set(user);
         return future.get().getUpdateTime().toString();
     }
 

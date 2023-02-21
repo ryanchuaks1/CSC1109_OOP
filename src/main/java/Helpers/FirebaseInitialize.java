@@ -10,7 +10,7 @@ public class FirebaseInitialize {
 
     public static void initDatabase() throws Exception {
         try {
-            FileInputStream serviceAccount = new FileInputStream("../../../ServiceAccountKey.json");
+            FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Ryan\\Desktop\\CSC1109_OOP\\src\\main\\java\\Helpers\\ServiceAccountKey.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))

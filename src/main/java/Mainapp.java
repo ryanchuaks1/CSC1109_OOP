@@ -1,6 +1,7 @@
 import Clients.AuthClient;
 import Helpers.DBUtil;
 import Helpers.FirebaseInitialize;
+import Helpers.UserService;
 import Models.User;
 
 import java.io.FileInputStream;
@@ -8,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.Date;
 
 // UI imports
 import javafx.application.Application;
@@ -50,8 +53,27 @@ public class Mainapp extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
+
+        User user1 = new User(
+            "1234qwr",
+            "Ryan24@gmail.com",
+            "testusername",
+            "testpassword123",
+            "Ryan",
+            "Chua",
+            "SGD",
+            81228470,
+            200000d,
+            0.1d
+        );
+        
         try {
             FirebaseInitialize.initDatabase();
+
+            UserService usrSvc = new UserService();
+            usrSvc.saveUserDetails(user1);
+
+            
             FXMLLoader loader = new FXMLLoader(); // to load view
             loader.setLocation(getClass().getResource("GUI/PubScene/MainWindow.fxml"));
             VBox root = loader.load();

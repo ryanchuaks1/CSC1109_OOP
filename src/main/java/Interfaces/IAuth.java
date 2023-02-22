@@ -1,6 +1,6 @@
 package Interfaces;
 
-import Models.User;
+import Entity.User;
 
 import java.sql.Date;
 

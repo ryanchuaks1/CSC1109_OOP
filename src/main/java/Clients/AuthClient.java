@@ -1,78 +1,50 @@
 package Clients;
 
-import Exceptions.UserNotFoundException;
-import Helpers.DBUtil;
-import Interfaces.IAuth;
-import Models.User;
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
-import com.password4j.Hash;
+import Entity.User;
+import Models.CreateUser;
+import Models.LoginUser;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
+import com.google.firebase.cloud.FirestoreClient;
 import com.password4j.Password;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.time.LocalDate;
+public class AuthClient {
+    Firestore db = FirestoreClient.getFirestore();
 
-public class AuthClient implements IAuth {
-    // TODO: Return a User object.
-    // TODO: Handle exceptions more graceful?
-    @Override
-    public User Login(String username, String password) {
-        User user;
+    public User Login(LoginUser loginUser) {
         try {
-            String sqlQuery = "SELECT * FROM User WHERE User.Username = ?";
-            PreparedStatement stmt = DBUtil.DBConnection.prepareStatement(sqlQuery);
-            stmt.setString(1, username);
-            var results = stmt.executeQuery();
-            if (!results.next()) {
-                throw new UserNotFoundException();
+            User user;
+
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("username", loginUser.getUsername()).get();
+            QuerySnapshot snapshots = apiFuture.get();
+            if (snapshots.isEmpty()) {
+                System.out.println("User not found.");
             }
-            String hashPass = results.getString("Password");
-            if (Password.check(password, hashPass).withArgon2()) {
-                // Get all the data out from table to the user object
-                System.out.println("Successfully login");
+
+            //Since querySnapshot returns a list
+            for (DocumentSnapshot documentSnapshot : snapshots.getDocuments()) {
+                String hashPass = documentSnapshot.getString("password");
+
+                assert hashPass != null;
+                if (Password.check(loginUser.getPassword(), hashPass).withArgon2()) {
+                    user = documentSnapshot.toObject(User.class);
+                    return user;
+                }
             }
-            return null;
-        } catch (Exception ex) {
-            System.out.println("Exception occurred: " + ex.getMessage());
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return null;
     }
 
-    // TODO: Move parameters to a DTO class so there's no need for massive
-    // parameters
-    // TODO: Validation check to see if it clashes with any other username (Although
-    // database is already listed as unique)
-    @Override
-    public boolean Register(String Username, String Pass, String Email, String FirstName, String LastName,
-            String CountryCode, int PhoneNo, Date DateOfBirth) {
-        Hash hashPass = Password.hash(Pass).addRandomSalt().withArgon2();
+    //TODO: Check for duplicated Username.
+    public void Register(CreateUser createUser) {
         try {
-            // We are ignoring some parameter first.
-            String sqlQuery = "INSERT INTO User(Email, Username ,Password, FirstName, LastName, DOB) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = DBUtil.DBConnection.prepareStatement(sqlQuery);
-            stmt.setString(1, Email);
-            stmt.setString(2, Username);
-            stmt.setString(3, hashPass.getResult());
-            stmt.setString(4, FirstName);
-            stmt.setString(5, LastName);
-            stmt.setDate(6, DateOfBirth);
-
-            // Maybe check on the number of rows affected by the query
-            // Maybe also automatically login by passing it a user object
-            stmt.executeUpdate();
+            ApiFuture<WriteResult> apiFuture = db.collection("users").document().set(createUser);
+            System.out.printf("Successfully created user at %s \n",apiFuture.get().getUpdateTime());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
-        // Generate a salt. Hash it and place the salt + hashed value in the database.
-        return false;
-    }
-
-    // TODO: SMTP implementation
-    // TODO: Just find some library to do TOTP/HOTP
-    @Override
-    public void ResetPassword(String email) {
-        // Throw invalid account exception if there's no user.
     }
 }

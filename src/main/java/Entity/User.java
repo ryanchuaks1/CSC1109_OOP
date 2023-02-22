@@ -1,91 +1,53 @@
-package Models;
+package Entity;
 
-import Clients.Bank;
+import com.google.cloud.firestore.annotation.DocumentId;
+import com.google.cloud.firestore.annotation.PropertyName;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
-import com.google.type.Decimal;
-
 public class User {
-    private String UserID;
-    private String Email;
-    private String Username;
-    private String Password;
-    private String FirstName;
-    private String LastName;
-    private String CountryCode;
-    private int PhoneNo;
-    private double MaximumDebt;
-    private double DebtInterestRate;
-    private Date DateOfBirth;
+    @DocumentId
+    private String Id;
+    @PropertyName("username")
+    private String username;
+    @PropertyName("password")
+    private String password;
+    @PropertyName("firstName")
+    private String firstName;
+    @PropertyName("lastName")
+    private String lastName;
+    @PropertyName("phoneNo")
+    private String phoneNo;
 
-    public User(
-            String userID,
-            String email,
-            String username,
-            String password,
-            String firstName,
-            String lastName,
-            String countryCode,
-            int phoneNo,
-            Double maximumDebt,
-            Double debtInterest) {
+    //Required empty constructor for firestore
+    public User()
+    {}
 
-        UserID = userID;
-        Email = email;
-        Username = username;
-        Password = password;
-        FirstName = firstName;
-        LastName = lastName;
-        CountryCode = countryCode;
-        PhoneNo = phoneNo;
-        MaximumDebt = maximumDebt;
-        DebtInterestRate = debtInterest;
-    }
-    
-    public String getUserID() {
-        return UserID;
+    public String getId() {
+        return Id;
     }
 
-    public String getEmail() {
-        return Email;
-    }
     public String getUsername() {
-        return Username;
+        return username;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public String getCountryCode() {
-        return CountryCode;
+    public String getFullName() {
+        return String.format("%s %s", firstName, lastName);
     }
 
-    public int getPhoneNo() {
-        return PhoneNo;
+    public String getPhoneNo() {
+        return phoneNo;
     }
-
-    public double getMaximumDebt() {
-        return MaximumDebt;
-    }
-
-    public double getDebtInterestRate() {
-        return DebtInterestRate;
-    }
-
-    public Date getDateOfBirth() {
-        return DateOfBirth;
-    }
-
-
 }

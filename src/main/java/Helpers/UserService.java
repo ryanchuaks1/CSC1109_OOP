@@ -10,7 +10,7 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
 // Import the User object
-import Models.User;
+import Entity.User;
 
 public class UserService {
 

@@ -1,2 +1,8 @@
-package Models;public enum TransactionType {
+package Models;
+
+public enum TransactionType {
+    InternalTransfer,
+    OverseasTransfer,
+    Withdrawal,
+    Deposit,
 }

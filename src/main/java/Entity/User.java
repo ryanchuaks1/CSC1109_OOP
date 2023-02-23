@@ -1,9 +1,11 @@
 package Entity;
 
+import Models.CreateAccount;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
 import com.google.firebase.cloud.FirestoreClient;
@@ -58,7 +60,7 @@ public class User {
     }
 
     public String getPhoneNo() {
-        return phoneNo;
+        return this.phoneNo;
     }
 
     public List<Account> getAccounts()
@@ -75,5 +77,17 @@ public class User {
             System.out.println(ex.getMessage());
         }
         return accounts;
+    }
+
+    //TODO: Add different account type for different interest name.
+    public void CreateAccount()
+    {
+        CreateAccount createAccount = new CreateAccount(this.Id);
+        try {
+            ApiFuture<WriteResult> apiFuture = db.collection("accounts").document().set(createAccount);
+            System.out.printf("Successfully created account for UserId(%s) at %s %n", this.Id , apiFuture.get().getUpdateTime());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

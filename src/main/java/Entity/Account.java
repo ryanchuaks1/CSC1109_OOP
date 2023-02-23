@@ -10,21 +10,40 @@ public class Account {
     @PropertyName("userId")
     private String userId;
 
-    @PropertyName("animal")
-    private String animal;
+    @PropertyName("localTransferLimit")
+    private double localTransferLimit;
+
+    @PropertyName("internationalTransferLimit")
+    private double internationalTransferLimit;
+
     public Account()
     {
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public String getId() {
         return Id;
     }
 
-    public String getAnimal() {
-        return animal;
+    public String getUserId() {
+        return userId;
+    }
+
+    public double getLocalTransferLimit() {
+        return localTransferLimit;
+    }
+
+    public double getInternationalTransferLimit() {
+        return internationalTransferLimit;
+    }
+
+    //TODO: How to differentiate between InternationalTransfer
+    //TODO: How to differentiate between LocalTransfer
+    public void Deposit(String userId)
+    {
+    }
+
+    public void Withdraw(double amount)
+    {
+
     }
 }

@@ -24,6 +24,8 @@ public class Transaction {
     @PropertyName("accountId")
     private String AccountId;
 
+
+
     public String getId() {
         return Id;
     }

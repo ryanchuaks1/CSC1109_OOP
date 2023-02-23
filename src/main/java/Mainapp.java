@@ -15,33 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Mainapp extends Application {
-    // public static void main(String[] args) {
-    // if (!DBUtil.EstablishConnection()) {
-    // System.out.println("Failed establishing a connection to MySQL Server. Please
-    // try again soon.");
-    // return;
-    // }
-    // System.out.println("Welcome to ABC Bank!");
-    // System.out.println("Please select an option below");
-    // System.out.println("[1] Login");
-    // System.out.println("[2] Register");
-    // Scanner scanner = new Scanner(System.in);
-    // int optSelection;
-    // do {
-    // System.out.print("Please enter your selection: ");
-    // optSelection = scanner.nextInt();
-    // } while (optSelection != 1 && optSelection != 2);
-
-    // // Testing out how the flow would work like
-    // AuthClient client = new AuthClient();
-    // String dateString = "1999-08-18";
-    // Date date = Date.valueOf(dateString);
-
-    // var test = client.Login("xavieroyj1999", "trickster123");
-    // // Creating an account
-
-    // }
-
     public static void main(String[] args) {
         launch(args);
     }

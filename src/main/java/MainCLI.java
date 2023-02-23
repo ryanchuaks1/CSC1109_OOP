@@ -24,8 +24,9 @@ public class MainCLI {
         user.CreateAccount();
 
         List<Account> accountsList = user.getAccounts();
+        Account account1 = accountsList.get(0);
+        account1.Transfer(500, "012121212");
 
-        //user.CreateAccount();
 
         //client.Register(createUser);
     }

@@ -1,6 +1,7 @@
 package Entity;
 
 import Models.CreateAccount;
+import Services.UserService;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
@@ -29,8 +30,8 @@ public class User {
     @PropertyName("phoneNo")
     private String phoneNo;
 
-    Firestore db = FirestoreClient.getFirestore();
 
+    UserService userService = new UserService();
     //Required empty constructor for firestore
     public User()
     {}
@@ -65,29 +66,6 @@ public class User {
 
     public List<Account> getAccounts()
     {
-        List<Account> accounts = new ArrayList<>();
-        try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("userId", this.Id).get();
-            QuerySnapshot snapshots = apiFuture.get();
-
-            accounts = snapshots.toObjects(Account.class);
-            return accounts;
-        }
-        catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return accounts;
-    }
-
-    //TODO: Add different account type for different interest name.
-    public void CreateAccount()
-    {
-        CreateAccount createAccount = new CreateAccount(this.Id);
-        try {
-            ApiFuture<WriteResult> apiFuture = db.collection("accounts").document().set(createAccount);
-            System.out.printf("Successfully created account for UserId(%s) at %s %n", this.Id , apiFuture.get().getUpdateTime());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+        return userService.getUsers();
     }
 }

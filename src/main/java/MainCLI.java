@@ -18,14 +18,17 @@ public class MainCLI {
         CreateUser createUser = new CreateUser("xavieroyj", "trickster123", "Xavier", "Ong", "+6586918172");
         LoginUser loginUser = new LoginUser("xavieroyj", "trickster123");
 
-        User user = client.Login(loginUser);
+        try {
+            User user = client.Login(loginUser);
+            System.out.printf("Full Name: %s(%s)%n", user.getFullName(), user.getId());
 
-        System.out.println(user.getFullName());
-        user.CreateAccount();
-
-        List<Account> accountsList = user.getAccounts();
-        Account account1 = accountsList.get(0);
-        account1.Transfer(500, "012121212");
+            var accounts = user.getAccounts();
+            for (Account account : accounts) {
+                System.out.printf("TransactionId: %s %n", account.getId());
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
 
 
         //client.Register(createUser);

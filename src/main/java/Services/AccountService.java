@@ -15,7 +15,7 @@ public class AccountService {
     public List<Account> getAccounts(String userId) {
         List<Account> account = null;
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("userId", userId).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("userId", userId).get();
             account = apiFuture.get().toObjects(Account.class);
             return account;
 

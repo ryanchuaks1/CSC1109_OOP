@@ -43,6 +43,21 @@ public class UserService {
         return account;
     }
 
+    public User getUserByEmail(String email) {
+        User account = null;
+        try {
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("email", email).get();
+            QuerySnapshot snapshots = apiFuture.get();
+            var userSnapshot = snapshots.getDocuments().get(0);
+            account = userSnapshot.toObject(User.class);
+            return account;
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return account;
+    }
+
     public void createUser(CreateUser createUser) {
         try {
             ApiFuture<WriteResult> apiFuture = db.collection("users").document().set(createUser);

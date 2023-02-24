@@ -42,8 +42,8 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <JFXButton fx:id="login" layoutX="468.0" layoutY="274.0" onAction="#handleLoginButtonAction" style="-fx-border-color: black;" text="Login" />
                         <PasswordField fx:id="password" layoutX="243.0" layoutY="161.0" />
+                        <JFXButton fx:id="login" layoutX="468.0" layoutY="274.0" onAction="#handleLoginButtonAction" style="-fx-border-color: black;" text="Login" />
                         <JFXButton fx:id="createAcc" layoutX="31.0" layoutY="315.0" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="109.0" text="Create Accounts" underline="true" />
                         <JFXButton fx:id="forgetPassword" layoutX="430.0" layoutY="316.0" onAction="#handleButtonAction" prefHeight="20.0" prefWidth="123.0" text="Forget Password?" underline="true" />
                      </children>

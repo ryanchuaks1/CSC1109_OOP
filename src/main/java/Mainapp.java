@@ -1,5 +1,4 @@
 import Helpers.FirebaseInitialize;
-import Helpers.UserService;
 import Entity.User;
 
 import java.io.IOException;
@@ -26,10 +25,6 @@ public class Mainapp extends Application {
             FXMLLoader loader = new FXMLLoader(); // to load view
             loader.setLocation(getClass().getResource("GUI/PubScene/MainWindow.fxml"));
             VBox root = loader.load();
-
-            // //controller
-            // MainWindowController LOECtrl=loader.getController();
-            // LOECtrl.setMainApp(this);
 
             Path dPath = FileSystems.getDefault().getPath("Resources/image/", "maxresdefault.jpg");
             Scene scene = new Scene(root);

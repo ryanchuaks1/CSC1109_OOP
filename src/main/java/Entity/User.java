@@ -12,14 +12,13 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
 import com.google.firebase.cloud.FirestoreClient;
 
-import javax.swing.text.Document;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class User {
     @DocumentId
     private String Id;
+    @PropertyName("email")
+    private String email;
     @PropertyName("username")
     private String username;
     @PropertyName("password")
@@ -30,6 +29,10 @@ public class User {
     private String lastName;
     @PropertyName("phoneNo")
     private String phoneNo;
+    @PropertyName("DOB")
+    private String DOB;
+    @PropertyName("verified")
+    private String verified;
 
     AccountService accountService = new AccountService();
     //Required empty constructor for firestore
@@ -38,6 +41,10 @@ public class User {
 
     public String getId() {
         return Id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getUsername() {
@@ -62,6 +69,14 @@ public class User {
 
     public String getPhoneNo() {
         return this.phoneNo;
+    }
+
+    public String getDOB() {
+        return DOB;
+    }
+    
+    public String getVerified() {
+        return verified;
     }
 
     public List<Account> getAccounts()

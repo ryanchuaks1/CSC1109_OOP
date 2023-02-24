@@ -9,13 +9,19 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
+import Clients.AuthClient;
+import Clients.EmailClient;
+import Entity.User;
+import Services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -109,35 +115,34 @@ public class ForgotPasswordController implements Initializable{
 
 		String Email = email.getText();
 		boolean success = false;
-		// ObservableList<PerModel> accountList=dao.getAllAccounts();
-		// PerModel account=null;
-		// for (PerModel f:accountList) {
+		
+		AuthClient aClient = new AuthClient();
+		EmailClient eClient = new EmailClient();
+		UserService userService = new UserService();
+		
+		User user = userService.getUserByEmail(Email);
 
-		// 	if (f.getEmail().equals(Email)){
+		
 
-		// 		account = f;
-		// 		PerModel.setAccounts(account);
-		// 		success = true;
-		// 		break;
-		// 	} 
+		if (user != null){
+			eClient.emailVerification(user);
 
-		// }
-		// if(success){
-		// 	//get reference to the button's stage         
-		// 	stage=(Stage) submit.getScene().getWindow();
-		// 	//load up OTHER FXML document
-		// 	root = FXMLLoader.load(getClass().getResource("/CSGO/PubView/PerSecurityQuestion.fxml"));
-		// 	//create a new scene with root and set the stage
-		// 	Scene scene = new Scene(root);
-		// 	stage.setScene(scene);
-		// 	stage.show();
-		// }
-		// else {
-		// 	Alert alert = new Alert(AlertType.INFORMATION);
-		// 	alert.setTitle("Incorrect Email");
-		// 	alert.setContentText("You have entered an incorrect email. Please try again.");
-		// 	alert.showAndWait();
-		// }
+			stage=(Stage)  LGButton.getScene().getWindow();
+			root = FXMLLoader.load(getClass().getResource("verifyReset.fxml"));
+			
+			//create a new scene with root and set the stage
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+
+		} else{
+			String failed = "Email Not Found";
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle(failed);
+            alert.setContentText("Email not found");
+
+            alert.showAndWait();
+		}
 
 	}
 }

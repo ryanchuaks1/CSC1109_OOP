@@ -5,12 +5,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
+import Clients.AuthClient;
+import Clients.EmailClient;
+import Entity.User;
+import Services.UserService;
+import Models.CreateUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,6 +64,9 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private TextField lName;
+    
+    @FXML
+    private TextField username;
 
     @FXML
     private PasswordField password1;
@@ -128,6 +139,7 @@ public class RegistrationController implements Initializable {
     @FXML
     void handleConfirmButtonAction(ActionEvent event) throws IOException {
         String Email = "";
+        String Username = "";
         String Password = "";
         String Password2 = "";
         String firstName = "";
@@ -136,6 +148,7 @@ public class RegistrationController implements Initializable {
         String Contact = "";
         String BirthDate = "";
 
+        Username = username.getText();
         Email = email.getText();
         Password = password1.getText();
         Password2 = password2.getText();
@@ -145,13 +158,13 @@ public class RegistrationController implements Initializable {
         Contact = phoneNO.getText();
         BirthDate = DOB.getText();
 
-        String errormessage = verifyRegister(Email, Password, Password2, firstName, lastName, countrycode, Contact,
+        String errormessage = verifyRegister(Email, Username, Password, Password2, firstName, lastName, countrycode, Contact,
                 BirthDate);
 
         // Validate Legit email
-        String errormessage4 = validateEmail();
-        if (errormessage4 != null || errormessage4 != "") {
-            errormessage += errormessage4;
+        String errormessage1 = validateEmail();
+        if (errormessage1 != null || errormessage1 != "") {
+            errormessage += errormessage1;
         }
 
         // validatePasswordStrength
@@ -165,14 +178,29 @@ public class RegistrationController implements Initializable {
             errormessage += errormessage3;
         }
 
-        if (errormessage == "") {
+        //validate DOB
+        String errormessage4 = validateDOB(BirthDate);
+        if (errormessage4 != null || errormessage4 != "") {
+            errormessage += errormessage4;
+        }
+        System.out.println("'"+errormessage+"'");
+
+        if (errormessage.equals("")) {
 
             // need to add the registration on authClient
+            AuthClient authclient = new AuthClient();
+            EmailClient emailclient = new EmailClient();
+
+            CreateUser createuser = new CreateUser(Email, Username, Password, firstName, lastName, (countrycode+Contact) , BirthDate ,"N");
+            authclient.Register(createuser); 
+            UserService userService = new UserService();
+            User user = userService.getUserByUsername(Username);
+            emailclient.emailVerification(user);
 
             String Success = "Registration Success";
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle(Success);
-            alert.setContentText("You have successfully created an Account!");
+            alert.setContentText("You have successfully created an Account! Please check your email for verification");
             alert.showAndWait();
 
             if (event.getSource() == confirmButton) {
@@ -184,7 +212,7 @@ public class RegistrationController implements Initializable {
                 // load up OTHER FXML document (May have to check to link to another
                 // verification page through email instead)
 
-                root = FXMLLoader.load(getClass().getResource("PersonalLogin.fxml"));
+                root = FXMLLoader.load(getClass().getResource("verifyRegistration.fxml"));
                 // create a new scene with root and set the stage
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -193,7 +221,6 @@ public class RegistrationController implements Initializable {
 
         } else {
             String failed = "Registration Failed";
-
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle(failed);
             alert.setContentText(errormessage);
@@ -203,7 +230,7 @@ public class RegistrationController implements Initializable {
     }
 
     // check all text field is filled
-    public String verifyRegister(String email, String password, String password2, String fName, String lName,
+    public String verifyRegister(String email, String username, String password, String password2, String fName, String lName,
             String cCode, String contactNumber,
             String birthDate) {
         String errormessage = "";
@@ -211,7 +238,10 @@ public class RegistrationController implements Initializable {
         if (email != null && !email.trim().isEmpty()) {
         } else
             errormessage += "Email not inputted\n";
-
+        // check if username textfield is empty
+        if (username != null && !username.trim().isEmpty()) {
+        } else
+            errormessage += "Email not inputted\n";
         // Check if password textfield is empty
         if (password != null && !password.trim().isEmpty()) {
         } else
@@ -356,5 +386,20 @@ public class RegistrationController implements Initializable {
             return Email;
         } else
             return "";
+    }
+
+    public String validateDOB(String DOB){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dob = LocalDate.parse(DOB,formatter);
+        LocalDate now = LocalDate.now();
+        
+        long diff = ChronoUnit.YEARS.between(dob, now);
+        if(diff < 18){
+            return "Age is not eligible to register or use our bank services.";
+        } else{
+            return "";
+        }
+
     }
 }

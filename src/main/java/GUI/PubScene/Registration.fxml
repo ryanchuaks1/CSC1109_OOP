@@ -40,6 +40,7 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints maxHeight="51.0" minHeight="6.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="140.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="170.0" minHeight="3.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -53,42 +54,48 @@
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password:" textAlignment="CENTER" wrappingWidth="135.26171875" GridPane.rowIndex="2">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password:" textAlignment="CENTER" wrappingWidth="135.26171875" GridPane.rowIndex="3">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" textAlignment="CENTER" wrappingWidth="135.552734375" GridPane.rowIndex="1">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" textAlignment="CENTER" wrappingWidth="135.552734375" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name:" textAlignment="CENTER" wrappingWidth="135.677734375" GridPane.rowIndex="3">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name:" textAlignment="CENTER" wrappingWidth="135.677734375" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Of Birth (DD/MM/YYYY):" textAlignment="CENTER" wrappingWidth="133.677734375" GridPane.rowIndex="5">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Of Birth (DD/MM/YYYY):" textAlignment="CENTER" wrappingWidth="133.677734375" GridPane.rowIndex="6">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" textAlignment="CENTER" wrappingWidth="133.677734375" GridPane.rowIndex="7">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" textAlignment="CENTER" wrappingWidth="133.677734375" GridPane.rowIndex="8">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
                               <TextField fx:id="email" GridPane.columnIndex="1" />
-                              <TextField fx:id="fName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField fx:id="DOB" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField fx:id="countryCode" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <PasswordField fx:id="password1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <PasswordField fx:id="password2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country Code:" textAlignment="CENTER" wrappingWidth="133.677734375" GridPane.rowIndex="6">
+                              <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <PasswordField fx:id="password1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <PasswordField fx:id="password2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="fName" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="lName" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="DOB" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="countryCode" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country Code:" textAlignment="CENTER" wrappingWidth="133.677734375" GridPane.rowIndex="7">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <TextField fx:id="phoneNO" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name:" textAlignment="CENTER" wrappingWidth="135.677734375" GridPane.rowIndex="4">
+                              <TextField fx:id="phoneNO" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name:" textAlignment="CENTER" wrappingWidth="135.677734375" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="15.0" />
                                  </font></Text>
-                              <TextField fx:id="lName" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" textAlignment="CENTER" wrappingWidth="133.92578125" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </GridPane>
                         <JFXButton fx:id="confirmButton" buttonType="RAISED" layoutX="262.0" layoutY="423.0" onAction="#handleConfirmButtonAction" style="-fx-background-color: #ffd39b;" text="Confirm" />

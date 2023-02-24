@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="720.0" style="-fx-background-color: #A1D6E2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PubScene.verifyResetController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="57.0" prefWidth="720.0" style="-fx-background-color: #800000;;">
+         <children>
+            <JFXHamburger fx:id="hamburger" layoutX="6.0" layoutY="6.0" prefHeight="32.0" prefWidth="39.0" />
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" prefHeight="567.0" prefWidth="600.0" style="-fx-background-color: #A1D6E2;">
+         <children>
+            <AnchorPane prefHeight="497.0" prefWidth="720.0" style="-fx-background-color: #fdfcf6;">
+               <children>
+                  <Text layoutX="69.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Verification Reset" textAlignment="CENTER" wrappingWidth="582.0000032782555">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Text>
+                  <AnchorPane layoutX="69.0" layoutY="44.0" prefHeight="462.0" prefWidth="582.0" style="-fx-border-color: black;">
+                     <children>
+                        <GridPane layoutX="36.0" layoutY="199.0" prefHeight="53.0" prefWidth="510.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="204.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="306.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="51.0" minHeight="6.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Verification Number:" textAlignment="CENTER" wrappingWidth="133.92578125">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Text>
+                              <TextField fx:id="verification" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                        <JFXButton fx:id="confirmButton" buttonType="RAISED" layoutX="262.0" layoutY="423.0" onAction="#handleConfirmButtonAction" style="-fx-background-color: #ffd39b;" text="Confirm" />
+                     </children>
+                  </AnchorPane>
+                  <JFXDrawer fx:id="drawer" defaultDrawerSize="190.0" prefHeight="251.0" prefWidth="20.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="49.0" prefWidth="720.0" style="-fx-background-color: #800000;">
+         <children>
+            <ButtonBar layoutX="-1.0" prefHeight="53.0" prefWidth="720.0">
+               <buttons>
+                  <JFXButton fx:id="LGButton" onMouseClicked="#handleLoginPage" prefHeight="51.0" prefWidth="409.0" style="-fx-background-color: #800000;" text="Login" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="RGButton" onMouseClicked="#handleRegistrationPage" prefHeight="51.0" prefWidth="101.0" style="-fx-background-color: #800000;" text="Registration" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </JFXButton>
+               </buttons>
+            </ButtonBar>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

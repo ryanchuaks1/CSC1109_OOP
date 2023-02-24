@@ -23,7 +23,6 @@ public class Mainapp extends Application {
         try {
             FirebaseInitialize.initDatabase();
 
-            
             FXMLLoader loader = new FXMLLoader(); // to load view
             loader.setLocation(getClass().getResource("GUI/PubScene/MainWindow.fxml"));
             VBox root = loader.load();

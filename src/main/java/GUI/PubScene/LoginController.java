@@ -174,7 +174,7 @@ public class LoginController implements Initializable {
         } else {
             // may consider adding condition to prevent user from continuous spamming on
             // login and maybe lock account.
-            Alert alert = new Alert(AlertType.INFORMATION);
+            Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Login failure");
             alert.setContentText("Username or password is wrong.");
             alert.showAndWait();

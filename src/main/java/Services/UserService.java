@@ -28,22 +28,6 @@ public class UserService {
         return user;
     }
 
-//    public User getUserById(int Id) {
-//        Account account = null;
-//        try {
-//            ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("userId", Id).get();
-//            QuerySnapshot snapshots = apiFuture.get();
-//
-//            var accountSnapshot = snapshots.getDocuments().get(0);
-//            account = accountSnapshot.toObject(Account.class);
-//            return account;
-//        }
-//        catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return account;
-//    }
-
     public User getUserByUsername(String username) {
         User account = null;
         try {

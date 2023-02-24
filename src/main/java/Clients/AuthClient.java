@@ -2,6 +2,7 @@ package Clients;
 
 import Entity.Account;
 import Entity.User;
+import Exceptions.UserNotFoundException;
 import Models.CreateUser;
 import Models.LoginUser;
 import Services.UserService;
@@ -12,17 +13,18 @@ import com.password4j.Password;
 
 public class AuthClient {
     UserService userService = new UserService();
-    Firestore db = FirestoreClient.getFirestore();
 
-    public User Login(LoginUser loginUser) {
+    public User Login(LoginUser loginUser) throws UserNotFoundException {
         User user = userService.getUserByUsername(loginUser.getUsername());
         if (Password.check(loginUser.getPassword(), user.getPassword()).withArgon2()) {
             return user;
         }
-        return null;
+        throw new UserNotFoundException();
     }
 
-    //TODO: Check for duplicated Username.
+    // TODO: Check for duplicated Username.
+    // TODO:
     public void Register(CreateUser createUser) {
+        userService.createUser(createUser);
     }
 }

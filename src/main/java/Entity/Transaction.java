@@ -25,7 +25,6 @@ public class Transaction {
     private String AccountId;
 
 
-
     public String getId() {
         return Id;
     }

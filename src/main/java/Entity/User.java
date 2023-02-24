@@ -1,6 +1,7 @@
 package Entity;
 
 import Models.CreateAccount;
+import Services.AccountService;
 import Services.UserService;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -30,8 +31,7 @@ public class User {
     @PropertyName("phoneNo")
     private String phoneNo;
 
-
-    UserService userService = new UserService();
+    AccountService accountService = new AccountService();
     //Required empty constructor for firestore
     public User()
     {}
@@ -66,6 +66,6 @@ public class User {
 
     public List<Account> getAccounts()
     {
-        return userService.getUsers();
+        return accountService.getAccounts(this.getId());
     }
 }

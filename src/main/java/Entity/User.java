@@ -32,7 +32,7 @@ public class User {
     @PropertyName("DOB")
     private String DOB;
     @PropertyName("verified")
-    private String verified;
+    private boolean verified;
 
     AccountService accountService = new AccountService();
     //Required empty constructor for firestore
@@ -75,7 +75,7 @@ public class User {
         return DOB;
     }
     
-    public String getVerified() {
+    public boolean getVerified() {
         return verified;
     }
 

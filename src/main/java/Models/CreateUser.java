@@ -10,9 +10,9 @@ public class CreateUser {
     private String LastName;
     private String PhoneNo;
     private String DOB;
-    private String Verified;
+    private boolean Verified;
 
-    public CreateUser(String email, String username, String password, String firstName, String lastName, String phoneNo, String DOB, String verified) {
+    public CreateUser(String email, String username, String password, String firstName, String lastName, String phoneNo, String DOB, boolean verified) {
         this.Email = email;
         this.Username = username;
         this.Password = com.password4j.Password.hash(password).addRandomSalt().withArgon2().getResult();
@@ -53,7 +53,7 @@ public class CreateUser {
         return DOB;
     }
 
-    public String getVerified() {
+    public boolean getVerified() {
         return Verified;
     }
 }

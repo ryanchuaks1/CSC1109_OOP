@@ -1,7 +1,9 @@
 package Clients;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Timer;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,13 +15,18 @@ import javax.mail.internet.MimeMessage;
 
 import Entity.User;
 import Helpers.SecretKeyStore;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class EmailClient {
     
     static private int randomVerifier;
     static private User usertemp;
+    static long totalMiliseconds;
+    
 
-    public void emailVerification(User user){
+    //type rest / register
+    public void emailVerification(User user, String type){
         usertemp = user;
         // Sender's email ID needs to be mentioned
         String from = SecretKeyStore.getKey("emailId");
@@ -62,39 +69,63 @@ public class EmailClient {
             
             int verificationNO = ThreadLocalRandom.current().nextInt(100000, 1000000);
             randomVerifier = verificationNO;
+            if(type.equals("register")){
+                // Set Subject: header field
+                message.setSubject("Welcome to RJDX Bank!");
 
-            // Set Subject: header field
-            message.setSubject("Welcome to RJDX Bank!");
+                String msg = "Welcome " + user.getFullName() +"\n\n";
+                msg += "Thanks for joining RJDX Bank, Below is your 6 digits verification code, please key in the verirication page\n\n";
+                msg += verificationNO;
 
-            String msg = "Welcome " + user.getFullName() +"\n\n";
-            msg += "Thanks for joining RJDX Bank, Below is your 6 digits verification code, please key in the verirication page\n\n";
-            msg += verificationNO;
+                msg += "\n\nRegards,\n";
+                msg += "RDJX Bank";
 
-            msg += "\n\nRegards,\n";
-            msg += "RDJX Bank";
+                // Now set the actual message
+                message.setText(msg);
+            }
+            else if(type.equals("reset")){
+                message.setSubject("Reset Password!");
 
-            // Now set the actual message
-            message.setText(msg);
+                String msg = "Hello " + user.getFullName() +"\n\n";
+                msg += "Below is your 6 digits verification code, please key in the verirication page, before password reset\n\n";
+                msg += verificationNO;
+
+                msg += "\n\nRegards,\n";
+                msg += "RDJX Bank";
+
+                // Now set the actual message
+                message.setText(msg);
+            }
 
             System.out.println("sending...");
             // Send message
             Transport.send(message);
             System.out.println("Sent message successfully....");
+            totalMiliseconds = System.currentTimeMillis();
+
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
+        
     }
-
+    
     public boolean verification(String value){
         System.out.println(randomVerifier);
-        if(Integer.toString(randomVerifier).equals(value)){
-            randomVerifier = 0;
+        long timeStartMin = totalMiliseconds / 1000 / 60;
+        long current = System.currentTimeMillis() / 1000 / 60;
+        if((current - timeStartMin) < 5){
+            if(Integer.toString(randomVerifier).equals(value)){
+                randomVerifier = 0;
+                return true;
+            }
+        }
 
-            return true;
-        }
-        else{
-            return false;
-        }
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Failed");
+        alert.setContentText("Timeup. Please verify again.");
+
+        alert.showAndWait();
+        return false;
     }
 }
 

@@ -122,10 +122,9 @@ public class ForgotPasswordController implements Initializable{
 		
 		User user = userService.getUserByEmail(Email);
 
-		
 
 		if (user != null){
-			eClient.emailVerification(user);
+			eClient.emailVerification(user, "reset");
 
 			stage=(Stage)  LGButton.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("verifyReset.fxml"));

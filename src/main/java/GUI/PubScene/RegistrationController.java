@@ -191,11 +191,11 @@ public class RegistrationController implements Initializable {
             AuthClient authclient = new AuthClient();
             EmailClient emailclient = new EmailClient();
 
-            CreateUser createuser = new CreateUser(Email, Username, Password, firstName, lastName, (countrycode+Contact) , BirthDate ,"N");
+            CreateUser createuser = new CreateUser(Email, Username, Password, firstName, lastName, (countrycode+Contact) , BirthDate ,false);
             authclient.Register(createuser); 
             UserService userService = new UserService();
             User user = userService.getUserByUsername(Username);
-            emailclient.emailVerification(user);
+            emailclient.emailVerification(user, "register");
 
             String Success = "Registration Success";
             Alert alert = new Alert(AlertType.INFORMATION);

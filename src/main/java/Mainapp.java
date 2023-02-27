@@ -1,40 +1,37 @@
-import Helpers.FirebaseInitialize;
-import Entity.User;
-
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 
 // UI imports
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class Mainapp extends Application {
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 
-    public void start(Stage primaryStage) throws Exception {
-        try {
-            FirebaseInitialize.initDatabase();
-
-            FXMLLoader loader = new FXMLLoader(); // to load view
-            loader.setLocation(getClass().getResource("GUI/PubScene/MainWindow.fxml"));
-            VBox root = loader.load();
-
-            Path dPath = FileSystems.getDefault().getPath("Resources/image/", "maxresdefault.jpg");
-            Scene scene = new Scene(root);
-            // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.show();
-            primaryStage.setTitle("Banking");
-            primaryStage.getIcons().add(new Image(dPath.toUri().toString()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private static Scene scene;
+    
+    @Override
+    public void start(Stage stage) throws IOException {
+        scene = new Scene(loadFXML("GUI/PubScene/Login"));
+        // scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        stage.setScene(scene);
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        stage.show();
     }
+
+    static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+    }
+
+    private static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Mainapp.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
+
 }

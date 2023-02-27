@@ -4,9 +4,7 @@ Clients\AuthClient.class
 Entity\Transaction.class
 Models\TransactionType.class
 GUI\PubScene\ForgotPasswordController.class
-GUI\PubScene\MainWindowController$2.class
 Mainapp.class
-GUI\PubScene\LoginController.class
 Interfaces\IBank.class
 Models\TransactionStatus.class
 GUI\PubScene\RegistrationController.class
@@ -17,8 +15,5 @@ GUI\PubScene\DrawerController.class
 Entity\User.class
 Exceptions\UserNotFoundException.class
 Models\CreateTransaction.class
-MainCLI.class
-GUI\PubScene\MainWindowController.class
 Helpers\FirebaseInitialize.class
 Models\CreateUser.class
-GUI\PubScene\MainWindowController$1.class

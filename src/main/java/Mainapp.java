@@ -19,9 +19,9 @@ public class Mainapp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("GUI/PubScene/Login"));
-        // scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet()); // Add style sheet to scenes
         stage.setScene(scene);
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        stage.setTitle("RDJX Ibanking");
         stage.show();
     }
 

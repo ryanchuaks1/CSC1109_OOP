@@ -2,35 +2,34 @@ package GUI.PubScene;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Clients.AuthClient;
 import Clients.EmailClient;
 import Entity.User;
-import Services.UserService;
+import Exceptions.UserNotFoundException;
 import Models.CreateUser;
+import Services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class RegistrationController implements Initializable {
@@ -39,19 +38,13 @@ public class RegistrationController implements Initializable {
     private TextField DOB;
 
     @FXML
-    private JFXButton confirmButton;
+    private Button btnCreateUser;
 
     @FXML
-    private JFXButton LGButton;
-
-    @FXML
-    private JFXButton RGButton;
+    private Button btnLogin;
 
     @FXML
     private TextField countryCode;
-
-    @FXML
-    private JFXDrawer drawer;
 
     @FXML
     private TextField email;
@@ -60,13 +53,13 @@ public class RegistrationController implements Initializable {
     private TextField fName;
 
     @FXML
-    private JFXHamburger hamburger;
+    private ImageView homeBackground;
+
+    @FXML
+    private ImageView iconPrimary;
 
     @FXML
     private TextField lName;
-    
-    @FXML
-    private TextField username;
 
     @FXML
     private PasswordField password1;
@@ -75,226 +68,136 @@ public class RegistrationController implements Initializable {
     private PasswordField password2;
 
     @FXML
-    private TextField phoneNO;
+    private TextField phoneNo;
+
+    @FXML
+    private TextField username;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Path homeBackgroundPath = FileSystems.getDefault().getPath("resources/image/", "RJDX_mainbackground.png");
+        Image homeBackgroundImage = new Image(homeBackgroundPath.toUri().toString());
+        homeBackground.setImage(homeBackgroundImage);
 
-        VBox box;
+        Path iconPrimaryPath = FileSystems.getDefault().getPath("resources/image/", "IconPrimary.png");
+        Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
+        iconPrimary.setImage(iconPrimaryImage);
+    }
+
+    @FXML
+    private void onButtonClicked(ActionEvent event) throws IOException, UserNotFoundException {
+        // loading.setVisible(true); Not working cuz of javafx logic where UI will hang
+        // while code is still running
+        if (event.getSource() == btnLogin) {
+            Navigate.setRoot("Login");
+        } else if (event.getSource() == btnCreateUser) {
+            handleCreateUser(event);
+        }
+    }
+
+    @FXML
+    void handleCreateUser(ActionEvent event) throws IOException {
+        String Email = email.getText();
+        String Username = username.getText();
+        String Password = password1.getText();
+        String Password2 = password2.getText();
+        String firstName = fName.getText();
+        String lastName = lName.getText();
+        String countrycode = countryCode.getText();
+        String Contact = phoneNo.getText();
+        String BirthDate = DOB.getText();
+
         try {
-            box = FXMLLoader.load(getClass().getResource("Drawer.fxml"));
-            drawer.setSidePane(box);
-            drawer.setMinWidth(-100);
-            HamburgerBackArrowBasicTransition burgerTask2 = new HamburgerBackArrowBasicTransition(hamburger);
-            burgerTask2.setRate(-1);
-            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-                burgerTask2.setRate(burgerTask2.getRate() * -1);
-                burgerTask2.play();
-
-                if (drawer.isOpened()) {
-                    drawer.close();
-                    drawer.setMouseTransparent(true);
-                } else {
-                    drawer.setMouseTransparent(false);
-                    drawer.open();
-                }
-            });
-
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-    }
-
-    @FXML
-    void handleLoginPage(MouseEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
-        // create personal account
-
-        stage = (Stage) LGButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-
-        // create a new scene with root and set the stage
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    void handleRegistrationPage(MouseEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
-        // Registration page
-
-        stage = (Stage) RGButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    void handleConfirmButtonAction(ActionEvent event) throws IOException {
-        String Email = "";
-        String Username = "";
-        String Password = "";
-        String Password2 = "";
-        String firstName = "";
-        String lastName = "";
-        String countrycode = "";
-        String Contact = "";
-        String BirthDate = "";
-
-        Username = username.getText();
-        Email = email.getText();
-        Password = password1.getText();
-        Password2 = password2.getText();
-        firstName = fName.getText();
-        lastName = lName.getText();
-        countrycode = countryCode.getText();
-        Contact = phoneNO.getText();
-        BirthDate = DOB.getText();
-
-        String errormessage = verifyRegister(Email, Username, Password, Password2, firstName, lastName, countrycode, Contact,
-                BirthDate);
-
-        // Validate Legit email
-        String errormessage1 = validateEmail();
-        if (errormessage1 != null || errormessage1 != "") {
-            errormessage += errormessage1;
-        }
-
-        // validatePasswordStrength
-        String errormessage2 = passwordStrength(Password);
-        if (errormessage2 != null || errormessage2 != "") {
-            errormessage += errormessage2;
-        }
-        // Validate Legit Contact
-        String errormessage3 = validateContact(Contact);
-        if (errormessage3 != null || errormessage3 != "") {
-            errormessage += errormessage3;
-        }
-
-        //validate DOB
-        String errormessage4 = validateDOB(BirthDate);
-        if (errormessage4 != null || errormessage4 != "") {
-            errormessage += errormessage4;
-        }
-        System.out.println("'"+errormessage+"'");
-
-        if (errormessage.equals("")) {
-
-            // need to add the registration on authClient
-            AuthClient authclient = new AuthClient();
-            EmailClient emailclient = new EmailClient();
-
-            CreateUser createuser = new CreateUser(Email, Username, Password, firstName, lastName, (countrycode+Contact) , BirthDate ,false);
-            authclient.Register(createuser); 
-            UserService userService = new UserService();
-            User user = userService.getUserByUsername(Username);
-            emailclient.emailVerification(user, "register");
-
-            String Success = "Registration Success";
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle(Success);
-            alert.setContentText("You have successfully created an Account! Please check your email for verification");
-            alert.showAndWait();
-
-            if (event.getSource() == confirmButton) {
-                Stage stage = null;
-                Parent root = null;
-
-                // get reference to the button's stage
-                stage = (Stage) confirmButton.getScene().getWindow();
-                // load up OTHER FXML document (May have to check to link to another
-                // verification page through email instead)
-
-                root = FXMLLoader.load(getClass().getResource("verifyRegistration.fxml"));
-                // create a new scene with root and set the stage
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }
-
-        } else {
-            String failed = "Registration Failed";
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle(failed);
-            alert.setContentText(errormessage);
-
+            checkFields(Email, Username, Password, Password2, firstName,
+                    lastName, countrycode, Contact, BirthDate);
+            checkPassword(Password, Password2);
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Registration Failed");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
+
+        // String errormessage1 = validateEmail();
+        // if (errormessage1 != null || errormessage1 != "") {
+        // errormessage += errormessage1;
+        // }
+        // // validatePasswordStrength
+        // String errormessage2 = passwordStrength(Password);
+        // if (errormessage2 != null || errormessage2 != "") {
+        // errormessage += errormessage2;
+        // }
+        // // Validate Legit Contact
+        // String errormessage3 = validateContact(Contact);
+        // if (errormessage3 != null || errormessage3 != "") {
+        // errormessage += errormessage3;
+        // }
+        // // validate DOB
+        // String errormessage4 = validateDOB(BirthDate);
+        // if (errormessage4 != null || errormessage4 != "") {
+        // errormessage += errormessage4;
+        // }
+        // System.out.println("'" + errormessage + "'");
+
+        // if (errormessage.equals("")) {
+
+        // // need to add the registration on authClient
+        // AuthClient authclient = new AuthClient();
+        // EmailClient emailclient = new EmailClient();
+
+        // CreateUser createuser = new CreateUser(Email, Username, Password, firstName,
+        // lastName,
+        // (countrycode + Contact), BirthDate, false);
+        // authclient.Register(createuser);
+        // UserService userService = new UserService();
+        // User user = userService.getUserByUsername(Username);
+        // emailclient.emailVerification(user, "register");
+
+        // String Success = "Registration Success";
+        // Alert alert = new Alert(AlertType.INFORMATION);
+        // alert.setTitle(Success);
+        // alert.setContentText("You have successfully created an Account! Please check
+        // your email for verification");
+        // alert.showAndWait();
+
+        // if (event.getSource() == confirmButton) {
+        // Stage stage = null;
+        // Parent root = null;
+
+        // // get reference to the button's stage
+        // stage = (Stage) confirmButton.getScene().getWindow();
+        // // load up OTHER FXML document (May have to check to link to another
+        // // verification page through email instead)
+
+        // root = FXMLLoader.load(getClass().getResource("verifyRegistration.fxml"));
+        // // create a new scene with root and set the stage
+        // Scene scene = new Scene(root);
+        // stage.setScene(scene);
+        // stage.show();
+        // }
     }
 
     // check all text field is filled
-    public String verifyRegister(String email, String username, String password, String password2, String fName, String lName,
-            String cCode, String contactNumber,
-            String birthDate) {
-        String errormessage = "";
-        // Check if email textfield is empty
-        if (email != null && !email.trim().isEmpty()) {
-        } else
-            errormessage += "Email not inputted\n";
-        // check if username textfield is empty
-        if (username != null && !username.trim().isEmpty()) {
-        } else
-            errormessage += "Email not inputted\n";
-        // Check if password textfield is empty
-        if (password != null && !password.trim().isEmpty()) {
-        } else
-            errormessage += "Password not inputted\n";
-
-        // Check if password2 textfield is empty
-        if (password2 != null && !password2.trim().isEmpty()) {
-        } else
-            errormessage += "Confirm Password not inputted\n";
-
-        // Check if password textfield and password 2 is equal
-        if (password.equals(password2)) {
-        } else
-            errormessage += "Passwords not equal\n";
-
-        // Check if fname textfield is empty
-        if (fName != null && !fName.trim().isEmpty()) {
-        } else
-            errormessage += "First name not inputted\n";
-
-        // Check if lname textfield is empty
-        if (lName != null && !lName.trim().isEmpty()) {
-        } else
-            errormessage += "Last name not inputted\n";
-
-        // Check if contact textfield is empty
-        if (contactNumber != null && !contactNumber.trim().isEmpty()) {
-        } else
-            errormessage += "Contact Number not inputted\n";
-
-        // Check if birthdate textfield is empty
-        if (birthDate != null && !birthDate.trim().isEmpty()) {
-        } else
-            errormessage += "Birthdate not inputted\n";
-
-        // Check if countryCode textfield is empty
-        if (cCode == null || cCode == "") {
-            errormessage += "Please provide your countryCode\n";
+    public void checkFields(String... strings) throws Exception {
+        for (String s : strings) {
+            if (s.isEmpty() || s.trim().isEmpty()) {
+                throw new Exception("Please fill in all the fields");
+            }
         }
 
-        return errormessage;
     }
 
     // password Strength
-    public String passwordStrength(String password) {
-
+    public void checkPassword(String password, String password2) throws Exception {
         boolean hasUpperCase = false;// at least 1 uppercase
         boolean hasLowerCase = false; // at least 1 lowercase
         boolean hasNumbers = false; // at least 1 digit number
-        String errormessage = "";
 
+        if (!password.equals(password2)) {
+            throw new Exception("Passwords do not match");
+        }
         if (password.length() >= 8) {
-
             for (int i = 0; i < password.length(); i++) {
                 char x = password.charAt(i);
                 if (Character.isUpperCase(x)) {
@@ -304,19 +207,19 @@ public class RegistrationController implements Initializable {
                 } else if (Character.isDigit(x)) {
                     hasNumbers = true;
                 }
-
                 if (hasUpperCase && hasLowerCase && hasNumbers) {
                     break;
                 }
             }
-            if (hasNumbers && hasLowerCase && hasUpperCase) {
-                errormessage = "";
-            } else {
-                errormessage = "Password is not strong. Please check whether your password contains at least 1 uppercase alphabet, 1 lowercase alphabet and 1 number.\n";
+            if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
+                throw new Exception("Password is too weak");
             }
-        } else
-            errormessage = "Password less than 8 characters\n";
-        return errormessage;
+            else {
+                throw new Exception("OK WE STOP HERE FOR NOW GO SLEEP");
+            }
+        } else {
+            throw new Exception("Password is less then 8 characters");
+        }
     }
 
     // verify Contact
@@ -388,16 +291,16 @@ public class RegistrationController implements Initializable {
             return "";
     }
 
-    public String validateDOB(String DOB){
+    public String validateDOB(String DOB) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dob = LocalDate.parse(DOB,formatter);
+        LocalDate dob = LocalDate.parse(DOB, formatter);
         LocalDate now = LocalDate.now();
-        
+
         long diff = ChronoUnit.YEARS.between(dob, now);
-        if(diff < 18){
+        if (diff < 18) {
             return "Age is not eligible to register or use our bank services.";
-        } else{
+        } else {
             return "";
         }
 

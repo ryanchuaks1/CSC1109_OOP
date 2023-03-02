@@ -14,7 +14,6 @@ public class MainCLI {
     {
         //Ensure that Firebase is initialized.
         FirebaseInitialize.initDatabase();
-
         AuthClient client = new AuthClient();
         //CreateUser createUser = new CreateUser("xavieroyj", "trickster123", "Xavier", "Ong", "+6586918172");
         LoginUser loginUser = new LoginUser("xavieroyj", "trickster123");

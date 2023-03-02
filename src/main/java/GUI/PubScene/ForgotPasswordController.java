@@ -49,32 +49,6 @@ public class ForgotPasswordController implements Initializable{
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		VBox box;
-		try {
-			box = FXMLLoader.load(getClass().getResource("Drawer.fxml"));
-			drawer.setSidePane(box);
-			drawer.setMinWidth(-100);
-			HamburgerBackArrowBasicTransition burgerTask2 = new HamburgerBackArrowBasicTransition(hamburger);
-			burgerTask2.setRate(-1);
-			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
-				burgerTask2.setRate(burgerTask2.getRate()*-1);
-				burgerTask2.play();
-				
-				if(drawer.isOpened()){
-					drawer.close();
-					drawer.setMouseTransparent(true);
-				}
-				else {
-					drawer.setMouseTransparent(false);
-					drawer.open();
-				}
-			});
-			
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 	}
 
 	@FXML

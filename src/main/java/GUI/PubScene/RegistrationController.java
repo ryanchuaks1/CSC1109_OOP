@@ -5,6 +5,7 @@ import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -35,16 +37,13 @@ import javafx.stage.Stage;
 public class RegistrationController implements Initializable {
 
     @FXML
-    private TextField DOB;
+    private DatePicker DOB;
 
     @FXML
     private Button btnCreateUser;
 
     @FXML
     private Button btnLogin;
-
-    @FXML
-    private TextField countryCode;
 
     @FXML
     private TextField email;
@@ -103,14 +102,16 @@ public class RegistrationController implements Initializable {
         String Password2 = password2.getText();
         String firstName = fName.getText();
         String lastName = lName.getText();
-        String countrycode = countryCode.getText();
         String Contact = phoneNo.getText();
-        String BirthDate = DOB.getText();
+        LocalDate BirthDate = DOB.getValue();
 
         try {
             checkFields(Email, Username, Password, Password2, firstName,
-                    lastName, countrycode, Contact, BirthDate);
+                    lastName, Contact);
+            validateDOB(BirthDate);
             checkPassword(Password, Password2);
+            validateEmail(Email);
+            validateContact(Contact);
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Registration Failed");
@@ -119,29 +120,7 @@ public class RegistrationController implements Initializable {
             alert.showAndWait();
         }
 
-        // String errormessage1 = validateEmail();
-        // if (errormessage1 != null || errormessage1 != "") {
-        // errormessage += errormessage1;
-        // }
-        // // validatePasswordStrength
-        // String errormessage2 = passwordStrength(Password);
-        // if (errormessage2 != null || errormessage2 != "") {
-        // errormessage += errormessage2;
-        // }
-        // // Validate Legit Contact
-        // String errormessage3 = validateContact(Contact);
-        // if (errormessage3 != null || errormessage3 != "") {
-        // errormessage += errormessage3;
-        // }
-        // // validate DOB
-        // String errormessage4 = validateDOB(BirthDate);
-        // if (errormessage4 != null || errormessage4 != "") {
-        // errormessage += errormessage4;
-        // }
-        // System.out.println("'" + errormessage + "'");
-
         // if (errormessage.equals("")) {
-
         // // need to add the registration on authClient
         // AuthClient authclient = new AuthClient();
         // EmailClient emailclient = new EmailClient();
@@ -160,7 +139,6 @@ public class RegistrationController implements Initializable {
         // alert.setContentText("You have successfully created an Account! Please check
         // your email for verification");
         // alert.showAndWait();
-
         // if (event.getSource() == confirmButton) {
         // Stage stage = null;
         // Parent root = null;
@@ -176,6 +154,7 @@ public class RegistrationController implements Initializable {
         // stage.setScene(scene);
         // stage.show();
         // }
+        // }
     }
 
     // check all text field is filled
@@ -188,7 +167,7 @@ public class RegistrationController implements Initializable {
 
     }
 
-    // password Strength
+    // Password match and strength
     public void checkPassword(String password, String password2) throws Exception {
         boolean hasUpperCase = false;// at least 1 uppercase
         boolean hasLowerCase = false; // at least 1 lowercase
@@ -214,95 +193,54 @@ public class RegistrationController implements Initializable {
             if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
                 throw new Exception("Password is too weak");
             }
-            else {
-                throw new Exception("OK WE STOP HERE FOR NOW GO SLEEP");
-            }
         } else {
             throw new Exception("Password is less then 8 characters");
         }
     }
 
-    // verify Contact
-    public String verifyContact(String contact) {
-        String error = validateContact(contact);
-        if (error.isEmpty() || error == null) {
-            return contact;
-        } else
-            return "";
+    // Check DOB is filled and age 18 and above
+    public void validateDOB(LocalDate birthDate) throws Exception {
+        try {
+            LocalDate today = LocalDate.now();
+            Period period = Period.between(birthDate, today);
+            int age = period.getYears();
+            if (age < 18) {
+                throw new Exception("You must be 18 to create a personal account");
+            } else {
+                throw new Exception("FAQWFWAFGWAFWAFWAFAWFAF");
+            }
+        } catch (NullPointerException e) {
+            throw new Exception("Please fill in all the fields");
+        }
     }
 
-    // TODO: need to amend to fit for all kinds of country phone numbers
-    public String validateContact(String contact) {
-        boolean firstDigit = false; // Check if start with 9 or 8
-        boolean noalphabet = false; // Check if contact is made out of digits only
-        boolean space = false;
-        String errormessage = "";
-
-        if (contact.length() == 8) {
-            if (contact.charAt(0) == '9') {
-            } else if (contact.charAt(0) == '8') {
-            } else
-                firstDigit = true;
-
-            for (int i = 0; i < contact.length(); i++) {
-                char x = contact.charAt(i);
-                if (Character.isLetter(x)) {
-                    noalphabet = true;
-                }
-                if (Character.isWhitespace(x)) {
-                    space = true;
-                }
-                if (noalphabet) {
-                    break;
-                }
-                if (space) {
-                    break;
-                }
-            }
-
-            if (noalphabet || space) {
-                errormessage += "Invalid Contact number\n";
-            }
-            if (firstDigit) {
-                errormessage += "Contact numbers start with 9 or 8\n";
-            }
-
-        } else
-            errormessage = "Contact contains only 8 numbers";
-        return errormessage;
-    }
-
-    private String validateEmail() {
+    // Check if email format is valid
+    private void validateEmail(String Email) throws Exception {
         Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
-        Matcher m = p.matcher(email.getText());
-        if (m.find() && m.group().equals(email.getText())) {
-            return "";
-        } else {
-            return "Please provide a valid Email\n";
+        Matcher m = p.matcher(Email);
+        if (!m.find() || !m.group().equals(Email)) {
+            throw new Exception("Please enter a valid email");
         }
     }
 
-    // verify Email
-    public String verifyEmail(String Email) {
-        String error = validateEmail();
-        if (error.isEmpty() || error == null) {
-            return Email;
-        } else
-            return "";
-    }
+    // Check if contant number is valid
+    public void validateContact(String contact) throws Exception {
 
-    public String validateDOB(String DOB) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dob = LocalDate.parse(DOB, formatter);
-        LocalDate now = LocalDate.now();
-
-        long diff = ChronoUnit.YEARS.between(dob, now);
-        if (diff < 18) {
-            return "Age is not eligible to register or use our bank services.";
-        } else {
-            return "";
+        if (!(contact.length() == 8)) {
+            throw new Exception("Contact should only contain 8 numbers");
         }
-
+        if (!(contact.charAt(0) == '9' || contact.charAt(0) == '8')) {
+            throw new Exception("Contact numbers start with 9 or 8");
+        }
+        for (int i = 0; i < contact.length(); i++) {
+            char x = contact.charAt(i);
+            if (Character.isLetter(x)) {
+                throw new Exception("Contact number should only contain numbers");
+            }
+            if (Character.isWhitespace(x)) {
+                throw new Exception("Remove spaces from contact number");
+            }
+        }
+        throw new Exception("OK WE STOP HERE FOR NOW GO SLEEP");
     }
 }

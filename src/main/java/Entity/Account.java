@@ -3,6 +3,7 @@ package Entity;
 import Models.CreateTransaction;
 import Models.TransactionStatus;
 import Models.TransactionType;
+import Services.TransactionService;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
@@ -25,7 +26,7 @@ public class Account {
     @PropertyName("internationalTransferLimit")
     private double internationalTransferLimit;
 
-    Firestore db = FirestoreClient.getFirestore();
+    TransactionService transactionService = new TransactionService();
 
     public Account()
     {
@@ -67,12 +68,18 @@ public class Account {
 
             CreateTransaction transfereeTransaction = new CreateTransaction(amount,
                     "SGD",
-                    TransactionType.Deposit,
+                    TransactionType.InternalTransfer,
                     TransactionStatus.Completed,
                     accountNo);
 
-            var apiTransferorFuture = db.collection("transactions").document().set(transferorTransaction).get();
-            var apiTransfereeFuture = db.collection("transactions").document().set(transfereeTransaction).get();
+            //Set respective to/from
+            transferorTransaction.setTo(accountNo);
+            transfereeTransaction.setFrom(this.Id);
+
+
+            transactionService.createTransaction(transferorTransaction);
+            transactionService.createTransaction(transfereeTransaction);
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -80,14 +87,37 @@ public class Account {
 
     public void Deposit(double amount)
     {
+        try {
+            CreateTransaction transaction = new CreateTransaction(amount,
+                    "SGD",
+                    TransactionType.Deposit,
+                    TransactionStatus.Completed,
+                    this.Id);
+
+            transactionService.createTransaction(transaction);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void Withdraw(double amount)
     {
+        try {
+            CreateTransaction transaction = new CreateTransaction(
+                    amount,
+                    "SGD",
+                    TransactionType.Withdrawal,
+                    TransactionStatus.Completed,
+                    this.Id);
+
+            transactionService.createTransaction(transaction);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public List<Transaction> getTransactions()
     {
-        return null;
+        return transactionService.getTransactionsByAccountId(this.Id);
     }
 }

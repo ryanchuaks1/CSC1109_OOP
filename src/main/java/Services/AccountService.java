@@ -17,8 +17,6 @@ public class AccountService {
         try {
             ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("userId", userId).get();
             account = apiFuture.get().toObjects(Account.class);
-            return account;
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

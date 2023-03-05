@@ -12,8 +12,8 @@ public class Transaction {
     @PropertyName("currencyCode")
     private String currencyCode;
 
-    @PropertyName("amount")
-    private double amount;
+    @PropertyName("transactionAmount")
+    private double transactionAmount;
 
     @PropertyName("transactionType")
     private TransactionType transactionType;
@@ -24,6 +24,12 @@ public class Transaction {
     @PropertyName("accountId")
     private String AccountId;
 
+    @PropertyName("from")
+    private String from;
+
+    @PropertyName("to")
+    private String to;
+
 
     public String getId() {
         return Id;
@@ -33,8 +39,8 @@ public class Transaction {
         return currencyCode;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getTransactionAmount() {
+        return transactionAmount;
     }
 
     public String getTransactionType() {
@@ -48,6 +54,14 @@ public class Transaction {
 
     public String getTransactionStatus() {
         return this.transactionStatus.name();
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 
     public void setTransactionStatus(String transactionStatus) {

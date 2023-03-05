@@ -35,7 +35,6 @@ public class UserService {
             QuerySnapshot snapshots = apiFuture.get();
             var userSnapshot = snapshots.getDocuments().get(0);
             account = userSnapshot.toObject(User.class);
-            return account;
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -50,8 +49,6 @@ public class UserService {
             QuerySnapshot snapshots = apiFuture.get();
             var userSnapshot = snapshots.getDocuments().get(0);
             account = userSnapshot.toObject(User.class);
-            return account;
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

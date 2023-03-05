@@ -1,6 +1,7 @@
 package Services;
 import Clients.AuthClient;
 import Entity.Account;
+import Entity.Transaction;
 import Entity.User;
 import Helpers.FirebaseInitialize;
 import Models.CreateAccount;
@@ -24,7 +25,15 @@ public class MainCLI {
 
             var accounts = user.getAccounts();
             for (Account account : accounts) {
-                System.out.printf("TransactionId: %s %n", account.getId());
+                System.out.printf("AccountID: %s %n", account.getId());
+
+                // Each account has their own transaction
+                List<Transaction> transactions = account.getTransactions();
+                if (transactions != null) {
+                    for (Transaction transaction : transactions) {
+                        System.out.printf("TransactionID(%s) \t TransactionAmount:($%s)\n", transaction.getId(), transaction.getTransactionAmount());
+                    }
+                }
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

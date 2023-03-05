@@ -3,6 +3,8 @@ package Models;
 public class CreateTransaction {
     private double transactionAmount;
     private String currencyCode;
+    private String to;
+    private String from;
     private TransactionType transactionType;
     private TransactionStatus transactionStatus;
     private String accountId;
@@ -13,6 +15,14 @@ public class CreateTransaction {
         this.transactionType = transactionType;
         this.transactionStatus = transactionStatus;
         this.accountId = accountId;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 
     public double getTransactionAmount() {

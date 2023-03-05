@@ -43,8 +43,8 @@ public class Transaction {
         return transactionAmount;
     }
 
-    public String getTransactionType() {
-        return this.transactionType.name();
+    public TransactionType getTransactionType() {
+        return this.transactionType;
     }
 
     public void setTransactionType(String transactionType)
@@ -52,8 +52,8 @@ public class Transaction {
         this.transactionType = Models.TransactionType.valueOf(transactionType);
     }
 
-    public String getTransactionStatus() {
-        return this.transactionStatus.name();
+    public TransactionStatus getTransactionStatus() {
+        return this.transactionStatus;
     }
 
     public String getFrom() {

@@ -120,4 +120,42 @@ public class Account {
     {
         return transactionService.getTransactionsByAccountId(this.Id);
     }
+
+    public void getBalance() {
+        List<Transaction> transactions = getTransactions();
+        double pendingBalance = 0;
+        double availableBalance = 0;
+
+        for (Transaction transaction: transactions) {
+            TransactionType transactionType = transaction.getTransactionType();
+            TransactionStatus transactionStatus = transaction.getTransactionStatus();
+
+            if (transaction.getTo() != null) {
+                // To means deduction
+                if (transactionStatus == TransactionStatus.Pending) {
+                    pendingBalance -= transaction.getTransactionAmount();
+                } else if (transactionStatus == TransactionStatus.Completed) {
+                    availableBalance -= transaction.getTransactionAmount();
+                }
+            } else if (transaction.getFrom() != null) {
+                if (transactionStatus == TransactionStatus.Pending) {
+                    pendingBalance += transaction.getTransactionAmount();
+                } else if (transactionStatus == TransactionStatus.Completed) {
+                    availableBalance += transaction.getTransactionAmount();
+                }
+            } else {
+                // Can only be Withdrawal/Deposit
+                if (transactionType == TransactionType.Withdrawal) {
+                    availableBalance -= transaction.getTransactionAmount();
+                } else if (transactionType == TransactionType.Deposit) {
+                    availableBalance += transaction.getTransactionAmount();
+                }
+            }
+        }
+        // Available balance is defined balance that you can move around. (Liquidity)
+        // Pending funds are considered not available (Those are called balance)
+        double balance = availableBalance + pendingBalance;
+        System.out.printf("Available balance is %f. Pending balance is %f \n", balance, pendingBalance);
+    }
+
 }

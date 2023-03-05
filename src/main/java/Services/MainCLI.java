@@ -27,6 +27,9 @@ public class MainCLI {
             for (Account account : accounts) {
                 System.out.printf("AccountID: %s %n", account.getId());
 
+                // Randomly testing for balance
+                account.getBalance();
+
                 // Each account has their own transaction
                 List<Transaction> transactions = account.getTransactions();
                 if (transactions != null) {

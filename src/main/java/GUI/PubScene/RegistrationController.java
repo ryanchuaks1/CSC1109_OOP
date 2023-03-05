@@ -6,24 +6,17 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Clients.AuthClient;
-import Clients.EmailClient;
-import Entity.User;
+import Clients.RegistrationClient;
 import Exceptions.UserNotFoundException;
 import Models.CreateUser;
-import Services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -32,7 +25,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class RegistrationController implements Initializable {
 
@@ -108,10 +100,12 @@ public class RegistrationController implements Initializable {
         try {
             checkFields(Email, Username, Password, Password2, firstName,
                     lastName, Contact);
-            validateDOB(BirthDate);
             checkPassword(Password, Password2);
+            validateDOB(BirthDate);
             validateEmail(Email);
             validateContact(Contact);
+            CreateUser newUser = new CreateUser(Email, Username, Password, firstName, lastName, Contact, BirthDate, false);
+            AuthClient.Register(newUser);
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Registration Failed");
@@ -119,46 +113,10 @@ public class RegistrationController implements Initializable {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-
-        // if (errormessage.equals("")) {
-        // // need to add the registration on authClient
-        // AuthClient authclient = new AuthClient();
-        // EmailClient emailclient = new EmailClient();
-
-        // CreateUser createuser = new CreateUser(Email, Username, Password, firstName,
-        // lastName,
-        // (countrycode + Contact), BirthDate, false);
-        // authclient.Register(createuser);
-        // UserService userService = new UserService();
-        // User user = userService.getUserByUsername(Username);
-        // emailclient.emailVerification(user, "register");
-
-        // String Success = "Registration Success";
-        // Alert alert = new Alert(AlertType.INFORMATION);
-        // alert.setTitle(Success);
-        // alert.setContentText("You have successfully created an Account! Please check
-        // your email for verification");
-        // alert.showAndWait();
-        // if (event.getSource() == confirmButton) {
-        // Stage stage = null;
-        // Parent root = null;
-
-        // // get reference to the button's stage
-        // stage = (Stage) confirmButton.getScene().getWindow();
-        // // load up OTHER FXML document (May have to check to link to another
-        // // verification page through email instead)
-
-        // root = FXMLLoader.load(getClass().getResource("verifyRegistration.fxml"));
-        // // create a new scene with root and set the stage
-        // Scene scene = new Scene(root);
-        // stage.setScene(scene);
-        // stage.show();
-        // }
-        // }
     }
 
     // check all text field is filled
-    public void checkFields(String... strings) throws Exception {
+    private void checkFields(String... strings) throws Exception {
         for (String s : strings) {
             if (s.isEmpty() || s.trim().isEmpty()) {
                 throw new Exception("Please fill in all the fields");
@@ -168,7 +126,7 @@ public class RegistrationController implements Initializable {
     }
 
     // Password match and strength
-    public void checkPassword(String password, String password2) throws Exception {
+    private void checkPassword(String password, String password2) throws Exception {
         boolean hasUpperCase = false;// at least 1 uppercase
         boolean hasLowerCase = false; // at least 1 lowercase
         boolean hasNumbers = false; // at least 1 digit number
@@ -199,15 +157,13 @@ public class RegistrationController implements Initializable {
     }
 
     // Check DOB is filled and age 18 and above
-    public void validateDOB(LocalDate birthDate) throws Exception {
+    private void validateDOB(LocalDate birthDate) throws Exception {
         try {
             LocalDate today = LocalDate.now();
             Period period = Period.between(birthDate, today);
             int age = period.getYears();
             if (age < 18) {
                 throw new Exception("You must be 18 to create a personal account");
-            } else {
-                throw new Exception("FAQWFWAFGWAFWAFWAFAWFAF");
             }
         } catch (NullPointerException e) {
             throw new Exception("Please fill in all the fields");
@@ -224,7 +180,7 @@ public class RegistrationController implements Initializable {
     }
 
     // Check if contant number is valid
-    public void validateContact(String contact) throws Exception {
+    private void validateContact(String contact) throws Exception {
 
         if (!(contact.length() == 8)) {
             throw new Exception("Contact should only contain 8 numbers");
@@ -241,6 +197,5 @@ public class RegistrationController implements Initializable {
                 throw new Exception("Remove spaces from contact number");
             }
         }
-        throw new Exception("OK WE STOP HERE FOR NOW GO SLEEP");
     }
 }

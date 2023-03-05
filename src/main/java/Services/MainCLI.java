@@ -27,8 +27,8 @@ public class MainCLI {
             for (Account account : accounts) {
                 System.out.printf("AccountID: %s %n", account.getId());
 
-                // Randomly testing for balance
-                account.getBalance();
+                System.out.printf("Can utilise to $%f \n", account.getAvailableBalance());
+                System.out.printf("Currently there are $%f pending balances \n", account.getPendingBalance());
 
                 // Each account has their own transaction
                 List<Transaction> transactions = account.getTransactions();

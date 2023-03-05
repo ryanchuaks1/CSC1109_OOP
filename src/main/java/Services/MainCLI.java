@@ -1,5 +1,6 @@
 package Services;
 import Clients.AuthClient;
+import Clients.PhoneOTPClient;
 import Entity.Account;
 import Entity.Transaction;
 import Entity.User;
@@ -9,6 +10,8 @@ import Models.CreateUser;
 import Models.LoginUser;
 
 import java.util.List;
+
+import com.google.firebase.auth.PhoneIdentifier;
 
 public class MainCLI {
     public static void main(String[] args)
@@ -38,10 +41,12 @@ public class MainCLI {
                     }
                 }
             }
+            //PhoneOTPClient otpClient = new PhoneOTPClient();
+            //otpClient.phoneOTP(user);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
+        
 
         //client.Register(createUser);
     }

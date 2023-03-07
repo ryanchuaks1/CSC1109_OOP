@@ -2,17 +2,16 @@ package Clients;
 
 import Entity.Account;
 import Entity.User;
+import Exceptions.UserDuplicateFoundException;
 import Exceptions.UserNotFoundException;
 import Models.CreateUser;
 import Models.LoginUser;
 import Services.UserService;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
 import com.password4j.Password;
 
 public class AuthClient {
     UserService userService = new UserService();
+    PhoneOTPClient otpClient = new PhoneOTPClient();
 
     public User Login(LoginUser loginUser) throws UserNotFoundException {
         User user = userService.getUserByUsername(loginUser.getUsername());
@@ -24,7 +23,13 @@ public class AuthClient {
 
     // TODO: Check for duplicated Username.
     // TODO:
-    public void Register(CreateUser createUser) {
-        userService.createUser(createUser);
+    public void Register(CreateUser createUser) throws UserDuplicateFoundException {
+        if (userService.getUserByUsername(createUser.getUsername()) != null) {
+            throw new UserDuplicateFoundException();
+        } else {
+            userService.createUser(createUser);
+            otpClient.phoneOTP(createUser);
+        }
+
     }
 }

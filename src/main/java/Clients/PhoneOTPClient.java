@@ -8,6 +8,7 @@ import com.twilio.type.PhoneNumber;
 
 import Entity.User;
 import Helpers.SecretKeyStore;
+import Models.CreateUser;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -17,13 +18,13 @@ public class PhoneOTPClient {
     static private User usertemp;
     static long totalMiliseconds;
 
-    public void phoneOTP(User user) {
+    public void phoneOTP(CreateUser user) {
         Twilio.init(SecretKeyStore.getKey("ACCOUNT_SID"), SecretKeyStore.getKey("AUTH_TOKEN"));
 
         int verificationNO = ThreadLocalRandom.current().nextInt(100000, 1000000);
         randomVerifier = verificationNO;
 
-        String msg = "Welcome " + user.getFullName() + "\n\n";
+        String msg = "Welcome " + user.getFirstName() + " " + user.getLastName() + "\n\n";
         msg += "Thanks for joining RJDX Bank, Below is your 6 digits verification code, please key in the verirication page\n\n";
         msg += verificationNO;
 

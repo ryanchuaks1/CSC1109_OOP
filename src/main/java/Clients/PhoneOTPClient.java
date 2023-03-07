@@ -15,10 +15,15 @@ import javafx.scene.control.Alert.AlertType;
 public class PhoneOTPClient {
 
     static private int randomVerifier;
-    static private User usertemp;
+    static private CreateUser cuser;
     static long totalMiliseconds;
 
+    public CreateUser getUser(){
+        return cuser;
+    }
+
     public void phoneOTP(CreateUser user) {
+        cuser = user;
         Twilio.init(SecretKeyStore.getKey("ACCOUNT_SID"), SecretKeyStore.getKey("AUTH_TOKEN"));
 
         int verificationNO = ThreadLocalRandom.current().nextInt(100000, 1000000);

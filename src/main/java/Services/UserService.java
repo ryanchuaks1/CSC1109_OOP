@@ -33,9 +33,10 @@ public class UserService {
         try {
             ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("username", username).get();
             QuerySnapshot snapshots = apiFuture.get();
-            var userSnapshot = snapshots.getDocuments().get(0);
-            account = userSnapshot.toObject(User.class);
-
+            if (!snapshots.getDocuments().isEmpty()) {
+                var userSnapshot = snapshots.getDocuments().get(0);
+                account = userSnapshot.toObject(User.class);
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

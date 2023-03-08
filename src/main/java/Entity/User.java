@@ -1,6 +1,7 @@
 package Entity;
 
 import Models.CreateAccount;
+import Models.TransactionStatus;
 import Services.AccountService;
 import Services.UserService;
 import com.google.api.core.ApiFuture;
@@ -12,6 +13,8 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
 import com.google.firebase.cloud.FirestoreClient;
 
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class User {
@@ -30,7 +33,7 @@ public class User {
     @PropertyName("phoneNo")
     private String phoneNo;
     @PropertyName("DOB")
-    private String DOB;
+    private LocalDate DOB;
     @PropertyName("verified")
     private boolean verified;
 
@@ -71,10 +74,15 @@ public class User {
         return this.phoneNo;
     }
 
-    public String getDOB() {
+    public void setDOB(String DOB) {
+        ZonedDateTime zdt = ZonedDateTime.parse(DOB);
+        this.DOB = zdt.toLocalDate();
+    }
+
+    public LocalDate getDOB() {
         return DOB;
     }
-    
+
     public boolean getVerified() {
         return verified;
     }

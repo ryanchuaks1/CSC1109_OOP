@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Clients.AuthClient;
-import Clients.RegistrationClient;
 import Exceptions.UserNotFoundException;
 import Models.CreateUser;
 import javafx.event.ActionEvent;
@@ -105,7 +104,8 @@ public class RegistrationController implements Initializable {
             validateEmail(Email);
             validateContact(Contact);
             CreateUser newUser = new CreateUser(Email, Username, Password, firstName, lastName, Contact, BirthDate, false);
-            AuthClient.Register(newUser);
+            AuthClient authClient = new AuthClient();
+            authClient.Register(newUser);
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Registration Failed");

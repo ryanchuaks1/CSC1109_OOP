@@ -10,8 +10,6 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
-import javax.swing.text.Document;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -50,6 +48,21 @@ public class UserService {
             QuerySnapshot snapshots = apiFuture.get();
             var userSnapshot = snapshots.getDocuments().get(0);
             account = userSnapshot.toObject(User.class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return account;
+    }
+
+    public User getUserByPhoneNumber(String phoneNumber) {
+        User account = null;
+        try {
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("username", phoneNumber).get();
+            QuerySnapshot snapshots = apiFuture.get();
+            if (!snapshots.getDocuments().isEmpty()) {
+                var userSnapshot = snapshots.getDocuments().get(0);
+                account = userSnapshot.toObject(User.class);
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

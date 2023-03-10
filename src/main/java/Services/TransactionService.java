@@ -4,7 +4,6 @@ import Entity.Transaction;
 import Models.CreateTransaction;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
@@ -24,7 +23,7 @@ public class TransactionService {
         return transaction;
     }
 
-    public void createTransaction(CreateTransaction createTransaction){
+    public void createTransaction(CreateTransaction createTransaction) {
         try {
             ApiFuture<WriteResult> apiFuture = db.collection("transactions").document().set(createTransaction);
             System.out.printf("Successfully created user at %s \n", apiFuture.get().getUpdateTime());

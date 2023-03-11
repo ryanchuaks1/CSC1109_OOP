@@ -27,8 +27,7 @@ public class AuthClient {
     }
 
     public void Register(CreateUser createUser) throws UserDuplicateFoundException {
-        if (userService.getUserByUsername(createUser.getUsername()) != null || userService
-                .getUserByPhoneNumber(createUser.getPhoneNo()) != null) {
+        if (userService.getUserByUsername(createUser.getUsername()) != null) {
             throw new UserDuplicateFoundException();
         } else {
             userService.createUser(createUser);

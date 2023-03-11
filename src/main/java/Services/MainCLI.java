@@ -6,6 +6,7 @@ import Entity.*;
 import Helpers.FirebaseInitialize;
 
 public class MainCLI {
+
     public static void main(String[] args) {
         // Ensure that Firebase is initialized.
         FirebaseInitialize.initDatabase();
@@ -21,15 +22,21 @@ public class MainCLI {
         BankIdentificationClient BinClient = new BankIdentificationClient();
         String binNum = fullCardNumber.substring(0, 6);
         String cardNum = fullCardNumber.substring(6, 15);
-
+        UserService userService = new UserService();
         System.out.println(fullCardNumber);
         System.out.println(binNum);
         System.out.println(cardNum);
 
         if (BinClient.CheckBIN(binNum)) {
-            System.out.println("Exisit in our bank");
+            System.out.println("Exist in our bank");
             Account account = accountClient.Login(cardNum, "123456");
-            System.out.println("Account number: " + account.getaccountNumber());
+            
+            AccountService testservice = new AccountService();
+            System.out.println(account.getATMWithdrawalLimit());
+            testservice.updateAccountLimits(account, "atmWithdrawalLimit", 5000);
+            Account account2 = accountClient.Login(cardNum, "123456");
+            System.out.println(account2.getATMWithdrawalLimit());
+            // System.out.println("Account number: " + account.getaccountNumber());
         } else {
             System.out.println("Exist in other bank");
         }

@@ -7,6 +7,7 @@ import Entity.User;
 import Models.CreateAccount;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
@@ -52,9 +53,9 @@ public class AccountService {
         return account;
     }
 
-    public boolean checkAccountExist(String creditCardNo) {
+    public boolean checkAccountExist(String accountNo) {
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("creditCardNo", creditCardNo).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNo", accountNo).get();
             QuerySnapshot snapshots = apiFuture.get();
             if (snapshots.isEmpty())
                 return false;
@@ -73,4 +74,24 @@ public class AccountService {
             System.out.println(ex.getMessage());
         }
     }
+
+    public void updateAccountLimits(Account account, String field, int value){
+        try {
+            DocumentReference docref = db.collection("accounts").document(account.getId());
+            docref.update(field, value);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    //value in argon format
+    public void changePin(Account account, String value){
+        try {
+            DocumentReference docref = db.collection("accounts").document(account.getId());
+            docref.update("pinNo", value);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 }

@@ -21,6 +21,5 @@ public class AccountClient {
 
     public void Register(CreateAccount createAccount){
         accountService.createAccount(createAccount);
-        
     }
 }

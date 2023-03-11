@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
-import Clients.EmailClient;
 import Clients.PhoneOTPClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -4,6 +4,7 @@ import Entity.Account;
 import Entity.User;
 import Models.CreateUser;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -24,6 +25,18 @@ public class UserService {
             System.out.println(ex.getMessage());
         }
         return user;
+    }
+
+    public User getUserByUserId(String userId) {
+        User account = null;
+        try {
+            
+            ApiFuture<DocumentSnapshot> apiFuture = db.collection("users").document(userId).get();
+            account = apiFuture.get().toObject(User.class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return account;
     }
 
     public User getUserByUsername(String username) {

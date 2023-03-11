@@ -10,7 +10,6 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
 import Clients.AuthClient;
-import Clients.EmailClient;
 import Entity.User;
 import Services.UserService;
 import javafx.event.ActionEvent;
@@ -91,14 +90,12 @@ public class ForgotPasswordController implements Initializable{
 		boolean success = false;
 		
 		AuthClient aClient = new AuthClient();
-		EmailClient eClient = new EmailClient();
 		UserService userService = new UserService();
 		
 		User user = userService.getUserByEmail(Email);
 
 
 		if (user != null){
-			eClient.emailVerification(user, "reset");
 
 			stage=(Stage)  LGButton.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("verifyReset.fxml"));

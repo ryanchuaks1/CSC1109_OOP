@@ -9,7 +9,6 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
-import Clients.EmailClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -105,39 +104,11 @@ public class verifyResetController implements Initializable{
     //TODO need to link to correct page
     @FXML
     void handleConfirmButtonAction(ActionEvent event) throws IOException {
-        EmailClient eClient = new EmailClient();
 
         String verificationNo = verification.getText();
         
-        boolean check = eClient.verification(verificationNo);
         Alert alert = new Alert(AlertType.INFORMATION);
 
-        if(check){
-            //update db to 
-            String Success = "Registration Completed";
-            alert.setTitle(Success);
-            alert.setContentText("You have successfully completed registration!");
-            alert.showAndWait();
-
-            Stage stage = null;
-            Parent root = null;
-            // create personal account
-
-            stage = (Stage) LGButton.getScene().getWindow();
-            //link to reset password page
-            root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-
-            // create a new scene with root and set the stage
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-        else{
-            Alert error = new Alert(AlertType.ERROR);
-            String failed = "Wrong Value";
-            error.setTitle(failed);
-            error.setContentText("Verification Value is wrong!");
-            error.showAndWait(); 
-        }
+        
     }
 }

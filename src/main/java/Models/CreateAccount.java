@@ -17,7 +17,7 @@ public class CreateAccount {
         this.accountType = accountType;
         this.AccountNumber = Integer.toString(100000000 + rand.nextInt(900000000));
         this.atmWithdrawalLimit = 5000;
-        this.pinNo = com.password4j.Password.hash(pinNo).addRandomSalt().withArgon2().getResult();;
+        this.pinNo = com.password4j.Password.hash(pinNo).addRandomSalt().withArgon2().getResult();
         this.internationalTransferLimit = 5000;
         this.localTransferLimit = 5000;
         this.userId = userId;

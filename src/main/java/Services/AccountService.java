@@ -8,6 +8,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
+import com.password4j.Password;
 
 import java.util.List;
 
@@ -46,5 +47,18 @@ public class AccountService {
             System.out.println(ex.getMessage());
         }
         return account;
+    }
+
+    public boolean checkAccountExist(String creditCardNo) {
+        try {
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("creditCardNo", creditCardNo).get();
+            QuerySnapshot snapshots = apiFuture.get();
+            if (snapshots.isEmpty())
+                return false;
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
     }
 }

@@ -28,8 +28,8 @@ public class MainCLI {
         // System.out.println(account.getAvailableBalance());
         // System.out.println(account.getYearlyProjectedInterestRate());
 
-        String test = CreditCardHelper.generateCreditCard();
-        System.out.println(test);
-        System.out.println(CreditCardHelper.checkLuhn(test));
+        AccountClient accountClient = new AccountClient();
+        Account account = accountClient.Login("6229259821434678", "123456");
+        account.Transfer(520, "6229259121434670");
     }
 }

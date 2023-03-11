@@ -4,6 +4,7 @@ import Interfaces.IAccount;
 import Models.CreateTransaction;
 import Models.TransactionStatus;
 import Models.TransactionType;
+import Services.AccountService;
 import Services.TransactionService;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
@@ -36,11 +37,20 @@ public abstract class Account implements IAccount {
     @PropertyName("accountType")
     private String accountType;
 
+    @PropertyName("creditCardNo")
+    private String creditCardNo;
+
+    // TODO : Hide the rest of the password field maybe?
+    public String getCreditCardNo() {
+        return creditCardNo;
+    }
+
     public String getAccountType() {
         return accountType;
     }
 
     private final TransactionService transactionService = new TransactionService();
+    private final AccountService accountService = new AccountService();
 
     public String getId() {
         return Id;
@@ -64,12 +74,22 @@ public abstract class Account implements IAccount {
     {
     }
 
+    // This is actually internal transfer. Which means that we should be able to cross-check
+    // with the reference in our database.
     //TODO: Reminder that there will be 2 transactions inserted.
     //TODO: Both transferee and transferor should have transaction logs.
     //TODO: Check for valid accountNo
     public void Transfer(double amount, String accountNo)
     {
         try {
+            // Firstly check available balance to see if user has sufficient amount to transfer else throw exception
+            //TODO: Custom exception
+            if (getAvailableBalance() < amount)
+                //TODO: Use custom exceptions
+                throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
+            else if (!accountService.checkAccountExist(accountNo))
+                throw new Exception("The account does not exist");
+
             CreateTransaction transferorTransaction = new CreateTransaction(amount,
                     "SGD",
                     TransactionType.InternalTransfer,
@@ -99,7 +119,6 @@ public abstract class Account implements IAccount {
         return pinNo;
     }
 
-    //TODO : Check
     public void Deposit(double amount)
     {
         try {
@@ -115,7 +134,6 @@ public abstract class Account implements IAccount {
         }
     }
 
-    //TODO: Check
     public void Withdraw(double amount)
     {
         try {

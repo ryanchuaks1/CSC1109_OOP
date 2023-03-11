@@ -4,6 +4,7 @@ import Clients.AuthClient;
 import Clients.PhoneOTPClient;
 import Entity.*;
 import Exceptions.UserDuplicateFoundException;
+import Helpers.CreditCardHelper;
 import Helpers.FirebaseInitialize;
 import Models.CreateAccount;
 import Models.CreateUser;
@@ -21,10 +22,14 @@ public class MainCLI {
         //Ensure that Firebase is initialized.
         FirebaseInitialize.initDatabase();
 
-        AccountClient accountClient = new AccountClient();
-        Account account = accountClient.Login("6229259821434678", "123456");
-        account.Withdraw(600);
-        System.out.println(account.getAvailableBalance());
-        System.out.println(account.getYearlyProjectedInterestRate());
+        // AccountClient accountClient = new AccountClient();
+        // Account account = accountClient.Login("6229259821434678", "123456");
+        // account.Withdraw(600);
+        // System.out.println(account.getAvailableBalance());
+        // System.out.println(account.getYearlyProjectedInterestRate());
+
+        String test = CreditCardHelper.generateCreditCard();
+        System.out.println(test);
+        System.out.println(CreditCardHelper.checkLuhn(test));
     }
 }

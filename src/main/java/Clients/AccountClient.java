@@ -7,7 +7,7 @@ import com.password4j.Password;
 
 public class AccountClient {
     final AccountService accountService = new AccountService();
-    public Account Login(int creditCardNo, String unhashedPassword)
+    public Account Login(String creditCardNo, String unhashedPassword)
     {
         Account account = null;
         account = accountService.getAccountsByCreditCard(creditCardNo);

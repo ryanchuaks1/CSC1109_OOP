@@ -14,7 +14,7 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.List;
 
-public abstract class Account implements IAccount {
+public class Account implements IAccount {
     @DocumentId
     private String Id;
 
@@ -206,6 +206,4 @@ public abstract class Account implements IAccount {
     public double getATMWithdrawalLimit() {
         return this.atmWithdrawalLimit;
     }
-
-    public abstract double getYearlyProjectedInterestRate();
 }

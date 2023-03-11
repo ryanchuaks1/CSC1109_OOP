@@ -1,4 +1,5 @@
 package Services;
+import Clients.AccountClient;
 import Clients.AuthClient;
 import Clients.PhoneOTPClient;
 import Entity.*;
@@ -12,11 +13,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.google.firebase.auth.PhoneIdentifier;
+import com.password4j.Password;
 
 public class MainCLI {
     public static void main(String[] args)
     {
         //Ensure that Firebase is initialized.
         FirebaseInitialize.initDatabase();
+
+        AccountClient accountClient = new AccountClient();
+        Account test = accountClient.Login("6229259121434673", "123456");
+        if (test != null) {
+            System.out.println("There's an account");
+        }
     }
 }

@@ -1,6 +1,7 @@
 package Services;
 
 import Entity.Account;
+import Entity.SavingsAccount;
 import Entity.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
@@ -24,16 +25,17 @@ public class AccountService {
         return account;
     }
 
-    public Account getAccountsByCreditCard(int creditCardNo) {
+    public Account getAccountsByCreditCard(String creditCardNo) {
         Account account = null;
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("users").whereEqualTo("creditCardNo", creditCardNo).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("creditCardNo", creditCardNo).get();
             QuerySnapshot snapshots = apiFuture.get();
             if (!snapshots.getDocuments().isEmpty()) {
                 var accountSnapshot = snapshots.getDocuments().get(0);
                 account = accountSnapshot.toObject(Account.class);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println(ex.getMessage());
         }
         return account;

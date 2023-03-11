@@ -26,7 +26,7 @@ public class TransactionService {
     public void createTransaction(CreateTransaction createTransaction) {
         try {
             ApiFuture<WriteResult> apiFuture = db.collection("transactions").document().set(createTransaction);
-            System.out.printf("Successfully created user at %s \n", apiFuture.get().getUpdateTime());
+            System.out.printf("Successfully created transaction at %s \n", apiFuture.get().getUpdateTime());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

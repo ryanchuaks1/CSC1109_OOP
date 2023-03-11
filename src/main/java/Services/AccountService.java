@@ -1,6 +1,7 @@
 package Services;
 
 import Entity.Account;
+import Entity.FixedDepositAccount;
 import Entity.SavingsAccount;
 import Entity.User;
 import com.google.api.core.ApiFuture;
@@ -32,7 +33,13 @@ public class AccountService {
             QuerySnapshot snapshots = apiFuture.get();
             if (!snapshots.getDocuments().isEmpty()) {
                 var accountSnapshot = snapshots.getDocuments().get(0);
-                account = accountSnapshot.toObject(Account.class);
+                var accountData = accountSnapshot.getData();
+                String accountType = (String) accountData.get("accountType");
+                if (accountType.equals("Savings")) {
+                    account = accountSnapshot.toObject(SavingsAccount.class);
+                } else if (accountType.equals("FixedDeposit")) {
+                    account = accountSnapshot.toObject(FixedDepositAccount.class);
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

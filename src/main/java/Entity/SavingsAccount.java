@@ -1,9 +1,9 @@
 package Entity;
 
 public class SavingsAccount extends Account{
-    private final double interestRate = 0.01;
-
+    @Override
     public double getYearlyProjectedInterestRate() {
+        double interestRate = 0.04;
         return (getAvailableBalance() * interestRate);
     }
 }

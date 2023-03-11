@@ -22,9 +22,9 @@ public class MainCLI {
         FirebaseInitialize.initDatabase();
 
         AccountClient accountClient = new AccountClient();
-        Account test = accountClient.Login("6229259121434673", "123456");
-        if (test != null) {
-            System.out.println("There's an account");
-        }
+        Account account = accountClient.Login("6229259821434678", "123456");
+        account.Withdraw(600);
+        System.out.println(account.getAvailableBalance());
+        System.out.println(account.getYearlyProjectedInterestRate());
     }
 }

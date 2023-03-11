@@ -2,6 +2,7 @@ package Clients;
 
 import Entity.Account;
 import Entity.User;
+import Models.CreateAccount;
 import Services.AccountService;
 import com.password4j.Password;
 
@@ -16,5 +17,10 @@ public class AccountClient {
             return account;
         }
         return null;
+    }
+
+    public void Register(CreateAccount createAccount){
+        accountService.createAccount(createAccount);
+        
     }
 }

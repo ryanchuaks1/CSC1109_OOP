@@ -30,7 +30,6 @@ public class CreateUser {
         this.Verified = verified;
     }
 
-
     public String getEmail() {
         return Email;
     }

@@ -4,9 +4,12 @@ import Entity.Account;
 import Entity.FixedDepositAccount;
 import Entity.SavingsAccount;
 import Entity.User;
+import Models.CreateAccount;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import com.password4j.Password;
 
@@ -60,5 +63,14 @@ public class AccountService {
             System.out.println(ex.getMessage());
         }
         return false;
+    }
+
+    public void createAccount(CreateAccount createAccount) {
+        try {
+            ApiFuture<WriteResult> apiFuture = db.collection("accounts").document().set(createAccount);
+            System.out.printf("Successfully created account at %s \n", apiFuture.get().getUpdateTime());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

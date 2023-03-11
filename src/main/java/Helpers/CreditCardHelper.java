@@ -31,17 +31,7 @@ public class CreditCardHelper {
         }
     }
 
-    // private static String luhn_calculate(String partcode) {
-    //     var checksum = getLuhnCheckDigit(partcode + "0");
-    //     String value = "";
-    //     if(checksum == 0){
-    //         return value + 0;
-    //     }
-    //     else{
-    //         return value + (10-checksum);
-    //     }
-    // }
-
+    //Not needed just a random generated
     public static String generateCreditCard() {
         String cardNo;
         String bankIdentifierNumber = "622925";
@@ -51,7 +41,6 @@ public class CreditCardHelper {
         // The last digits must be a check digit.
         Random random = new Random();
         String bankAccountNumber = Integer.toString(100000000 + random.nextInt(900000000));
-
         String checkDigit = getLuhnCheckDigit(bankIdentifierNumber + bankAccountNumber + "0");
         cardNo = bankIdentifierNumber + bankAccountNumber + checkDigit;
         

@@ -1,35 +1,37 @@
 package Services;
+
 import Clients.AccountClient;
-import Clients.AuthClient;
-import Clients.PhoneOTPClient;
+import Clients.BankIdentificationClient;
 import Entity.*;
-import Exceptions.UserDuplicateFoundException;
-import Helpers.CreditCardHelper;
 import Helpers.FirebaseInitialize;
-import Models.CreateAccount;
-import Models.CreateUser;
-import Models.LoginUser;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import com.google.firebase.auth.PhoneIdentifier;
-import com.password4j.Password;
 
 public class MainCLI {
-    public static void main(String[] args)
-    {
-        //Ensure that Firebase is initialized.
+    public static void main(String[] args) {
+        // Ensure that Firebase is initialized.
         FirebaseInitialize.initDatabase();
 
-        // AccountClient accountClient = new AccountClient();
-        // Account account = accountClient.Login("6229259821434678", "123456");
-        // account.Withdraw(600);
-        // System.out.println(account.getAvailableBalance());
-        // System.out.println(account.getYearlyProjectedInterestRate());
+        // EXAMPLE DATA TO TRY
+        // Real card number: 6229 2598 2143 4678 pin 123456
 
+        tryLogin("6229259821434678");
+    }
+
+    private static void tryLogin(String fullCardNumber) {
         AccountClient accountClient = new AccountClient();
-        Account account = accountClient.Login("6229259821434678", "123456");
-        account.Transfer(520, "6229259121434670");
+        BankIdentificationClient BinClient = new BankIdentificationClient();
+        String binNum = fullCardNumber.substring(0, 6);
+        String cardNum = fullCardNumber.substring(6, 15);
+
+        System.out.println(fullCardNumber);
+        System.out.println(binNum);
+        System.out.println(cardNum);
+
+        if (BinClient.CheckBIN(binNum)) {
+            System.out.println("Exisit in our bank");
+            Account account = accountClient.Login(cardNum, "123456");
+            System.out.println("Account number: " + account.getaccountNumber());
+        } else {
+            System.out.println("Exist in other bank");
+        }
     }
 }

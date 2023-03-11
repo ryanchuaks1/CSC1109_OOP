@@ -37,12 +37,12 @@ public abstract class Account implements IAccount {
     @PropertyName("accountType")
     private String accountType;
 
-    @PropertyName("creditCardNo")
-    private String creditCardNo;
+    @PropertyName("accountNumber")
+    private String accountNumber;
 
     // TODO : Hide the rest of the password field maybe?
-    public String getCreditCardNo() {
-        return creditCardNo;
+    public String getaccountNumber() {
+        return accountNumber;
     }
 
     public String getAccountType() {

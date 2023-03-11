@@ -54,7 +54,7 @@ public class CreditCardHelper {
 
         String checkDigit = getLuhnCheckDigit(bankIdentifierNumber + bankAccountNumber + "0");
         cardNo = bankIdentifierNumber + bankAccountNumber + checkDigit;
-
+        
         return cardNo;
     }
 

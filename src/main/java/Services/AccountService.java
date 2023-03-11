@@ -27,10 +27,10 @@ public class AccountService {
         return account;
     }
 
-    public Account getAccountsByCreditCard(String creditCardNo) {
+    public Account getAccountsByNumber(String accountNumber) {
         Account account = null;
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("creditCardNo", creditCardNo).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNumber", accountNumber).get();
             QuerySnapshot snapshots = apiFuture.get();
             if (!snapshots.getDocuments().isEmpty()) {
                 var accountSnapshot = snapshots.getDocuments().get(0);

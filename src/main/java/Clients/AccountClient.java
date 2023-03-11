@@ -7,10 +7,11 @@ import com.password4j.Password;
 
 public class AccountClient {
     final AccountService accountService = new AccountService();
-    public Account Login(String creditCardNo, String unhashedPassword)
+
+    public Account Login(String accountNumber, String unhashedPassword)
     {
         Account account = null;
-        account = accountService.getAccountsByCreditCard(creditCardNo);
+        account = accountService.getAccountsByNumber(accountNumber);
         if (Password.check(unhashedPassword, account.getPinNo()).withArgon2()) {
             return account;
         }

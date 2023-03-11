@@ -1,10 +1,9 @@
 import java.io.IOException;
 
+import GUI.Navigate;
 // UI imports
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import GUI.PubScene.Navigate;
 import Helpers.FirebaseInitialize;
 
 public class Mainapp extends Application {

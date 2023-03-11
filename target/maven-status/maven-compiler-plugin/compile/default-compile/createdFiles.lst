@@ -1,11 +1,7 @@
-Interfaces\IAuth.class
 Clients\AuthClient.class
 Entity\Transaction.class
 Models\TransactionType.class
-GUI\PubScene\ForgotPasswordController.class
-Interfaces\IBank.class
 Models\TransactionStatus.class
-GUI\PubScene\RegistrationController.class
 Models\CreateAccount.class
 Entity\Account.class
 Models\LoginUser.class

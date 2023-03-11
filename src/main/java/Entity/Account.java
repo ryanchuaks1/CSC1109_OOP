@@ -1,5 +1,6 @@
 package Entity;
 
+import Interfaces.IAccount;
 import Models.CreateTransaction;
 import Models.TransactionStatus;
 import Models.TransactionType;
@@ -13,7 +14,7 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.List;
 
-public class Account {
+public abstract class Account implements IAccount {
     @DocumentId
     private String Id;
 
@@ -26,11 +27,13 @@ public class Account {
     @PropertyName("internationalTransferLimit")
     private double internationalTransferLimit;
 
-    TransactionService transactionService = new TransactionService();
+    @PropertyName("atmWithdrawalLimit")
+    private double atmWithdrawalLimit;
 
-    public Account()
-    {
-    }
+    @PropertyName("pinNo")
+    private String pinNo;
+
+    private final TransactionService transactionService = new TransactionService();
 
     public String getId() {
         return Id;
@@ -85,6 +88,11 @@ public class Account {
         }
     }
 
+    public String getPinNo() {
+        return pinNo;
+    }
+
+    //TODO : Check
     public void Deposit(double amount)
     {
         try {
@@ -100,6 +108,7 @@ public class Account {
         }
     }
 
+    //TODO: Check
     public void Withdraw(double amount)
     {
         try {
@@ -121,6 +130,7 @@ public class Account {
         return transactionService.getTransactionsByAccountId(this.Id);
     }
 
+    @Override
     public double getAvailableBalance() {
         List<Transaction> transactions = getTransactions();
         double pendingBalance = 0;
@@ -157,8 +167,8 @@ public class Account {
         return availableBalance + pendingBalance;
     }
 
-    public double getPendingBalance()
-    {
+    @Override
+    public double getPendingAmount() {
         List<Transaction> transactions = getTransactions();
         double pendingBalance = 0;
         double availableBalance = 0;
@@ -192,4 +202,10 @@ public class Account {
         return pendingBalance;
     }
 
+    @Override
+    public double getATMWithdrawalLimit() {
+        return this.atmWithdrawalLimit;
+    }
+
+    public abstract double getYearlyProjectedInterestRate();
 }

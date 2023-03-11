@@ -34,6 +34,5 @@ public class AuthClient {
             userService.createUser(createUser);
             otpClient.phoneOTP(createUser);
         }
-
     }
 }

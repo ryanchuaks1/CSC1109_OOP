@@ -3,7 +3,7 @@ package Helpers;
 import java.util.Random;
 
 public class CreditCardHelper {
-    private static int getLuhnCheckDigit(String number) {
+    private static String getLuhnCheckDigit(String number) {
         int nDigits = number.length();
         int nSum = 0;
         boolean isSecond = false;
@@ -21,19 +21,26 @@ public class CreditCardHelper {
     
             isSecond = !isSecond;
         }
-        return nSum % 10;
-    }
-
-    private static String luhn_calculate(String partcode) {
-        var checksum = getLuhnCheckDigit(partcode + "0");
+        
         String value = "";
-        if(checksum == 0){
+        if((nSum %10) == 0){
             return value + 0;
         }
         else{
-            return value + (10-checksum);
+            return value + (10-(nSum %10));
         }
     }
+
+    // private static String luhn_calculate(String partcode) {
+    //     var checksum = getLuhnCheckDigit(partcode + "0");
+    //     String value = "";
+    //     if(checksum == 0){
+    //         return value + 0;
+    //     }
+    //     else{
+    //         return value + (10-checksum);
+    //     }
+    // }
 
     public static String generateCreditCard() {
         String cardNo;
@@ -45,7 +52,7 @@ public class CreditCardHelper {
         Random random = new Random();
         String bankAccountNumber = Integer.toString(100000000 + random.nextInt(900000000));
 
-        String checkDigit = luhn_calculate(bankIdentifierNumber + bankAccountNumber);
+        String checkDigit = getLuhnCheckDigit(bankIdentifierNumber + bankAccountNumber + "0");
         cardNo = bankIdentifierNumber + bankAccountNumber + checkDigit;
 
         return cardNo;

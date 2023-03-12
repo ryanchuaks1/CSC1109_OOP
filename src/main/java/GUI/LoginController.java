@@ -108,6 +108,8 @@ public class LoginController implements Initializable {
 
         if (BinClient.CheckBIN(binNum)) {
             throw new Exception("Belongs to our bank");
+            //thinking after u check bin, unhide field, request user to key in value for pin and once that 
+            //succeed store the information into SessionClient which I will use to retrieve the account information
         } else {
             throw new Exception("Does not belong to our bank");
         }

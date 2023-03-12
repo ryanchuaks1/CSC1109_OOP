@@ -97,6 +97,7 @@ public class LoginController implements Initializable {
     }
 
     private static void tryLogin(String fullCardNumber) throws Exception {
+        Navigate.setRoot("ChangePin");
         if ((CreditCardHelper.checkLuhn(fullCardNumber)) == false) {
             throw new Exception("Luhn returned false");
         }

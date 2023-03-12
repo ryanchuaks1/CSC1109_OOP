@@ -1,13 +1,18 @@
 package GUI;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +28,15 @@ import Entity.Account;
 import Services.AccountService;
 
 public class ChangePinController implements Initializable {
+
+    @FXML
+    private Label cNewPinLabel;
+
+    @FXML
+    private Label newPinLabel;
+
+    @FXML
+    private Label oldPinLabel;
 
     @FXML
     private Button changePin;
@@ -76,9 +90,29 @@ public class ChangePinController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        addTextLimiter(confirmNewpin, 6);
+        addTextLimiter(oldPin, 6);
+        addTextLimiter(newPin, 6);
         // Path iconPrimaryPath = FileSystems.getDefault().getPath("src/main/resources/images/", "IconPrimary.png");
         // Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         // iconPrimary.setImage(iconPrimaryImage);
+    }
+
+
+    public static void addTextLimiter(final PasswordField tf, final int maxLength) {
+        tf.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                if (tf.getText().length() > maxLength) {
+                    String s = tf.getText().substring(0, maxLength);
+                    tf.setText(s);
+                }
+                else if (!tf.getText().matches("\\d*") & tf.getText().length() < maxLength) {
+                    tf.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }
 
 }

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Text?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ChangePinController">
    <children>
-      <GridPane layoutX="200.0" layoutY="149.0">
+      <GridPane layoutX="99.0" layoutY="110.0" prefHeight="157.0" prefWidth="412.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -22,14 +21,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-alignment: right;" text="Old Pin:" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Pin:" textAlignment="RIGHT" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm New pin:" textAlignment="RIGHT" GridPane.rowIndex="2" />
             <PasswordField fx:id="oldPin" GridPane.columnIndex="1" />
             <PasswordField fx:id="newPin" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <PasswordField fx:id="confirmNewpin" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="oldPinLabel" text="Old Pin Number:" />
+            <Label fx:id="newPinLabel" text="New Pin Number:" GridPane.rowIndex="1" />
+            <Label fx:id="cNewPinLabel" text="Confirm New Pin Number:" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Button fx:id="changePin" layoutX="274.0" layoutY="270.0" mnemonicParsing="false" onAction="#onButtonPress" text="Button" />
+      <Button fx:id="changePin" layoutX="262.0" layoutY="267.0" mnemonicParsing="false" onAction="#onButtonPress" text="Change Pin" />
    </children>
 </AnchorPane>

@@ -47,7 +47,6 @@ public class Navigate {
         scene.addEventFilter(InputEvent.ANY, evt -> transition.playFromStart());
         transition.play();
 
-        
     }
 
     private static void logout() throws IOException{

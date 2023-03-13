@@ -1,4 +1,3 @@
-Clients\AuthClient.class
 Entity\Transaction.class
 Models\TransactionType.class
 Models\TransactionStatus.class

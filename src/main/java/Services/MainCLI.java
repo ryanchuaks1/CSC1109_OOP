@@ -7,7 +7,7 @@ import Helpers.FirebaseInitialize;
 
 public class MainCLI {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // Ensure that Firebase is initialized.
         FirebaseInitialize.initDatabase();
 
@@ -17,7 +17,7 @@ public class MainCLI {
         tryLogin("6229259821434678");
     }
 
-    private static void tryLogin(String fullCardNumber) {
+    private static void tryLogin(String fullCardNumber) throws Exception {
         AccountClient accountClient = new AccountClient();
         BankIdentificationClient BinClient = new BankIdentificationClient();
         String binNum = fullCardNumber.substring(0, 6);
@@ -33,7 +33,7 @@ public class MainCLI {
             
             AccountService testservice = new AccountService();
             System.out.println(account.getATMWithdrawalLimit());
-            testservice.updateAccountLimits(account, "atmWithdrawalLimit", 5000);
+            // testservice.updateAccountLimits(account, "atmWithdrawalLimit", 5000);
             Account account2 = accountClient.Login(cardNum, "123456");
             System.out.println(account2.getATMWithdrawalLimit());
             // System.out.println("Account number: " + account.getaccountNumber());

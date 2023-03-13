@@ -46,7 +46,6 @@ public class Navigate {
         // restart transition on user interaction
         scene.addEventFilter(InputEvent.ANY, evt -> transition.playFromStart());
         transition.play();
-
     }
 
     private static void logout() throws IOException{

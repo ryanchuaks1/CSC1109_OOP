@@ -9,19 +9,21 @@ import java.util.Date;
 
 import com.itextpdf.html2pdf.HtmlConverter;
 
+import Models.TransactionType;
+
 public class pdfService {
 
-    public static void depositReceipt(String TransactionType, String amount) throws FileNotFoundException, IOException {
+    public static void depositReceipt(TransactionType TransactionType, String amount) throws FileNotFoundException, IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now();
 
         String htmlString = "<img src='src/main/resources/images/IconPrimary.png'>"
-            +"<p>Founded by Ryan, Jeff, Desmond Xavier</p>"
+            +"<p style='line-height:1.4'>Founded by Ryan, Jeff, Desmond Xavier</p>"
             + "<p>Transaction Receipt</p>"
             + "<hr>"
-            + "<p>Date: "+dtf.format(now) +"</p>"
-            + "<p>Transaction type: "+TransactionType+"<br/>"
-            + "<p>Amount: "+amount+ "<br/>";
+            + "<p style='line-height:1.0'>Date: "+dtf.format(now) +"<p>"
+            + "<p style='line-height:1.0'>Transaction type: "+TransactionType+"<br/>"
+            + "<p style='line-height:1.0'>Amount: "+amount+ "<br/>";
 
         HtmlConverter.convertToPdf(htmlString, new FileOutputStream("src/main/resources/Receipt/test.pdf"));
         System.out.println("PDF Created!");

@@ -127,7 +127,7 @@
                         <Insets right="40.0" />
                      </HBox.margin>
                   </Pane>
-                  <Pane maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="transHistory" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>

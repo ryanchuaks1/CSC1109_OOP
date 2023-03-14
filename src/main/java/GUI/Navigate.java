@@ -32,7 +32,7 @@ public class Navigate {
         scene.setRoot(loadFXML(fxml));
 
         // create transition for logout (Normally should be more than that but for now I put with 10 for showcase purposes)
-        Duration delay = Duration.seconds(10);
+        Duration delay = Duration.seconds(30);
         PauseTransition transition = new PauseTransition(delay);
         transition.setOnFinished(evt -> {
             try {

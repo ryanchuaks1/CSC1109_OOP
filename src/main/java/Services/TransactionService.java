@@ -2,6 +2,9 @@ package Services;
 
 import Entity.Transaction;
 import Models.CreateTransaction;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
@@ -37,6 +40,18 @@ public class TransactionService {
         try {
             var apiFuture = db.collection("transactions").whereEqualTo("accountId", accountId).get();
             transactions = apiFuture.get().toObjects(Transaction.class);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return transactions;
+    }
+
+    public ObservableList<Transaction> getTransactionsByAccountIdLimit100(String accountId) {
+        ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+        try {
+            var apiFuture = db.collection("transactions").limit(100).whereEqualTo("accountId", accountId).get();
+            List<Transaction> transactionListDB = apiFuture.get().toObjects(Transaction.class);
+            transactions.addAll(transactionListDB);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

@@ -31,7 +31,6 @@ public class AuthClient {
             throw new UserDuplicateFoundException();
         } else {
             userService.createUser(createUser);
-            otpClient.phoneOTP(createUser);
         }
     }
 }

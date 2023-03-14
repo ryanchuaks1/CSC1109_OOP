@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 public class MainDashboardController implements Initializable {
 
@@ -50,6 +52,9 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     private Label nameLabel;
+
+    @FXML
+    private Pane transHistory;
 
     SessionClient sc;
 
@@ -97,4 +102,11 @@ public class MainDashboardController implements Initializable {
         }
     }
 
+
+    @FXML
+    void onMouseNavigate(MouseEvent event) throws IOException {
+        if (event.getSource() == transHistory) {
+            Navigate.setRoot("TransHistory");
+        }
+    }
 }

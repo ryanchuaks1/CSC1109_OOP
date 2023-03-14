@@ -6,37 +6,41 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+import Entity.Account;
 import Entity.User;
 import Helpers.SecretKeyStore;
 import Models.CreateUser;
+import Services.UserService;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class PhoneOTPClient {
 
     static private int randomVerifier;
-    static private CreateUser cuser;
+    static private User cuser;
     static long totalMiliseconds;
+    UserService userService = new UserService();
 
-    public CreateUser getUser(){
+    public User getUser(){
         return cuser;
     }
 
-    public void phoneOTP(CreateUser user) {
-        cuser = user;
+    public void phoneOTP(Account account) {
+
+        cuser = userService.getUserByUserId(account.getUserId());
         Twilio.init(SecretKeyStore.getKey("ACCOUNT_SID"), SecretKeyStore.getKey("AUTH_TOKEN"));
 
         int verificationNO = ThreadLocalRandom.current().nextInt(100000, 1000000);
         randomVerifier = verificationNO;
 
-        String msg = "Welcome " + user.getFirstName() + " " + user.getLastName() + "\n\n";
-        msg += "Thanks for joining RJDX Bank, Below is your 6 digits verification code, please key in the verirication page\n\n";
+        String msg = "Hello " + cuser.getFirstName() + " " + cuser.getLastName() + "\n\n";
+        msg += "Thanks for using RJDX Bank. Below is your 6 digits verification code, please key in the verirication page to process your change of pin.\n\n";
         msg += verificationNO;
 
         msg += "\n\nRegards,\n";
         msg += "RDJX Bank";
 
-        Message message = Message.creator(new PhoneNumber(user.getPhoneNo()),
+        Message message = Message.creator(new PhoneNumber(cuser.getPhoneNo()),
                 new PhoneNumber(
                         "+15674122358"),
                 msg).create();

@@ -3,32 +3,32 @@ package Clients;
 import Entity.Account;
 
 public class SessionClient {
-    public Account account;
-    public String cardNum;
-    public boolean ownBank;
+    public static Account account;
+    public static String cardNum;
+    public static boolean ownBank;
 
-    public boolean isOwnBank() {
+    public static boolean isOwnBank() {
         return ownBank;
     }
 
-    public void setOwnBank(boolean ownBank) {
-        this.ownBank = ownBank;
+    public static void setOwnBank(boolean ownBank) {
+        SessionClient.ownBank = ownBank;
     }
 
-    public String getCardNum() {
+    public static String getCardNum() {
         return cardNum;
     }
 
-    public void setCardNum(String cardNum) {
-        this.cardNum = cardNum;
+    public static void setCardNum(String cardNum) {
+        SessionClient.cardNum = cardNum;
     }
 
-    public Account getAccount() {
+    public static Account getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public static void setAccount(Account account) {
+        SessionClient.account = account;
     }
     
 }

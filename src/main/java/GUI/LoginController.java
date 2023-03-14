@@ -63,7 +63,6 @@ public class LoginController implements Initializable {
     @FXML
     private Label invalidPinLabel;
 
-    public SessionClient sc = new SessionClient();
     private int attempts = 0;
 
     @Override
@@ -120,8 +119,8 @@ public class LoginController implements Initializable {
         String binNum = fullCardNumber.substring(0, 6);
 
         if (BinClient.CheckBIN(binNum)) {
-            sc.setCardNum(fullCardNumber);
-            sc.setOwnBank(true);
+            SessionClient.setCardNum(fullCardNumber);
+            SessionClient.setOwnBank(true);
             PinPage.setVisible(true);
             LoadingPage.setVisible(false);
         } else {
@@ -131,10 +130,10 @@ public class LoginController implements Initializable {
 
     private void checkPin(String pin) throws IOException {
         AccountClient accountClient = new AccountClient();
-        String cardNum = sc.getCardNum().substring(6, 15);
+        String cardNum = SessionClient.getCardNum().substring(6, 15);
         try {
             Account account = accountClient.Login(cardNum, pin);
-            sc.setAccount(account);
+            SessionClient.setAccount(account);
             Navigate.setRoot("MainDashboard");
         } catch (Exception e) {
             if (attempts < 6) {

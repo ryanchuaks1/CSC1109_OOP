@@ -2,10 +2,10 @@ Entity\Transaction.class
 Models\TransactionType.class
 Models\TransactionStatus.class
 Models\CreateAccount.class
+Entity\User.class
+Models\CreateTransaction.class
+Models\CreateUser.class
 Entity\Account.class
 Models\LoginUser.class
-Entity\User.class
 Exceptions\UserNotFoundException.class
-Models\CreateTransaction.class
 Helpers\FirebaseInitialize.class
-Models\CreateUser.class

@@ -71,7 +71,7 @@ public class MainDashboardController implements Initializable {
         Image iconSettingsImage = new Image(iconSettingsPath.toUri().toString());
         iconSettings.setImage(iconSettingsImage);
 
-        // nameLabel.setText(sc.getAccount());
+        nameLabel.setText(SessionClient.getAccount().getId().toString());
     }
 
     @FXML

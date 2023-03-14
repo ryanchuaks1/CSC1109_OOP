@@ -31,7 +31,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" layoutX="281.0" prefHeight="80.0" prefWidth="979.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Button fx:id="btnEnglish" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: FFFFF;" text="English" textFill="WHITE">
+                  <Button fx:id="btnEnglish" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: none;" text="English" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Bold" size="24.0" />
                      </font>
@@ -40,7 +40,7 @@
                      </cursor>
                   </Button>
                   <Line endX="90.0" startX="90.0" startY="-45.0" stroke="WHITE" strokeWidth="2.0" />
-                  <Button fx:id="btnChinese" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: FFFFF;" text="中文" textFill="WHITE">
+                  <Button fx:id="btnChinese" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: none;" text="中文" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Bold" size="24.0" />
                      </font>
@@ -49,7 +49,7 @@
                      </cursor>
                   </Button>
                   <Line endX="90.0" startX="90.0" startY="-45.0" stroke="WHITE" strokeWidth="2.0" />
-                  <Button fx:id="btnMalay" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: FFFFF;" text="Melayu" textFill="WHITE">
+                  <Button fx:id="btnMalay" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: none;" text="Melayu" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Bold" size="24.0" />
                      </font>
@@ -86,7 +86,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
-                              <ImageView fx:id="iconDeposit" fitHeight="170.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="iconDeposit" fitHeight="151.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../resources/images/DepositIcon.png" />
                                  </image>
@@ -107,7 +107,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
-                              <ImageView fx:id="iconTransfer" fitHeight="170.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="iconTransfer" fitHeight="154.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../resources/images/TransferIcon.png" />
                                  </image>
@@ -132,7 +132,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
-                              <ImageView fx:id="iconWithdraw" fitHeight="170.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="iconWithdraw" fitHeight="161.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../resources/images/WithdrawIcon.png" />
                                  </image>
@@ -153,7 +153,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
-                              <ImageView fx:id="iconSettings" fitHeight="170.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="iconSettings" fitHeight="159.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../resources/images/SettingsIcon.png" />
                                  </image>

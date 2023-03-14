@@ -60,9 +60,9 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" layoutY="640.0" prefHeight="160.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="640.0">
+            <HBox alignment="CENTER_LEFT" layoutX="-1.0" layoutY="640.0" prefHeight="160.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="640.0">
                <children>
-                  <Button fx:id="btnEnglish" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: FFFFF;" text="English" textFill="WHITE">
+                  <Button fx:id="btnEnglish" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: none;" text="English" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Bold" size="24.0" />
                      </font>
@@ -74,7 +74,7 @@
                      </HBox.margin>
                   </Button>
                   <Line endX="90.0" startX="90.0" startY="-45.0" stroke="WHITE" strokeWidth="2.0" />
-                  <Button fx:id="btnChinese" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: FFFFF;" text="中文" textFill="WHITE">
+                  <Button fx:id="btnChinese" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: none;" text="中文" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Bold" size="24.0" />
                      </font>
@@ -86,7 +86,7 @@
                      </cursor>
                   </Button>
                   <Line endX="90.0" startX="90.0" startY="-45.0" stroke="WHITE" strokeWidth="2.0" />
-                  <Button fx:id="btnMalay" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: FFFFF;" text="Melayu" textFill="WHITE">
+                  <Button fx:id="btnMalay" mnemonicParsing="false" onAction="#setLanguage" style="-fx-background-color: none;" text="Melayu" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Bold" size="24.0" />
                      </font>

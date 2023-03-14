@@ -13,8 +13,8 @@ public class MainCLI {
 
         // EXAMPLE DATA TO TRY
         // Real card number: 6229 2598 2143 4678 pin 123456
-
-        tryLogin("6229259821434678");
+        pdfService.depositReceipt("Deposit", "1000");
+        // tryLogin("6229259821434678");
     }
 
     private static void tryLogin(String fullCardNumber) throws Exception {

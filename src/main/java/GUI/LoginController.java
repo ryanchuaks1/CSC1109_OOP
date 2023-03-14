@@ -85,7 +85,7 @@ public class LoginController implements Initializable {
 
     // THIS IS HARD CODED FOR NOW, BAD FORMATTING
     @FXML
-    void onInsertCard(ActionEvent event) {
+    void onInsertCard(ActionEvent event) throws InterruptedException {
         LoginPage.setVisible(false);
         LoadingPage.setVisible(true);
         if (event.getSource() == card1) {

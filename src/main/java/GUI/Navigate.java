@@ -51,8 +51,9 @@ public class Navigate {
     private static void logout() throws IOException{
         //route to logout, card eject, and sessionvalues remove
         Navigate.setRoot("Login");
-        SessionClient sc = new SessionClient();
-        sc.setAccount(null);
+        SessionClient.setAccount(null);
+        SessionClient.setCardNum(null);
+        SessionClient.setOwnBank(false);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

@@ -18,7 +18,6 @@ import javafx.scene.image.ImageView;
 
 public class MainDashboardController implements Initializable {
 
-
     @FXML
     private Button btnChinese;
 
@@ -44,8 +43,13 @@ public class MainDashboardController implements Initializable {
     private ImageView iconWithdraw;
 
     @FXML
-    private Label nameLabel;
+    private ImageView iconTransHist;
 
+    @FXML
+    private ImageView iconExit;
+
+    @FXML
+    private Label nameLabel;
 
     SessionClient sc;
 
@@ -71,7 +75,15 @@ public class MainDashboardController implements Initializable {
         Image iconSettingsImage = new Image(iconSettingsPath.toUri().toString());
         iconSettings.setImage(iconSettingsImage);
 
-        nameLabel.setText(SessionClient.getAccount().getId().toString());
+        Path iconTransHistPath = FileSystems.getDefault().getPath("src/main/resources/images/", "TransHistoryIcon.png");
+        Image iconTransHistImage = new Image(iconTransHistPath.toUri().toString());
+        iconTransHist.setImage(iconTransHistImage);
+
+        Path iconExitPath = FileSystems.getDefault().getPath("src/main/resources/images/", "ExitIcon.png");
+        Image iconExitImage = new Image(iconExitPath.toUri().toString());
+        iconExit.setImage(iconExitImage);
+
+        nameLabel.setText(" " + SessionClient.getAccount().getId().toString());
     }
 
     @FXML

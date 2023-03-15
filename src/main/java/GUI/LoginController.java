@@ -63,6 +63,9 @@ public class LoginController implements Initializable {
     @FXML
     private Label invalidPinLabel;
 
+    @FXML
+    private Label loginActionLabel;
+
     private int attempts = 0;
 
     @Override
@@ -87,6 +90,7 @@ public class LoginController implements Initializable {
     @FXML
     void onInsertCard(ActionEvent event) throws InterruptedException {
         LoginPage.setVisible(false);
+        loginActionLabel.setText("%loadingLabel");
         LoadingPage.setVisible(true);
         if (event.getSource() == card1) {
             enterCardNumber("6229259821434671");

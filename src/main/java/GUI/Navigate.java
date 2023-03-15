@@ -28,10 +28,10 @@ public class Navigate {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        
         scene.setRoot(loadFXML(fxml));
 
-        // create transition for logout (Normally should be more than that but for now I put with 10 for showcase purposes)
+        // create transition for logout (Normally should be more than that but for now I
+        // put with 10 for showcase purposes)
         Duration delay = Duration.seconds(30);
         PauseTransition transition = new PauseTransition(delay);
         transition.setOnFinished(evt -> {
@@ -48,12 +48,26 @@ public class Navigate {
         transition.play();
     }
 
-    private static void logout() throws IOException{
-        //route to logout, card eject, and sessionvalues remove
+    // TODO: Create transition, i tried but had problems with static variables
+    protected static void logout() throws IOException {
         Navigate.setRoot("Login");
+        // LoginController.LoginPage.setVisible(false);
+        // LoginController.LoadingPage.setVisible(true);
+        // route to logout, card eject, and sessionvalues remove
         SessionClient.setAccount(null);
         SessionClient.setCardNum(null);
         SessionClient.setOwnBank(false);
+        SessionClient.setNavState(null);
+
+
+        Duration delay = Duration.seconds(2);
+        PauseTransition transition = new PauseTransition(delay);
+        transition.setOnFinished(evt -> {
+            // LoginController.loginActionLabel.setText("%returnCardLabel");
+            // LoginController.LoginPage.setVisible(true);
+            // LoginController.LoadingPage.setVisible(false);
+        });
+        transition.play();
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -62,7 +76,7 @@ public class Navigate {
         return fxmlLoader.load();
     }
 
-    public static void setLocale(Locale newLocale, String fxml) throws IOException{
+    public static void setLocale(Locale newLocale, String fxml) throws IOException {
         currentLocale = newLocale;
         setRoot(fxml);
     }

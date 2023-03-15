@@ -54,8 +54,22 @@ public class MainDashboardController implements Initializable {
     private Label nameLabel;
 
     @FXML
-    private Pane transHistory;
+    private Pane transHistoryPane;
 
+    @FXML
+    private Pane depositPane;
+
+    @FXML
+    private Pane exitPane;
+
+    @FXML
+    private Pane settingsPane;
+
+    @FXML
+    private Pane transferPane;
+
+    @FXML
+    private Pane withdrawPane;
     SessionClient sc;
 
     @Override
@@ -105,8 +119,19 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     void onMouseNavigate(MouseEvent event) throws IOException {
-        if (event.getSource() == transHistory) {
+        if (event.getSource() == transHistoryPane) {
             Navigate.setRoot("TransHistory");
+        }
+        else if (event.getSource() == depositPane) {
+            SessionClient.setNavState("Deposit");
+            Navigate.setRoot("DepositWithdraw");
+        }
+        else if (event.getSource() == withdrawPane) {
+            SessionClient.setNavState("Withdraw");
+            Navigate.setRoot("DepositWithdraw");
+        }
+        else if (event.getSource() == exitPane) {
+            Navigate.logout();
         }
     }
 }

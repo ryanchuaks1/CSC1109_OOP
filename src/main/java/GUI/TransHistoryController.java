@@ -96,5 +96,10 @@ public class TransHistoryController implements Initializable {
         transHistoryTable.setItems(listTrans);
         transHistoryTable.getColumns().addAll(transIDCol, transactionTypeCol, currencyCodeCol, transactionAmountCol, statusCol);
     }
+
+    @FXML
+    void btnBackPressed(ActionEvent event) throws IOException {
+        Navigate.setRoot("MainDashboard");
+    }
 }
 

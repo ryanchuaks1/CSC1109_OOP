@@ -61,7 +61,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <VBox layoutY="81.0" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <VBox layoutY="81.0" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
@@ -85,9 +85,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="256.0" prefWidth="1280.0">
                <children>
-                  <Pane maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="depositPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
+                        <VBox alignment="CENTER" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0">
                            <children>
                               <ImageView fx:id="iconDeposit" fitHeight="151.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -105,8 +105,11 @@
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Pane>
-                  <Pane maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="transferPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
@@ -126,8 +129,11 @@
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Pane>
-                  <Pane fx:id="transHistory" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="transHistoryPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
@@ -144,14 +150,17 @@
                            </children>
                         </VBox>
                      </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Pane>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="256.0" prefWidth="1280.0">
                <children>
-                  <Pane maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="withdrawPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
+                        <VBox alignment="CENTER" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0">
                            <children>
                               <ImageView fx:id="iconWithdraw" fitHeight="161.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -169,8 +178,11 @@
                      <HBox.margin>
                         <Insets right="40.0" top="40.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Pane>
-                  <Pane maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="settingsPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
@@ -196,8 +208,11 @@
                      <HBox.margin>
                         <Insets right="40.0" top="40.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Pane>
-                  <Pane maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
+                  <Pane fx:id="exitPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
                      <children>
                         <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
                            <children>
@@ -223,6 +238,9 @@
                      <HBox.margin>
                         <Insets top="40.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Pane>
                </children>
             </HBox>

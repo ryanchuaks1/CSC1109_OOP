@@ -62,7 +62,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <VBox layoutY="81.0" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <VBox layoutY="81.0" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
@@ -84,14 +84,25 @@
                   </Label>
                </children>
             </HBox>
+            <Button mnemonicParsing="false" onAction="#btnBackPressed" style="-fx-background-color: FFFFFF;" text="%backLabel" textFill="MAROON">
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri" size="36.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             <HBox alignment="CENTER" prefHeight="639.0" prefWidth="1280.0">
                <children>
                   <AnchorPane prefHeight="535.0" prefWidth="958.0">
                      <HBox.margin>
-                        <Insets bottom="50.0" top="50.0" />
+                        <Insets bottom="50.0" top="20.0" />
                      </HBox.margin>
                      <children>
-                        <ScrollPane prefHeight="535.0" prefWidth="958.0">
+                        <ScrollPane prefHeight="535.0" prefWidth="958.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <TableView fx:id="transHistoryTable" prefHeight="532.0" prefWidth="956.0" style="-fx-background-color: #FFFFFF;" />
                            </content>

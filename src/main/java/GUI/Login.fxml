@@ -100,7 +100,7 @@
       </AnchorPane>
       <AnchorPane fx:id="LoadingPage" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="800.0" prefWidth="1280.0" text="%loadingLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="loginActionLabel" alignment="CENTER" prefHeight="800.0" prefWidth="1280.0" text="%loadingLabel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="Calibri" size="48.0" />
                </font>

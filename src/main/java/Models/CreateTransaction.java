@@ -9,7 +9,8 @@ public class CreateTransaction {
     private TransactionStatus transactionStatus;
     private String accountId;
 
-    public CreateTransaction(double transactionAmount, String currencyCode, TransactionType transactionType, TransactionStatus transactionStatus, String accountId) {
+    public CreateTransaction(double transactionAmount, String currencyCode, TransactionType transactionType,
+            TransactionStatus transactionStatus, String accountId) {
         this.transactionAmount = transactionAmount;
         this.currencyCode = currencyCode;
         this.transactionType = transactionType;

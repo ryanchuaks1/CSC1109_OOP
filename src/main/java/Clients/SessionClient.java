@@ -6,6 +6,15 @@ public class SessionClient {
     public static Account account;
     public static String cardNum;
     public static boolean ownBank;
+    public static String navState;
+    
+    public static String getNavState() {
+        return navState;
+    }
+
+    public static void setNavState(String navState) {
+        SessionClient.navState = navState;
+    }
 
     public static boolean isOwnBank() {
         return ownBank;

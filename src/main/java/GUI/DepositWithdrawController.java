@@ -8,12 +8,10 @@ import java.nio.file.Path;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import Models.CreateTransaction;
-import Models.TransactionStatus;
 import Models.TransactionType;
-import Services.TransactionService;
 import Services.pdfService;
 import Clients.SessionClient;
+import Entity.Account;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -93,16 +91,9 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private void confirmDepositPressed(ActionEvent event) throws FileNotFoundException, IOException {
-        CreateTransaction createTransaction = new CreateTransaction(
-                amountInCashCompartment,
-                "SGD",
-                TransactionType.Deposit,
-                TransactionStatus.Completed,
-                SessionClient.getAccount().getId().toString());
-        TransactionService transactionService = new TransactionService();
+        Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
-
-        transactionService.createTransaction(createTransaction);
+        account.Deposit(amountInCashCompartment);
         pdfService.depositReceipt(TransactionType.Deposit, String.valueOf(amountInCashCompartment));
         Navigate.logout();
     }

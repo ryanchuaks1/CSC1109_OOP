@@ -4,7 +4,6 @@ import Clients.AccountClient;
 import Clients.BankIdentificationClient;
 import Entity.*;
 import Helpers.FirebaseInitialize;
-import Models.TransactionType;
 
 public class MainCLI {
 
@@ -31,7 +30,7 @@ public class MainCLI {
         if (BinClient.CheckBIN(binNum)) {
             System.out.println("Exist in our bank");
             Account account = accountClient.Login(cardNum, "123456");
-            
+
             AccountService testservice = new AccountService();
             System.out.println(account.getATMWithdrawalLimit());
             // testservice.updateAccountLimits(account, "atmWithdrawalLimit", 5000);

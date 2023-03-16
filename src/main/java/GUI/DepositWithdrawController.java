@@ -65,7 +65,6 @@ public class DepositWithdrawController implements Initializable {
             Duration delay = Duration.seconds(2);
             PauseTransition transition = new PauseTransition(delay);
             transition.setOnFinished(evt -> {
-
                 actionPane.setVisible(false);
                 depositPane.setVisible(true);
             });
@@ -102,6 +101,7 @@ public class DepositWithdrawController implements Initializable {
                 SessionClient.getAccount().getId().toString());
         TransactionService transactionService = new TransactionService();
         // Maybe need to surround this with try/catch ?
+
         transactionService.createTransaction(createTransaction);
         pdfService.depositReceipt(TransactionType.Deposit, String.valueOf(amountInCashCompartment));
         Navigate.logout();

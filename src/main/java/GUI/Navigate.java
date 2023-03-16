@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
-
 import Clients.SessionClient;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
@@ -28,24 +26,28 @@ public class Navigate {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        if (fxml == "Login") {
+            scene.setRoot(loadFXML(fxml));
+        } else {
+            scene.setRoot(loadFXML(fxml));
 
-        // create transition for logout (Normally should be more than that but for now I
-        // put with 10 for showcase purposes)
-        Duration delay = Duration.seconds(30);
-        PauseTransition transition = new PauseTransition(delay);
-        transition.setOnFinished(evt -> {
-            try {
-                logout();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        });
+            // create transition for logout (Normally should be more than that but for now I
+            // put with 10 for showcase purposes)
+            Duration delay = Duration.seconds(30);
+            PauseTransition transition = new PauseTransition(delay);
+            transition.setOnFinished(evt -> {
+                try {
+                    logout();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            });
 
-        // restart transition on user interaction
-        scene.addEventFilter(InputEvent.ANY, evt -> transition.playFromStart());
-        transition.play();
+            // restart transition on user interaction
+            scene.addEventFilter(InputEvent.ANY, evt -> transition.playFromStart());
+            transition.play();
+        }
     }
 
     // TODO: Create transition, i tried but had problems with static variables
@@ -58,7 +60,6 @@ public class Navigate {
         SessionClient.setCardNum(null);
         SessionClient.setOwnBank(false);
         SessionClient.setNavState(null);
-
 
         Duration delay = Duration.seconds(2);
         PauseTransition transition = new PauseTransition(delay);

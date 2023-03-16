@@ -13,6 +13,8 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
 import com.google.firebase.cloud.FirestoreClient;
 
+import Exceptions.InsufficientFundsException;
+
 import java.util.List;
 
 public abstract class Account implements IAccount {
@@ -70,22 +72,22 @@ public abstract class Account implements IAccount {
 
     // TODO: Develop algorithm to determine if accountNo is international
     // TODO: International Transfer should always be pending.
-    public void InternationalTransfer(double amount, String accountNo)
-    {
+    public void InternationalTransfer(double amount, String accountNo) {
     }
 
-    // This is actually internal transfer. Which means that we should be able to cross-check
+    // This is actually internal transfer. Which means that we should be able to
+    // cross-check
     // with the reference in our database.
-    //TODO: Reminder that there will be 2 transactions inserted.
-    //TODO: Both transferee and transferor should have transaction logs.
-    //TODO: Check for valid accountNo
-    public void Transfer(double amount, String accountNo)
-    {
+    // TODO: Reminder that there will be 2 transactions inserted.
+    // TODO: Both transferee and transferor should have transaction logs.
+    // TODO: Check for valid accountNo
+    public void Transfer(double amount, String accountNo) {
         try {
-            // Firstly check available balance to see if user has sufficient amount to transfer else throw exception
-            //TODO: Custom exception
+            // Firstly check available balance to see if user has sufficient amount to
+            // transfer else throw exception
+            // TODO: Custom exception
             if (getAvailableBalance() < amount)
-                //TODO: Use custom exceptions
+                // TODO: Use custom exceptions
                 throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
             else if (!accountService.checkAccountExist(accountNo))
                 throw new Exception("The account does not exist");
@@ -102,10 +104,9 @@ public abstract class Account implements IAccount {
                     TransactionStatus.Completed,
                     accountNo);
 
-            //Set respective to/from
+            // Set respective to/from
             transferorTransaction.setTo(accountNo);
             transfereeTransaction.setFrom(this.Id);
-
 
             transactionService.createTransaction(transferorTransaction);
             transactionService.createTransaction(transfereeTransaction);
@@ -119,8 +120,7 @@ public abstract class Account implements IAccount {
         return pinNo;
     }
 
-    public void Deposit(double amount)
-    {
+    public void Deposit(double amount) {
         try {
             CreateTransaction transaction = new CreateTransaction(amount,
                     "SGD",
@@ -134,8 +134,7 @@ public abstract class Account implements IAccount {
         }
     }
 
-    public void Withdraw(double amount)
-    {
+    public void Withdraw(double amount) {
         try {
             CreateTransaction transaction = new CreateTransaction(
                     amount,
@@ -144,14 +143,17 @@ public abstract class Account implements IAccount {
                     TransactionStatus.Completed,
                     this.Id);
 
-            transactionService.createTransaction(transaction);
+            if (this.getAvailableBalance() < amount) {
+                throw new InsufficientFundsException("Insufficient funds in account");
+            } else {
+                transactionService.createTransaction(transaction);
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public List<Transaction> getTransactions()
-    {
+    public List<Transaction> getTransactions() {
         return transactionService.getTransactionsByAccountId(this.Id);
     }
 
@@ -161,7 +163,7 @@ public abstract class Account implements IAccount {
         double pendingBalance = 0;
         double availableBalance = 0;
 
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             TransactionType transactionType = transaction.getTransactionType();
             TransactionStatus transactionStatus = transaction.getTransactionStatus();
 
@@ -198,7 +200,7 @@ public abstract class Account implements IAccount {
         double pendingBalance = 0;
         double availableBalance = 0;
 
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             TransactionType transactionType = transaction.getTransactionType();
             TransactionStatus transactionStatus = transaction.getTransactionStatus();
 

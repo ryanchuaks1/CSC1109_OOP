@@ -76,11 +76,11 @@ public class DepositWithdrawController implements Initializable {
     @FXML
     void setLanguage(ActionEvent event) throws IOException {
         if (event.getSource() == btnEnglish) {
-            Navigate.setLocale(Locale.forLanguageTag("en"), "MainDashboard");
+            Navigate.setLocale(Locale.forLanguageTag("en"), "DepositWithdraw");
         } else if (event.getSource() == btnChinese) {
-            Navigate.setLocale(Locale.forLanguageTag("zh"), "MainDashboard");
+            Navigate.setLocale(Locale.forLanguageTag("zh"), "DepositWithdraw");
         } else if (event.getSource() == btnMalay) {
-            Navigate.setLocale(Locale.forLanguageTag("ms"), "MainDashboard");
+            Navigate.setLocale(Locale.forLanguageTag("ms"), "DepositWithdraw");
         }
     }
 

@@ -25,6 +25,9 @@ import javafx.scene.image.ImageView;
 public class TransHistoryController implements Initializable {
 
     @FXML
+    private Label balLabel;
+
+    @FXML
     private Button btnChinese;
 
     @FXML
@@ -62,7 +65,9 @@ public class TransHistoryController implements Initializable {
         iconPrimary.setImage(iconPrimaryImage);
 
         nameLabel.setText(" " + SessionClient.getAccount().getId().toString());
+        balLabel.setText("" + SessionClient.getAccount().getAvailableBalance());
         intializeTable();
+
     }
 
     void intializeTable(){

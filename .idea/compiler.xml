@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="BankCLI" />
+        <module name="rjdxbank" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BankCLI" target="11" />
+      <module name="rjdxbank" target="19" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -22,4 +22,5 @@ module com.rjdxbanking.rjdxbank {
 
     opens com.rjdxbanking.rjdxbank.Entity to google.cloud.firestore;
     opens com.rjdxbanking.rjdxbank.Controllers to javafx.fxml;
+    opens com.rjdxbanking.rjdxbank.Models to google.cloud.firestore;
 }

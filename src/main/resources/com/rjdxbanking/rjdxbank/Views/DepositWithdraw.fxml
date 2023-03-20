@@ -242,7 +242,7 @@
                             <children>
                                 <VBox alignment="TOP_CENTER" prefHeight="574.0" prefWidth="640.0">
                                     <children>
-                                        <Label text="Minimum withdrawal $20">
+                                        <Label text="%minimumWithdrawLabel">
                                             <font>
                                                 <Font size="24.0" />
                                             </font>
@@ -250,12 +250,12 @@
                                                 <Insets top="40.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <TextField style="-fx-background-color: FFFFFF;">
+                                        <TextField fx:id="withdrawTextField" alignment="CENTER" style="-fx-background-color: FFFFFF;">
                                             <VBox.margin>
                                                 <Insets bottom="20.0" left="40.0" right="40.0" />
                                             </VBox.margin>
                                             <font>
-                                                <Font name="System Bold" size="48.0" />
+                                                <Font name="Calibri Bold" size="48.0" />
                                             </font>
                                         </TextField>
                                         <GridPane alignment="CENTER" prefHeight="322.0" prefWidth="560.0">
@@ -274,62 +274,105 @@
                                                 <Insets left="40.0" right="40.0" />
                                             </VBox.margin>
                                             <children>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="1" textFill="MAROON">
-                                                    <font>
-                                                        <Font size="24.0" />
-                                                    </font></Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="2" textFill="MAROON" GridPane.columnIndex="1">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="1" textFill="MAROON">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
-                                                </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="3" textFill="MAROON" GridPane.columnIndex="2">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></Button>
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="2" textFill="MAROON" GridPane.columnIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="4" textFill="MAROON" GridPane.rowIndex="1">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="3" textFill="MAROON" GridPane.columnIndex="2">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="5" textFill="MAROON" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="4" textFill="MAROON" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="6" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="5" textFill="MAROON" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="7" textFill="MAROON" GridPane.rowIndex="2">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="6" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="8" textFill="MAROON" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="7" textFill="MAROON" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="9" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="8" textFill="MAROON" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="0" textFill="MAROON" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="9" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                                 </Button>
+                                                <Button mnemonicParsing="false" onAction="#numPadClicked" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="0" textFill="MAROON" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                                </Button>
+                                    <Button mnemonicParsing="false" onAction="#numPadBackClicked" prefHeight="55.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="←" textFill="MAROON" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#confirmWithdrawPressed" prefHeight="55.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="✓" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Button>
                                             </children>
                                         </GridPane>
                                     </children>
                                 </VBox>
                                 <VBox alignment="TOP_CENTER" prefHeight="574.0" prefWidth="640.0">
                                     <children>
-                                        <Label text="Or choose quick amount">
+                                        <Label text="%quckAmountLabel">
                                             <font>
                                                 <Font size="24.0" />
                                             </font>

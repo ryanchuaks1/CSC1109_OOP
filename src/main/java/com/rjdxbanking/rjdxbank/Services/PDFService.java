@@ -1,6 +1,5 @@
 package com.rjdxbanking.rjdxbank.Services;
 
-import com.itextpdf.kernel.*;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;

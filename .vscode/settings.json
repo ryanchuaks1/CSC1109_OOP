@@ -2,5 +2,6 @@
   "java.configuration.updateBuildConfiguration": "disabled",
   "java.dependency.packagePresentation": "hierarchical",
   "java.debug.settings.onBuildFailureProceed": true,
-  "java.dependency.syncWithFolderExplorer": true
+  "java.dependency.syncWithFolderExplorer": true,
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
 }

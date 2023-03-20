@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -38,6 +39,9 @@ public class DepositWithdrawController implements Initializable {
     private Button btnMalay;
 
     @FXML
+    private Label depositAmountLabel;
+
+    @FXML
     private AnchorPane depositPane;
 
     @FXML
@@ -47,19 +51,21 @@ public class DepositWithdrawController implements Initializable {
     private AnchorPane withdrawPane;
 
     @FXML
-    private Label depositAmountLabel;
+    private TextField withdrawTextField;
 
-    private int amountInCashCompartment;
+    private Double amountInCashCompartment = 0.0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        amountInCashCompartment = 0;
+        amountInCashCompartment = 0.0;
         Path iconPrimaryPath = FileSystems.getDefault().getPath(
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
         if (SessionClient.getNavState().equals("Deposit")) {
+            withdrawPane.setVisible(false);
+            depositPane.setVisible(false);
             actionPane.setVisible(true);
             // Delay for cash compartment opening
             Duration delay = Duration.seconds(2);
@@ -71,6 +77,7 @@ public class DepositWithdrawController implements Initializable {
             transition.play();
         }
         if (SessionClient.getNavState().equals("Withdraw")) {
+            depositPane.setVisible(false);
             withdrawPane.setVisible(true);
         }
     }
@@ -96,8 +103,29 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
         account.Deposit(amountInCashCompartment);
-        PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
+        // PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
         Navigator.logout();
+    }
+
+    @FXML
+    private void confirmWithdrawPressed(ActionEvent event) throws FileNotFoundException, IOException {
+        Account account = SessionClient.getAccount();
+        // Maybe need to surround this with try/catch ?
+        account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
+        // PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(amountInCashCompartment));
+        Navigator.logout();
+    }
+
+    @FXML
+    private void numPadClicked(ActionEvent event) {
+        String[] strArr = event.getSource().toString().split("'");
+        String string = strArr[strArr.length - 1];
+        withdrawTextField.appendText(string);
+    }
+
+    @FXML
+    void numPadBackClicked(ActionEvent event) {
+        withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
     }
 
     // NOTE: Code below here is for dev purposes only
@@ -105,7 +133,7 @@ public class DepositWithdrawController implements Initializable {
     private void editCash(ActionEvent event) {
         String[] strArr = event.getSource().toString().split("'");
         String string = strArr[strArr.length - 1];
-        int amount = Integer.parseInt(string);
+        Double amount = Double.parseDouble(string);
         amountInCashCompartment += amount;
         depositAmountLabel.setText(String.valueOf(amountInCashCompartment));
     }

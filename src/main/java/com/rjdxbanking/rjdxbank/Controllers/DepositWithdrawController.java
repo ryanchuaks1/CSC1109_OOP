@@ -105,7 +105,7 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
         account.Deposit(amountInCashCompartment);
-        // PDFService.Receipt(account, TransactionType.Deposit,
+        PDFService.Receipt(account, TransactionType.Deposit,
         // String.valueOf(amountInCashCompartment));
         Navigator.logout();
     }

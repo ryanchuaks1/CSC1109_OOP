@@ -67,10 +67,11 @@ public class DepositWithdrawController implements Initializable {
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
+        insufficientFundsPane.setVisible(false);
+        withdrawPane.setVisible(false);
+        depositPane.setVisible(false);
 
         if (SessionClient.getNavState().equals("Deposit")) {
-            withdrawPane.setVisible(false);
-            depositPane.setVisible(false);
             actionPane.setVisible(true);
             // Delay for cash compartment opening
             Duration delay = Duration.seconds(2);
@@ -82,7 +83,6 @@ public class DepositWithdrawController implements Initializable {
             transition.play();
         }
         if (SessionClient.getNavState().equals("Withdraw")) {
-            depositPane.setVisible(false);
             withdrawPane.setVisible(true);
         }
     }

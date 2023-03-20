@@ -461,7 +461,7 @@
                 </Label>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="insufficientFundsPane" layoutX="340.0" layoutY="200.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 2px; -fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
+      <AnchorPane fx:id="insufficientFundsPane" layoutX="340.0" layoutY="200.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
          <children>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>

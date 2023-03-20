@@ -133,7 +133,7 @@ public abstract class Account implements IAccount {
         }
     }
 
-    public void Withdraw(double amount) {
+    public void Withdraw(double amount) throws InsufficientFundsException {
         LocalDateTime now = LocalDateTime.now();
         try {
             CreateTransaction transaction = new CreateTransaction(dtf.format(now),
@@ -150,6 +150,7 @@ public abstract class Account implements IAccount {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            throw new InsufficientFundsException(ex.getMessage());
         }
     }
 

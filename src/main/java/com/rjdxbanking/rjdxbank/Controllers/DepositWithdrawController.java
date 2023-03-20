@@ -4,6 +4,9 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
+import com.rjdxbanking.rjdxbank.Models.TransactionType;
+import com.rjdxbanking.rjdxbank.Services.PDFService;
+
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -105,7 +108,7 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
         account.Deposit(amountInCashCompartment);
-        PDFService.Receipt(account, TransactionType.Deposit,
+        PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
         // String.valueOf(amountInCashCompartment));
         Navigator.logout();
     }
@@ -115,12 +118,12 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         try {
             account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
+            Navigator.logout();
         } catch (InsufficientFundsException e) {
             insufficientFundsPane.setVisible(true);
         }
         // PDFService.Receipt(account, TransactionType.Withdrawal,
         // String.valueOf(amountInCashCompartment));
-        // Navigator.logout();
     }
 
     @FXML
@@ -128,14 +131,12 @@ public class DepositWithdrawController implements Initializable {
         String text = ((Button) event.getSource()).getText();
         Double amount = Double.parseDouble(text.substring(1, text.length()));
         Account account = SessionClient.getAccount();
-        // Maybe need to surround this with try/catch ?
         try {
             account.Withdraw(amount);
+            Navigator.logout();
         } catch (InsufficientFundsException e) {
-            System.out.println("wntfhwuig heugneugbacgbvbteuitneruivteityqeiqvtnqeyvnyiernvi");
             insufficientFundsPane.setVisible(true);
         }
-        // Navigator.logout();
     }
 
     @FXML
@@ -147,7 +148,7 @@ public class DepositWithdrawController implements Initializable {
     private void numPadBackClicked(ActionEvent event) {
         withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
     }
-    
+
     @FXML
     private void closePressed(ActionEvent event) {
         insufficientFundsPane.setVisible(false);

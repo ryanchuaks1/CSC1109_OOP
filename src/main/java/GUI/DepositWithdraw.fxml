@@ -323,6 +323,16 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Button>
+                                    <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="←" textFill="MAROON" textOverrun="CLIP" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="✓" textFill="MAROON" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </GridPane>
                            </children>

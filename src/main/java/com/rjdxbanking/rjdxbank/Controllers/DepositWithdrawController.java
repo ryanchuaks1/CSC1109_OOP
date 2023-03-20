@@ -2,9 +2,8 @@ package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
+import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
-import com.rjdxbanking.rjdxbank.Models.TransactionType;
-import com.rjdxbanking.rjdxbank.Services.PDFService;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,6 +48,9 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private AnchorPane withdrawPane;
+
+    @FXML
+    private AnchorPane insufficientFundsPane;
 
     @FXML
     private TextField withdrawTextField;
@@ -103,36 +105,58 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
         account.Deposit(amountInCashCompartment);
-        // PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
+        // PDFService.Receipt(account, TransactionType.Deposit,
+        // String.valueOf(amountInCashCompartment));
         Navigator.logout();
     }
 
     @FXML
     private void confirmWithdrawPressed(ActionEvent event) throws FileNotFoundException, IOException {
         Account account = SessionClient.getAccount();
+        try {
+            account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
+        } catch (InsufficientFundsException e) {
+            insufficientFundsPane.setVisible(true);
+        }
+        // PDFService.Receipt(account, TransactionType.Withdrawal,
+        // String.valueOf(amountInCashCompartment));
+        // Navigator.logout();
+    }
+
+    @FXML
+    private void quickAmountClicked(ActionEvent event) throws IOException {
+        String text = ((Button) event.getSource()).getText();
+        Double amount = Double.parseDouble(text.substring(1, text.length()));
+        Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
-        account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
-        // PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(amountInCashCompartment));
-        Navigator.logout();
+        try {
+            account.Withdraw(amount);
+        } catch (InsufficientFundsException e) {
+            System.out.println("wntfhwuig heugneugbacgbvbteuitneruivteityqeiqvtnqeyvnyiernvi");
+            insufficientFundsPane.setVisible(true);
+        }
+        // Navigator.logout();
     }
 
     @FXML
     private void numPadClicked(ActionEvent event) {
-        String[] strArr = event.getSource().toString().split("'");
-        String string = strArr[strArr.length - 1];
-        withdrawTextField.appendText(string);
+        withdrawTextField.appendText(((Button) event.getSource()).getText());
     }
 
     @FXML
-    void numPadBackClicked(ActionEvent event) {
+    private void numPadBackClicked(ActionEvent event) {
         withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
+    }
+    
+    @FXML
+    private void closePressed(ActionEvent event) {
+        insufficientFundsPane.setVisible(false);
     }
 
     // NOTE: Code below here is for dev purposes only
     @FXML
     private void editCash(ActionEvent event) {
-        String[] strArr = event.getSource().toString().split("'");
-        String string = strArr[strArr.length - 1];
+        String string = ((Button) event.getSource()).getText();
         Double amount = Double.parseDouble(string);
         amountInCashCompartment += amount;
         depositAmountLabel.setText(String.valueOf(amountInCashCompartment));

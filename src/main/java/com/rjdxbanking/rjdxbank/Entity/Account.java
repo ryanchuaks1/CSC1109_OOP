@@ -128,7 +128,7 @@ public abstract class Account implements IAccount {
         }
     }
 
-    public void Withdraw(double amount) {
+    public void Withdraw(double amount) throws InsufficientFundsException {
         try {
             CreateTransaction transaction = new CreateTransaction(
                     amount,

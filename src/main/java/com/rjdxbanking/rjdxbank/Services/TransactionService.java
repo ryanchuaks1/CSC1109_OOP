@@ -65,6 +65,7 @@ public class TransactionService {
         try {
             var apiFuture = db.collection("transactions").whereEqualTo("accountId", accountId).get();
             QuerySnapshot snapshots = apiFuture.get();
+
             if (!snapshots.getDocuments().isEmpty()) {
                 for(int i =0; i <snapshots.size(); i ++){
                     var transactionSnapshot = snapshots.getDocuments().get(i);

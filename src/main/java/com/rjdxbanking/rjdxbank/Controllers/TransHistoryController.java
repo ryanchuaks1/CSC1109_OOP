@@ -2,8 +2,11 @@ package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Transaction;
+import com.rjdxbanking.rjdxbank.Entity.User;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Services.TransactionService;
+import com.rjdxbanking.rjdxbank.Services.UserService;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,7 +75,9 @@ public class TransHistoryController implements Initializable {
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
-        nameLabel.setText(" " + SessionClient.getAccount().getId().toString());
+        UserService userService = new UserService();
+        User currentUser = userService.getUserByUserId(SessionClient.getAccount().getUserId());
+        nameLabel.setText(" " + currentUser.getFullName());
         balLabel.setText("" + SessionClient.getAccount().getAvailableBalance());
         intializeTable();
 

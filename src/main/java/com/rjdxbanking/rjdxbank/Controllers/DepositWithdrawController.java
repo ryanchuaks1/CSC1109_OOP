@@ -54,7 +54,8 @@ public class DepositWithdrawController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         amountInCashCompartment = 0;
-        Path iconPrimaryPath = FileSystems.getDefault().getPath("src/main/resources/images/", "WhiteIconPrimary.png");
+        Path iconPrimaryPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 

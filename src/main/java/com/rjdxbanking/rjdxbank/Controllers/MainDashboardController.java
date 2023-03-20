@@ -74,31 +74,38 @@ public class MainDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Path iconPrimaryPath = FileSystems.getDefault().getPath("src/main/resources/images/", "WhiteIconPrimary.png");
+        Path iconPrimaryPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
-        Path iconDepositPath = FileSystems.getDefault().getPath("src/main/resources/images/", "DepositIcon.png");
+        Path iconDepositPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "DepositIcon.png");
         Image iconDepositImage = new Image(iconDepositPath.toUri().toString());
         iconDeposit.setImage(iconDepositImage);
 
-        Path iconTransferPath = FileSystems.getDefault().getPath("src/main/resources/images/", "TransferIcon.png");
+        Path iconTransferPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "TransferIcon.png");
         Image iconTransferImage = new Image(iconTransferPath.toUri().toString());
         iconTransfer.setImage(iconTransferImage);
 
-        Path iconWithdrawPath = FileSystems.getDefault().getPath("src/main/resources/images/", "WithdrawIcon.png");
+        Path iconWithdrawPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WithdrawIcon.png");
         Image iconWithdrawImage = new Image(iconWithdrawPath.toUri().toString());
         iconWithdraw.setImage(iconWithdrawImage);
 
-        Path iconSettingsPath = FileSystems.getDefault().getPath("src/main/resources/images/", "SettingsIcon.png");
+        Path iconSettingsPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "SettingsIcon.png");
         Image iconSettingsImage = new Image(iconSettingsPath.toUri().toString());
         iconSettings.setImage(iconSettingsImage);
 
-        Path iconTransHistPath = FileSystems.getDefault().getPath("src/main/resources/images/", "TransHistoryIcon.png");
+        Path iconTransHistPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "TransHistoryIcon.png");
         Image iconTransHistImage = new Image(iconTransHistPath.toUri().toString());
         iconTransHist.setImage(iconTransHistImage);
 
-        Path iconExitPath = FileSystems.getDefault().getPath("src/main/resources/images/", "ExitIcon.png");
+        Path iconExitPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "ExitIcon.png");
         Image iconExitImage = new Image(iconExitPath.toUri().toString());
         iconExit.setImage(iconExitImage);
 
@@ -116,21 +123,17 @@ public class MainDashboardController implements Initializable {
         }
     }
 
-
     @FXML
     void onMouseNavigate(MouseEvent event) throws IOException {
         if (event.getSource() == transHistoryPane) {
             Navigator.setRoot("TransHistory");
-        }
-        else if (event.getSource() == depositPane) {
+        } else if (event.getSource() == depositPane) {
             SessionClient.setNavState("Deposit");
             Navigator.setRoot("DepositWithdraw");
-        }
-        else if (event.getSource() == withdrawPane) {
+        } else if (event.getSource() == withdrawPane) {
             SessionClient.setNavState("Withdraw");
             Navigator.setRoot("DepositWithdraw");
-        }
-        else if (event.getSource() == exitPane) {
+        } else if (event.getSource() == exitPane) {
             Navigator.logout();
         }
     }

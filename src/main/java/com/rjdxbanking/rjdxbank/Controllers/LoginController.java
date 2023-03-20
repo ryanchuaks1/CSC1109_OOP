@@ -70,7 +70,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Path iconPrimaryPath = FileSystems.getDefault().getPath("src/main/resources/images/", "IconPrimary.png");
+        Path iconPrimaryPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "IconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
     }

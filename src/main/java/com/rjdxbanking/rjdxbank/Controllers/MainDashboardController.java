@@ -124,7 +124,7 @@ public class MainDashboardController implements Initializable {
     }
 
     @FXML
-    void onMouseNavigate(MouseEvent event) throws IOException {
+    private void onMouseNavigate(MouseEvent event) throws IOException {
         if (event.getSource() == transHistoryPane) {
             Navigator.setRoot("TransHistory");
         } else if (event.getSource() == depositPane) {

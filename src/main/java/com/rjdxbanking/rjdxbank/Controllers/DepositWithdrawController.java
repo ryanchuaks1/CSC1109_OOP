@@ -71,19 +71,21 @@ public class DepositWithdrawController implements Initializable {
         withdrawPane.setVisible(false);
         depositPane.setVisible(false);
 
-        if (SessionClient.getNavState().equals("Deposit")) {
-            actionPane.setVisible(true);
-            // Delay for cash compartment opening
-            Duration delay = Duration.seconds(2);
-            PauseTransition transition = new PauseTransition(delay);
-            transition.setOnFinished(evt -> {
-                actionPane.setVisible(false);
-                depositPane.setVisible(true);
-            });
-            transition.play();
-        }
-        if (SessionClient.getNavState().equals("Withdraw")) {
-            withdrawPane.setVisible(true);
+        switch (SessionClient.getNavState()) {
+            case "Deposit":
+                actionPane.setVisible(true);
+                // Delay for cash compartment opening
+                Duration delay = Duration.seconds(2);
+                PauseTransition transition = new PauseTransition(delay);
+                transition.setOnFinished(evt -> {
+                    actionPane.setVisible(false);
+                    depositPane.setVisible(true);
+                });
+                transition.play();
+                break;
+            case "Withdraw":
+                withdrawPane.setVisible(true);
+                break;
         }
     }
 
@@ -106,10 +108,8 @@ public class DepositWithdrawController implements Initializable {
     @FXML
     private void confirmDepositPressed(ActionEvent event) throws FileNotFoundException, IOException {
         Account account = SessionClient.getAccount();
-        // Maybe need to surround this with try/catch ?
         account.Deposit(amountInCashCompartment);
         PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
-        // String.valueOf(amountInCashCompartment));
         Navigator.logout();
     }
 
@@ -118,12 +118,11 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         try {
             account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
+            PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField.getText()));
             Navigator.logout();
         } catch (InsufficientFundsException e) {
             insufficientFundsPane.setVisible(true);
         }
-        // PDFService.Receipt(account, TransactionType.Withdrawal,
-        // String.valueOf(amountInCashCompartment));
     }
 
     @FXML
@@ -133,6 +132,7 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         try {
             account.Withdraw(amount);
+            PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(amount));
             Navigator.logout();
         } catch (InsufficientFundsException e) {
             insufficientFundsPane.setVisible(true);

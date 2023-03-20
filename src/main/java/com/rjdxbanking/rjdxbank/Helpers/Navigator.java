@@ -1,6 +1,7 @@
 package com.rjdxbanking.rjdxbank.Helpers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
+import com.rjdxbanking.rjdxbank.Controllers.LoginController;
 import com.rjdxbanking.rjdxbank.MainApplication;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import java.util.ResourceBundle;
 public class Navigator {
     private static Scene scene;
     private static Locale currentLocale;
+
     public static void initUserInterface(Stage stage) throws IOException {
         currentLocale = Locale.forLanguageTag("en");
         scene = new Scene(loadFXML("Login"));
@@ -39,7 +41,6 @@ public class Navigator {
                 try {
                     logout();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             });
@@ -52,28 +53,18 @@ public class Navigator {
 
     // TODO: Create transition, i tried but had problems with static variables
     public static void logout() throws IOException {
-        Navigator.setRoot("Login");
-        // LoginController.LoginPage.setVisible(false);
-        // LoginController.LoadingPage.setVisible(true);
         // route to logout, card eject, and sessionvalues remove
         SessionClient.setAccount(null);
         SessionClient.setCardNum(null);
         SessionClient.setOwnBank(false);
-        SessionClient.setNavState(null);
-
-        Duration delay = Duration.seconds(2);
-        PauseTransition transition = new PauseTransition(delay);
-        transition.setOnFinished(evt -> {
-            // LoginController.loginActionLabel.setText("%returnCardLabel");
-            // LoginController.LoginPage.setVisible(true);
-            // LoginController.LoadingPage.setVisible(false);
-        });
-        transition.play();
+        SessionClient.setNavState("Logout");
+        Navigator.setRoot("Login");
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
         ResourceBundle bundle = ResourceBundle.getBundle("labelText", currentLocale);
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(String.format("Views/%s.fxml", fxml)), bundle);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(String.format("Views/%s.fxml", fxml)),
+                bundle);
         return fxmlLoader.load();
     }
 

@@ -6,9 +6,7 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,7 +66,10 @@ public class LoginController implements Initializable {
     private Label invalidPinLabel;
 
     @FXML
-    private Label loginActionLabel;
+    private Label loadingLabel;
+
+    @FXML
+    private Label returnCardLabel;
 
     private int attempts = 0;
 
@@ -78,6 +79,10 @@ public class LoginController implements Initializable {
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "IconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
+        if (SessionClient.getNavState() == "Logout") {
+            dispenseCard();
+            SessionClient.setNavState(null);
+        }
     }
 
     @FXML
@@ -95,8 +100,8 @@ public class LoginController implements Initializable {
     @FXML
     void onInsertCard(ActionEvent event) throws InterruptedException {
         LoginPage.setVisible(false);
-        loginActionLabel.setText("%loadingLabel");
         LoadingPage.setVisible(true);
+        loadingLabel.setVisible(true);
         if (event.getSource() == card1) {
             enterCardNumber("6229259821434671");
         } else if (event.getSource() == card2) {
@@ -111,6 +116,7 @@ public class LoginController implements Initializable {
             checkCardNumber(fullCardNumbe);
         } catch (Exception e) {
             LoginPage.setVisible(true);
+            loadingLabel.setVisible(false);
             LoadingPage.setVisible(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Card Rejected");
@@ -131,6 +137,7 @@ public class LoginController implements Initializable {
             SessionClient.setCardNum(fullCardNumber);
             SessionClient.setOwnBank(true);
             PinPage.setVisible(true);
+            loadingLabel.setVisible(false);
             LoadingPage.setVisible(false);
         } else {
             throw new Exception("Does not belong to our bank");
@@ -148,12 +155,14 @@ public class LoginController implements Initializable {
             if (attempts < 6) {
                 attempts++;
                 PinPage.setVisible(true);
+                loadingLabel.setVisible(false);
                 LoadingPage.setVisible(false);
                 invalidPinLabel.setVisible(true);
             } else {
                 // Reset attempts, kicks the user back to the login page.
                 attempts = 0;
                 invalidPinLabel.setVisible(false);
+                loadingLabel.setVisible(false);
                 LoadingPage.setVisible(false);
                 LoginPage.setVisible(true);
             }
@@ -164,9 +173,10 @@ public class LoginController implements Initializable {
     private void pinTyped(KeyEvent event) throws IOException {
         if (pinField.getText().length() >= 6) {
             PinPage.setVisible(false);
+            loadingLabel.setVisible(true);
             LoadingPage.setVisible(true);
 
-            Duration delay = Duration.millis(150);
+            Duration delay = Duration.millis(100);
             PauseTransition transition = new PauseTransition(delay);
             transition.setOnFinished(evt -> {
                 try {
@@ -178,5 +188,18 @@ public class LoginController implements Initializable {
             });
             transition.play();
         }
+    }
+
+    @FXML
+    public void dispenseCard() {
+        LoadingPage.setVisible(true);
+        returnCardLabel.setVisible(true);
+        Duration delay = Duration.seconds(2);
+        PauseTransition transition = new PauseTransition(delay);
+        transition.setOnFinished(evt -> {
+            LoadingPage.setVisible(false);
+            returnCardLabel.setVisible(false);
+        });
+        transition.play();
     }
 }

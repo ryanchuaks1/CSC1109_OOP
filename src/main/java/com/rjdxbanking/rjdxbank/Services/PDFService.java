@@ -14,6 +14,7 @@ public class PDFService {
         public static void Receipt(Account account, TransactionType TransactionType, String amount)
                         throws FileNotFoundException, IOException {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd_MM_yyyy");
                 LocalDateTime now = LocalDateTime.now();
                 String substring = account.getId().substring(account.getId().length() - 4, account.getId().length());
 
@@ -28,7 +29,8 @@ public class PDFService {
 
                 HtmlConverter.convertToPdf(htmlString,
                                 new FileOutputStream(
-                                                "src/main/resources/com/rjdxbanking/rjdxbank/Receipt/" + dtf.format(now)
+                                                "src/main/resources/com/rjdxbanking/rjdxbank/Receipt/receipt_"
+                                                                + dtf2.format(now)
                                                                 + ".pdf"));
                 System.out.println("PDF Created!");
 

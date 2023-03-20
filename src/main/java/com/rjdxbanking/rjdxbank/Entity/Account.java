@@ -1,4 +1,5 @@
 package com.rjdxbanking.rjdxbank.Entity;
+
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Interfaces.IAccount;
 import com.google.cloud.firestore.annotation.DocumentId;
@@ -9,6 +10,8 @@ import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public abstract class Account implements IAccount {
@@ -47,6 +50,7 @@ public abstract class Account implements IAccount {
 
     private final TransactionService transactionService = new TransactionService();
     private final AccountService accountService = new AccountService();
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     public String getId() {
         return Id;
@@ -85,14 +89,14 @@ public abstract class Account implements IAccount {
                 throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
             else if (!accountService.checkAccountExist(accountNo))
                 throw new Exception("The account does not exist");
-
-            CreateTransaction transferorTransaction = new CreateTransaction(amount,
+            LocalDateTime now = LocalDateTime.now();
+            CreateTransaction transferorTransaction = new CreateTransaction(dtf.format(now), amount,
                     "SGD",
                     TransactionType.InternalTransfer,
                     TransactionStatus.Completed,
                     this.Id);
 
-            CreateTransaction transfereeTransaction = new CreateTransaction(amount,
+            CreateTransaction transfereeTransaction = new CreateTransaction(dtf.format(now), amount,
                     "SGD",
                     TransactionType.InternalTransfer,
                     TransactionStatus.Completed,
@@ -115,8 +119,9 @@ public abstract class Account implements IAccount {
     }
 
     public void Deposit(double amount) {
+        LocalDateTime now = LocalDateTime.now();
         try {
-            CreateTransaction transaction = new CreateTransaction(amount,
+            CreateTransaction transaction = new CreateTransaction(dtf.format(now), amount,
                     "SGD",
                     TransactionType.Deposit,
                     TransactionStatus.Completed,
@@ -129,8 +134,9 @@ public abstract class Account implements IAccount {
     }
 
     public void Withdraw(double amount) {
+        LocalDateTime now = LocalDateTime.now();
         try {
-            CreateTransaction transaction = new CreateTransaction(
+            CreateTransaction transaction = new CreateTransaction(dtf.format(now),
                     amount,
                     "SGD",
                     TransactionType.Withdrawal,

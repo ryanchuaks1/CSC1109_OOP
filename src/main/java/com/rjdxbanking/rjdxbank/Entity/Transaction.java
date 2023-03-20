@@ -21,6 +21,9 @@ public class Transaction {
     @PropertyName("transactionStatus")
     private TransactionStatus transactionStatus;
 
+    @PropertyName("timeStamp")
+    private String timeStamp;
+
     @PropertyName("accountId")
     private String AccountId;
 
@@ -29,7 +32,6 @@ public class Transaction {
 
     @PropertyName("to")
     private String to;
-
 
     public String getId() {
         return Id;
@@ -47,8 +49,11 @@ public class Transaction {
         return this.transactionType;
     }
 
-    public void setTransactionType(String transactionType)
-    {
+    public String getTimeStamp() {
+        return this.timeStamp;
+    }
+
+    public void setTransactionType(String transactionType) {
         this.transactionType = TransactionType.valueOf(transactionType);
     }
 

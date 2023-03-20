@@ -103,7 +103,7 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
         account.Deposit(amountInCashCompartment);
-        // PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
+        PDFService.Receipt(account, TransactionType.Deposit, String.valueOf(amountInCashCompartment));
         Navigator.logout();
     }
 
@@ -112,7 +112,7 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         // Maybe need to surround this with try/catch ?
         account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
-        // PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(amountInCashCompartment));
+        PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(amountInCashCompartment));
         Navigator.logout();
     }
 

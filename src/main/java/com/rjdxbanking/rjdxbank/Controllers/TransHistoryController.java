@@ -61,7 +61,8 @@ public class TransHistoryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Path iconPrimaryPath = FileSystems.getDefault().getPath("src/main/resources/com/rjdxbanking/rjdxbank/Images/",
+        Path iconPrimaryPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/",
                 "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
@@ -76,17 +77,25 @@ public class TransHistoryController implements Initializable {
         ObservableList<Transaction> listTrans = tranService
                 .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
 
+        TableColumn<Transaction, String> transTimeCol = new TableColumn<Transaction, String>("Transaction Time");
+        transTimeCol.setMinWidth(200);
+        transTimeCol.setCellValueFactory(
+                new PropertyValueFactory<Transaction, String>("timeStamp"));
+        transTimeCol.setSortType(TableColumn.SortType.DESCENDING);
+
         TableColumn<Transaction, String> transIDCol = new TableColumn<Transaction, String>("Transaction ID");
         transIDCol.setMinWidth(200);
         transIDCol.setCellValueFactory(
                 new PropertyValueFactory<Transaction, String>("Id"));
 
-        TableColumn<Transaction, String> transactionTypeCol = new TableColumn<Transaction, String>("Transaction Type");
+        TableColumn<Transaction, String> transactionTypeCol = new TableColumn<Transaction, String>(
+                "Transaction Type");
         transactionTypeCol.setMinWidth(200);
         transactionTypeCol.setCellValueFactory(
                 new PropertyValueFactory<Transaction, String>("transactionType"));
 
-        TableColumn<Transaction, String> currencyCodeCol = new TableColumn<Transaction, String>("Currency Code");
+        TableColumn<Transaction, String> currencyCodeCol = new TableColumn<Transaction, String>(
+                "Currency Code");
         currencyCodeCol.setMinWidth(200);
         currencyCodeCol.setCellValueFactory(
                 new PropertyValueFactory<Transaction, String>("currencyCode"));
@@ -103,8 +112,10 @@ public class TransHistoryController implements Initializable {
                 new PropertyValueFactory<Transaction, String>("transactionStatus"));
 
         transHistoryTable.setItems(listTrans);
-        transHistoryTable.getColumns().addAll(transIDCol, transactionTypeCol, currencyCodeCol, transactionAmountCol,
-                statusCol);
+        transHistoryTable.getColumns().addAll(
+                transTimeCol, transIDCol, transactionTypeCol, currencyCodeCol,
+                transactionAmountCol, statusCol);
+
     }
 
     @FXML

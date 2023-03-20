@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -74,19 +79,26 @@ public class TransHistoryController implements Initializable {
     }
 
     void intializeTable() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         ObservableList<Transaction> listTrans = tranService
                 .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
+        System.out.println(listTrans.get(0).getId());
 
-        TableColumn<Transaction, String> transTimeCol = new TableColumn<Transaction, String>("Transaction Time");
+        TableColumn<Transaction, LocalDateTime> transTimeCol = new TableColumn<Transaction, LocalDateTime>("Transaction Time");
         transTimeCol.setMinWidth(200);
         transTimeCol.setCellValueFactory(
-                new PropertyValueFactory<Transaction, String>("timeStamp"));
+                new PropertyValueFactory<Transaction, LocalDateTime>("timeStamp"));
+        transTimeCol.setCellFactory(col -> new TableCell<Transaction, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty)
+                    setText(null);
+                else
+                    setText(dtf.format(item).toString());
+            }
+        });
         transTimeCol.setSortType(TableColumn.SortType.DESCENDING);
-
-        TableColumn<Transaction, String> transIDCol = new TableColumn<Transaction, String>("Transaction ID");
-        transIDCol.setMinWidth(200);
-        transIDCol.setCellValueFactory(
-                new PropertyValueFactory<Transaction, String>("Id"));
 
         TableColumn<Transaction, String> transactionTypeCol = new TableColumn<Transaction, String>(
                 "Transaction Type");
@@ -102,7 +114,7 @@ public class TransHistoryController implements Initializable {
 
         TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>(
                 "Transaction Amount");
-        transactionAmountCol.setMinWidth(180);
+        transactionAmountCol.setMinWidth(200);
         transactionAmountCol.setCellValueFactory(
                 new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
 
@@ -112,9 +124,12 @@ public class TransHistoryController implements Initializable {
                 new PropertyValueFactory<Transaction, String>("transactionStatus"));
 
         transHistoryTable.setItems(listTrans);
+
         transHistoryTable.getColumns().addAll(
-                transTimeCol, transIDCol, transactionTypeCol, currencyCodeCol,
+                transTimeCol, transactionTypeCol, currencyCodeCol,
                 transactionAmountCol, statusCol);
+        transHistoryTable.getSortOrder().add(transTimeCol);
+        transHistoryTable.sort();
 
     }
 

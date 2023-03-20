@@ -1,5 +1,8 @@
 package com.rjdxbanking.rjdxbank.Entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
 import com.rjdxbanking.rjdxbank.Models.TransactionStatus;
@@ -22,7 +25,7 @@ public class Transaction {
     private TransactionStatus transactionStatus;
 
     @PropertyName("timeStamp")
-    private String timeStamp;
+    private LocalDateTime timeStamp;
 
     @PropertyName("accountId")
     private String AccountId;
@@ -49,7 +52,7 @@ public class Transaction {
         return this.transactionType;
     }
 
-    public String getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return this.timeStamp;
     }
 

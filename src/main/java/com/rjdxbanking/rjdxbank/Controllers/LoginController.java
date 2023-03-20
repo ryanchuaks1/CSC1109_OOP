@@ -6,6 +6,9 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -117,7 +121,7 @@ public class LoginController implements Initializable {
     }
 
     private void checkCardNumber(String fullCardNumber) throws Exception {
-        if ((CreditCardHelper.checkLuhn(fullCardNumber)) == false) {
+        if (!(CreditCardHelper.checkLuhn(fullCardNumber))) {
             throw new Exception("Bad card reading, Please try again (Luhn Failed)");
         }
         BankIdentificationClient BinClient = new BankIdentificationClient();
@@ -147,6 +151,7 @@ public class LoginController implements Initializable {
                 LoadingPage.setVisible(false);
                 invalidPinLabel.setVisible(true);
             } else {
+                // Reset attempts, kicks the user back to the login page.
                 attempts = 0;
                 invalidPinLabel.setVisible(false);
                 LoadingPage.setVisible(false);
@@ -157,11 +162,21 @@ public class LoginController implements Initializable {
 
     @FXML
     private void pinTyped(KeyEvent event) throws IOException {
-        if (pinField.getText().length() == 6) {
+        if (pinField.getText().length() >= 6) {
             PinPage.setVisible(false);
             LoadingPage.setVisible(true);
-            checkPin(pinField.getText());
-            pinField.setText("");
+
+            Duration delay = Duration.millis(150);
+            PauseTransition transition = new PauseTransition(delay);
+            transition.setOnFinished(evt -> {
+                try {
+                    checkPin(pinField.getText());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                pinField.setText("");
+            });
+            transition.play();
         }
     }
 }

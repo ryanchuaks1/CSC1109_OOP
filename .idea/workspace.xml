@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added a lot of things :O" />
+    <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added a lot of things :O">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/rjdxbanking/rjdxbank/Views/MainDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/rjdxbanking/rjdxbank/Views/MainDashboard.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,18 +37,22 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/xavier/UofG/SITProjects/CSC1109/CSC1109_Firebase&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/xavier/UofG/SITProjects/CSC1109/CSC1109_Firebase/src/main/resources/Images&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/Images" />
       <recent name="$PROJECT_DIR$/src/main/java/Helpers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -63,6 +72,8 @@
       <workItem from="1679196556222" duration="6366000" />
       <workItem from="1679217804374" duration="1580000" />
       <workItem from="1679227652149" duration="397000" />
+      <workItem from="1679278910076" duration="769000" />
+      <workItem from="1679293577875" duration="2961000" />
     </task>
     <task id="LOCAL-00001" summary="Added a lot of things :O">
       <created>1679227980391</created>

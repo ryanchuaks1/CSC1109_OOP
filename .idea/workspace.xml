@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added a lot of things :O">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/rjdxbanking/rjdxbank/Views/MainDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/rjdxbanking/rjdxbank/Views/MainDashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/MainDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/MainDashboardController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +72,8 @@
       <workItem from="1679227652149" duration="397000" />
       <workItem from="1679278910076" duration="769000" />
       <workItem from="1679293577875" duration="2961000" />
+      <workItem from="1679296860708" duration="1342000" />
+      <workItem from="1679315572426" duration="243000" />
     </task>
     <task id="LOCAL-00001" summary="Added a lot of things :O">
       <created>1679227980391</created>
@@ -82,11 +82,29 @@
       <option name="project" value="LOCAL" />
       <updated>1679227980391</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added a lot of things :O">
+      <created>1679296883037</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679296883037</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added a lot of things :O" />

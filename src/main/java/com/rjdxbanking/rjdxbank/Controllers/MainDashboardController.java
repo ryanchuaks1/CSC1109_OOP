@@ -1,7 +1,9 @@
 package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
+import com.rjdxbanking.rjdxbank.Entity.User;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
+import com.rjdxbanking.rjdxbank.Services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -109,7 +111,9 @@ public class MainDashboardController implements Initializable {
         Image iconExitImage = new Image(iconExitPath.toUri().toString());
         iconExit.setImage(iconExitImage);
 
-        nameLabel.setText(" " + SessionClient.getAccount().getId());
+        UserService userService = new UserService();
+        User currentUser = userService.getUserByUserId(SessionClient.getAccount().getUserId());
+        nameLabel.setText(" " + currentUser.getFullName());
     }
 
     @FXML

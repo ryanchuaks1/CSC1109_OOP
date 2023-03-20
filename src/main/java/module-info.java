@@ -10,6 +10,7 @@ module com.rjdxbanking.rjdxbank {
     requires com.google.auth.oauth2;
     requires html2pdf;
     requires twilio;
+    requires kernel;
 
     opens com.rjdxbanking.rjdxbank to javafx.fxml;
 

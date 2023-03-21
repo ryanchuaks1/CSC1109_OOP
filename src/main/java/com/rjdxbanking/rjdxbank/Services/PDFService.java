@@ -14,7 +14,7 @@ public class PDFService {
         public static void Receipt(Account account, TransactionType TransactionType, String amount)
                         throws FileNotFoundException, IOException {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd_MM_yyyy HH:mm:ss");
+                DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd_MM_yyyy HH_mm_ss");
                 LocalDateTime now = LocalDateTime.now();
                 String substring = account.getId().substring(account.getId().length() - 4, account.getId().length());
 

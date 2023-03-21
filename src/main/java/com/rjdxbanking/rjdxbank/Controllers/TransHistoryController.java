@@ -86,7 +86,7 @@ public class TransHistoryController implements Initializable {
         ObservableList<Transaction> listTrans = tranService
                 .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
 
-        System.out.println(listTrans.get(0).getId());
+        // System.out.println(listTrans.get(0).getId());
 
         TableColumn<Transaction, LocalDateTime> transTimeCol = new TableColumn<Transaction, LocalDateTime>("Transaction Time");
         transTimeCol.setMinWidth(200);
@@ -126,9 +126,12 @@ public class TransHistoryController implements Initializable {
         statusCol.setMinWidth(180);
         statusCol.setCellValueFactory(
                 new PropertyValueFactory<Transaction, String>("transactionStatus"));
+        if(listTrans.size() == 0){
 
-        transHistoryTable.setItems(listTrans);
-
+        }
+        else{
+                transHistoryTable.setItems(listTrans);
+        }
         transHistoryTable.getColumns().addAll(
                 transTimeCol, transactionTypeCol, currencyCodeCol,
                 transactionAmountCol, statusCol);

@@ -18,8 +18,6 @@ import com.rjdxbanking.rjdxbank.Helpers.FirebaseInitialize;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 
 
-
-
 public class unitTesting {
     
     @BeforeClass

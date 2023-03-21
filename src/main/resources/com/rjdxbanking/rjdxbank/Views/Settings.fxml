@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -181,6 +182,91 @@
                     </children>
                 </HBox>
             </children></VBox>
+      <AnchorPane fx:id="verificationPane" layoutX="-2.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="711.0" prefWidth="1280.0">
+         <children>
+            <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="500.0" prefWidth="1002.0">
+                     <children>
+                        <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="500.0" prefWidth="892.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="%verificationLabel">
+                                 <font>
+                                    <Font name="Calibri" size="36.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="verificationOTP" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Calibri" size="36.0" />
+                                 </font>
+                              </PasswordField>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </GridPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="verificationBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%verificationBtn" textAlignment="CENTER" textFill="MAROON">
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Calibri" size="36.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="reOTPBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%resendOTPBtn" textAlignment="CENTER" textFill="MAROON">
+                           <font>
+                              <Font name="Calibri" size="36.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="returnBackBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%backLabel" textAlignment="CENTER" textFill="MAROON">
+                           <font>
+                              <Font name="Calibri" size="36.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="100.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="changePane" layoutX="-2.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
@@ -263,7 +349,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="verificationPane" layoutX="-2.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="711.0" prefWidth="1280.0">
+      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
                <children>
@@ -276,18 +362,40 @@
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="%verificationLabel">
+                              <Label text="%localTransferLimitLabel">
                                  <font>
                                     <Font name="Calibri" size="36.0" />
                                  </font>
                               </Label>
-                              <PasswordField fx:id="verificationOTP" GridPane.columnIndex="1">
+                              <Label text="%internationalTransferLimitLabel" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="Calibri" size="36.0" />
                                  </font>
-                              </PasswordField>
+                              </Label>
+                              <Label text="%atmWithdrawalLimitLabel" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Calibri" size="36.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="localTransferLimit" style="-fx-background-color: #FFFFFF; -fx-border-color: black;" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Calibri Bold" size="48.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="internationalTransferLimit" style="-fx-background-color: #FFFFFF; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Calibri Bold" size="48.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="atmWithdrawalLimit" style="-fx-background-color: #FFFFFF; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Calibri Bold" size="48.0" />
+                                 </font>
+                              </TextField>
                            </children>
                            <HBox.margin>
                               <Insets />
@@ -300,7 +408,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="verificationBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%verificationBtn" textAlignment="CENTER" textFill="MAROON">
+                        <Button fx:id="changeLimitBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="267.0" style="-fx-background-color: #FFFFFF;" text="Change Limits" textAlignment="CENTER" textFill="MAROON">
                            <HBox.margin>
                               <Insets right="40.0" />
                            </HBox.margin>
@@ -314,21 +422,7 @@
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="reOTPBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%resendOTPBtn" textAlignment="CENTER" textFill="MAROON">
-                           <font>
-                              <Font name="Calibri" size="36.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="returnBackBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%backLabel" textAlignment="CENTER" textFill="MAROON">
+                        <Button fx:id="returnBackBtn1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onButtonPress" prefHeight="65.0" prefWidth="241.0" style="-fx-background-color: #FFFFFF;" text="%backLabel" textAlignment="CENTER" textFill="MAROON">
                            <font>
                               <Font name="Calibri" size="36.0" />
                            </font>

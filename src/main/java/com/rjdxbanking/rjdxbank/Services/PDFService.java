@@ -27,13 +27,17 @@ public class PDFService {
                                 + "<p style='line-height:1.0'>Transaction type: " + TransactionType + "<br/>"
                                 + "<p style='line-height:1.0'>Amount: " + amount + "<br/>"
                                 + "<p style='line-height:1.0'>Remaining Balance: " + account.getAvailableBalance() + "<br/>";
-
-                HtmlConverter.convertToPdf(htmlString,
-                                new FileOutputStream(
-                                                "src/main/resources/com/rjdxbanking/rjdxbank/Receipt/receipt_"
-                                                                + dtf2.format(now)
-                                                                + ".pdf"));
-                System.out.println("PDF Created!");
+                
+                try{
+                    HtmlConverter.convertToPdf(htmlString, new FileOutputStream(
+                        "src/main/resources/com/rjdxbanking/rjdxbank/Receipt/receipt_"
+                                + dtf2.format(now)+ ".pdf"));
+                                System.out.println("PDF Created!");
+                }
+                catch(FileNotFoundException e){
+                    System.out.println("Print Error");
+                }
+                
 
         }
 }

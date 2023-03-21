@@ -20,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -38,6 +39,9 @@ import java.util.ResourceBundle;
 public class SettingsController implements Initializable{
 
     @FXML
+    private TextField atmWithdrawalLimit;
+
+    @FXML
     private Button btnChinese;
 
     @FXML
@@ -45,6 +49,9 @@ public class SettingsController implements Initializable{
 
     @FXML
     private Button btnMalay;
+
+    @FXML
+    private Button changeLimitBtn;
 
     @FXML
     private AnchorPane changePane;
@@ -74,7 +81,16 @@ public class SettingsController implements Initializable{
     private ImageView iconPrimary;
 
     @FXML
+    private TextField internationalTransferLimit;
+
+    @FXML
     private Pane limitPane;
+
+    @FXML
+    private AnchorPane limitSettingsPane;
+
+    @FXML
+    private TextField localTransferLimit;
 
     @FXML
     private Label nameLabel;
@@ -92,6 +108,9 @@ public class SettingsController implements Initializable{
     private Button returnBackBtn;
 
     @FXML
+    private Button returnBackBtn1;
+
+    @FXML
     private VBox settingBox;
 
     @FXML
@@ -104,6 +123,7 @@ public class SettingsController implements Initializable{
     private AnchorPane verificationPane;
 
     PhoneOTPClient otpClient = new PhoneOTPClient();
+    AccountService aService = new AccountService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -133,16 +153,23 @@ public class SettingsController implements Initializable{
         
         changePane.setVisible(false);
         verificationPane.setVisible(false);
+        limitSettingsPane.setVisible(false);
 
         addTextLimiter(confirmNewpin, 6);
         addTextLimiter(oldPin, 6);
         addTextLimiter(newPin, 6);
+
+        localTransferLimit.setText(String.format("%.2f", SessionClient.getAccount().getLocalTransferLimit()));
+        atmWithdrawalLimit.setText(String.format("%.2f", SessionClient.getAccount().getATMWithdrawalLimit()));
+        internationalTransferLimit.setText(String.format("%.2f", SessionClient.getAccount().getInternationalTransferLimit()));
     }
 
     @FXML
     void onButtonPress(ActionEvent event) {
         if (event.getSource() == changePin) {
             changePinMethod();
+        } else if (event.getSource() == changeLimitBtn) {
+            changeLimitMethod();
         } else if (event.getSource() == verificationBtn) {
             //verification
             if(otpClient.verification(verificationOTP.getText())){
@@ -158,8 +185,16 @@ public class SettingsController implements Initializable{
             }
         } else if (event.getSource() == reOTPBtn) {
             otpClient.phoneOTP(SessionClient.getAccount());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("OTP resend");
+                alert.setHeaderText(null);
+                alert.setContentText("OTP resend to your phone");
+                alert.showAndWait();
         } else if (event.getSource() == returnBackBtn) {
             verificationPane.setVisible(false);
+            settingBox.setVisible(true);
+        } else if (event.getSource() == returnBackBtn1) {
+            limitSettingsPane.setVisible(false);
             settingBox.setVisible(true);
         }
     }
@@ -178,10 +213,21 @@ public class SettingsController implements Initializable{
                 if(newpin.equals(confirmNewin)){
                     newpin = com.password4j.Password.hash(newpin).addRandomSalt().withArgon2().getResult();
                     accService.changePin(currentAcc, newpin);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Pin Updated");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Pin Updated, please login with your new pin");
+                    alert.showAndWait();
+                    try {
+                        Navigator.logout();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
                 else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("New pin and confirm New Pin are not the same");
+                    alert.setTitle("New pin and confirm new pin are not the same");
                     alert.setHeaderText(null);
                     alert.setContentText("New pin and confirm New Pin are not the same");
                     alert.showAndWait();
@@ -195,6 +241,28 @@ public class SettingsController implements Initializable{
                 alert.showAndWait();
             }
         }
+    }
+
+    public void changeLimitMethod(){
+        try {
+            aService.updateAccountLimits(SessionClient.getAccount(), "localTransferLimit", Double.parseDouble(localTransferLimit.getText()));
+            aService.updateAccountLimits(SessionClient.getAccount(), "internationalTransferLimit", Double.parseDouble(internationalTransferLimit.getText()));
+            aService.updateAccountLimits(SessionClient.getAccount(), "atmWithdrawalLimit", Double.parseDouble(atmWithdrawalLimit.getText()));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Limits Updated");
+            alert.setHeaderText(null);
+            alert.setContentText("Limits Updated, please reinsert card");
+            alert.showAndWait();
+            try {
+                Navigator.logout();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+        
     }
 
     public static void addTextLimiter(final PasswordField tf, final int maxLength) {
@@ -219,9 +287,8 @@ public class SettingsController implements Initializable{
             verificationPane.setVisible(true);
             otpClient.phoneOTP(SessionClient.getAccount());
         } else if (event.getSource() == limitPane) {
-            //Yet to do
-            SessionClient.setNavState("Deposit");
-            Navigator.setRoot("DepositWithdraw");
+            settingBox.setVisible(false);
+            limitSettingsPane.setVisible(true);
         } else if (event.getSource() == exitPane) {
             Navigator.setRoot("MainDashBoard");
         }

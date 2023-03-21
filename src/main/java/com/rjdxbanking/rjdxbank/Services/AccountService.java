@@ -72,7 +72,7 @@ public class AccountService {
         }
     }
 
-    public void updateAccountLimits(Account account, String field, int value){
+    public void updateAccountLimits(Account account, String field, Double value){
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());
             docref.update(field, value);

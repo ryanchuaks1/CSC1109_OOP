@@ -126,8 +126,9 @@ public abstract class Account implements IAccount {
                     TransactionType.Deposit,
                     TransactionStatus.Completed,
                     this.Id);
-
+            
             transactionService.createTransaction(transaction);
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

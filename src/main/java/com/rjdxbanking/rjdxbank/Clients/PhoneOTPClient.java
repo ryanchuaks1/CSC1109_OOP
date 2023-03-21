@@ -39,7 +39,7 @@ public class PhoneOTPClient {
                 new PhoneNumber(
                         "+15674122358"),
                 msg).create();
-
+        totalMiliseconds = System.currentTimeMillis();
         System.out.println(message.getSid());
     }
 
@@ -47,7 +47,7 @@ public class PhoneOTPClient {
         System.out.println(randomVerifier);
         long timeStartMin = totalMiliseconds / 1000 / 60;
         long current = System.currentTimeMillis() / 1000 / 60;
-        if ((current - timeStartMin) < 5) {
+        if ((current - timeStartMin) < 1) {
             if (Integer.toString(randomVerifier).equals(value)) {
                 randomVerifier = 0;
                 return true;

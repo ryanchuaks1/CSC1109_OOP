@@ -22,6 +22,7 @@ module com.rjdxbanking.rjdxbank {
     exports com.rjdxbanking.rjdxbank.Entity;
     exports com.rjdxbanking.rjdxbank.Models;
     exports com.rjdxbanking.rjdxbank.Controllers;
+    exports com.rjdxbanking.rjdxbank.Exception;
 
     opens com.rjdxbanking.rjdxbank.Entity to google.cloud.firestore, com.fasterxml.jackson.databind;
     opens com.rjdxbanking.rjdxbank.Models to google.cloud.firestore;

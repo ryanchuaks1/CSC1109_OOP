@@ -82,6 +82,7 @@ public class TransHistoryController implements Initializable {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         ObservableList<Transaction> listTrans = tranService
                 .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
+
         System.out.println(listTrans.get(0).getId());
 
         TableColumn<Transaction, LocalDateTime> transTimeCol = new TableColumn<Transaction, LocalDateTime>("Transaction Time");

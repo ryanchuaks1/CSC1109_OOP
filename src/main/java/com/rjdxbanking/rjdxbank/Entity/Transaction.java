@@ -2,6 +2,7 @@ package com.rjdxbanking.rjdxbank.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
@@ -36,6 +37,8 @@ public class Transaction {
     @PropertyName("to")
     private String to;
 
+    private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
     public String getId() {
         return Id;
     }
@@ -52,12 +55,17 @@ public class Transaction {
         return this.transactionType;
     }
 
+    public void setTransactionType(String transactionType) {
+        this.transactionType = TransactionType.valueOf(transactionType);
+    }
+
     public LocalDateTime getTimeStamp() {
         return this.timeStamp;
     }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = TransactionType.valueOf(transactionType);
+    public void setTimeStamp(String strTimeStamp) {
+        // Convert a string to a LocalDateTime
+        this.timeStamp =  LocalDateTime.parse(strTimeStamp, TIMESTAMP_FORMATTER);
     }
 
     public TransactionStatus getTransactionStatus() {

@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added a lot of things :O">
+    <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added account holder name to the dashboard.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/MainDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/MainDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/TransHistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/TransHistoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Entity/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Entity/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Services/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Services/TransactionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +76,7 @@
       <workItem from="1679278910076" duration="769000" />
       <workItem from="1679293577875" duration="2961000" />
       <workItem from="1679296860708" duration="1342000" />
-      <workItem from="1679315572426" duration="243000" />
+      <workItem from="1679315572426" duration="4149000" />
     </task>
     <task id="LOCAL-00001" summary="Added a lot of things :O">
       <created>1679227980391</created>
@@ -89,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679296883037</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added account holder name to the dashboard.">
+      <created>1679315890946</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679315890946</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,6 +118,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added a lot of things :O" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a lot of things :O" />
+    <MESSAGE value="Added account holder name to the dashboard." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added account holder name to the dashboard." />
   </component>
 </project>

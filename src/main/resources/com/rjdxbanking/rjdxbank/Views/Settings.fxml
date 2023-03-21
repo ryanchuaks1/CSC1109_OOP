@@ -139,7 +139,7 @@
                                 </VBox>
                             </children>
                             <HBox.margin>
-                                <Insets right="40.0" />
+                                <Insets />
                             </HBox.margin>
                             <cursor>
                                 <Cursor fx:constant="HAND" />
@@ -182,7 +182,7 @@
                     </children>
                 </HBox>
             </children></VBox>
-      <AnchorPane fx:id="verificationPane" layoutX="-2.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="711.0" prefWidth="1280.0">
+      <AnchorPane fx:id="verificationPane" layoutX="-2.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="711.0" prefWidth="1280.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
                <children>
@@ -267,7 +267,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="changePane" layoutX="-2.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0">
+      <AnchorPane fx:id="changePane" layoutX="-2.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
                <children>
@@ -349,7 +349,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0">
+      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
                <children>

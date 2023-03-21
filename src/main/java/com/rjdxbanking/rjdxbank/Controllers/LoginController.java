@@ -2,6 +2,7 @@ package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.rjdxbanking.rjdxbank.Clients.AccountClient;
 import com.rjdxbanking.rjdxbank.Clients.BankIdentificationClient;
+import com.rjdxbanking.rjdxbank.Clients.PinClient;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
@@ -10,7 +11,6 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -48,15 +48,6 @@ public class LoginController implements Initializable {
     private Button btnMalay;
 
     @FXML
-    private Button card1;
-
-    @FXML
-    private Button card2;
-
-    @FXML
-    private Button card3;
-
-    @FXML
     private ImageView iconPrimary;
 
     @FXML
@@ -71,6 +62,9 @@ public class LoginController implements Initializable {
     @FXML
     private Label returnCardLabel;
 
+    @FXML
+    private Label readingCardLabel;
+
     private int attempts = 0;
 
     @Override
@@ -79,6 +73,8 @@ public class LoginController implements Initializable {
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "IconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
+        PinPage.setVisible(false);
+        LoadingPage.setVisible(false);
         if (SessionClient.getNavState() == "Logout") {
             dispenseCard();
             SessionClient.setNavState(null);
@@ -96,67 +92,57 @@ public class LoginController implements Initializable {
         }
     }
 
-    // THIS IS HARD CODED FOR NOW, BAD FORMATTING
     @FXML
     void onInsertCard(ActionEvent event) {
-        LoginPage.setVisible(false);
+        String cardNum = ((Button) event.getSource()).getText().replaceAll("\\s+", "");
+        // Play reading card screen (simulate delay for machine to read card)
         LoadingPage.setVisible(true);
-        loadingLabel.setVisible(true);
-        String cardNum = ((Button) event.getSource()).getText().replaceAll("\\s+","");
-        System.out.println(cardNum);
-        try {
-            checkCardNumber(cardNum);
-        } catch (Exception e) {
-            LoginPage.setVisible(true);
-            loadingLabel.setVisible(false);
+        readingCardLabel.setVisible(true);
+        Duration delay = Duration.seconds(2);
+        PauseTransition transition = new PauseTransition(delay);
+        transition.setOnFinished(evt -> {
             LoadingPage.setVisible(false);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Card Rejected");
-            alert.setHeaderText(null);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }
+            readingCardLabel.setVisible(false);
+            checkCardNumber(cardNum);
+        });
+        transition.play();
     }
 
-    private void checkCardNumber(String fullCardNumber) throws Exception {
+    private void checkCardNumber(String fullCardNumber) {
         if (!(CreditCardHelper.checkLuhn(fullCardNumber))) {
-            throw new Exception("Bad card reading, Please try again (Luhn Failed)");
-        }
-        BankIdentificationClient BinClient = new BankIdentificationClient();
-        String binNum = fullCardNumber.substring(0, 6);
-
-        if (BinClient.CheckBIN(binNum)) {
-            SessionClient.setCardNum(fullCardNumber);
-            SessionClient.setOwnBank(true);
-            PinPage.setVisible(true);
-            loadingLabel.setVisible(false);
-            LoadingPage.setVisible(false);
+            dispenseCard();
         } else {
-            throw new Exception("Does not belong to our bank");
+            BankIdentificationClient BinClient = new BankIdentificationClient();
+            String binNum = fullCardNumber.substring(0, 6);
+            SessionClient.setCardNum(fullCardNumber);
+            SessionClient.setOwnBank(BinClient.CheckBIN(binNum));
+            PinPage.setVisible(true);
+            pinField.requestFocus();
         }
     }
 
     private void checkPin(String pin) throws IOException {
-        AccountClient accountClient = new AccountClient();
-        String cardNum = SessionClient.getCardNum().substring(6, 15);
-        try {
-            Account account = accountClient.Login(cardNum, pin);
-            SessionClient.setAccount(account);
-            Navigator.setRoot("MainDashboard");
-        } catch (Exception e) {
+        if (PinClient.checkPin(pin)) {
+            if (SessionClient.isOwnBank()) {
+                Navigator.setRoot("MainDashboard");
+            } else {
+                SessionClient.setNavState("Withdraw");
+                Navigator.setRoot("DepositWithdraw");
+            }
+        } else {
+            loadingLabel.setVisible(false);
+            LoadingPage.setVisible(false);
             if (attempts < 6) {
                 attempts++;
                 PinPage.setVisible(true);
-                loadingLabel.setVisible(false);
-                LoadingPage.setVisible(false);
+                pinField.requestFocus();
                 invalidPinLabel.setVisible(true);
             } else {
-                // Reset attempts, kicks the user back to the login page.
-                attempts = 0;
                 invalidPinLabel.setVisible(false);
-                loadingLabel.setVisible(false);
-                LoadingPage.setVisible(false);
-                LoginPage.setVisible(true);
+                SessionClient.setCardNum(null);
+                SessionClient.setOwnBank(false);
+                attempts = 0;
+                dispenseCard();
             }
         }
     }
@@ -167,16 +153,16 @@ public class LoginController implements Initializable {
             PinPage.setVisible(false);
             loadingLabel.setVisible(true);
             LoadingPage.setVisible(true);
-
-            Duration delay = Duration.millis(100);
+            Duration delay = Duration.millis(200);
             PauseTransition transition = new PauseTransition(delay);
             transition.setOnFinished(evt -> {
                 try {
                     checkPin(pinField.getText());
+                    pinField.setText("");
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
-                pinField.setText("");
+
             });
             transition.play();
         }

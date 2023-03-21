@@ -50,7 +50,6 @@ public class Navigator {
         }
     }
 
-    // TODO: Create transition, i tried but had problems with static variables
     public static void logout() throws IOException {
         // route to logout, card eject, and sessionvalues remove
         SessionClient.setAccount(null);

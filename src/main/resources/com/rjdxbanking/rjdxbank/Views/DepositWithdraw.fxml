@@ -208,7 +208,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="withdrawPane" layoutX="10.0" layoutY="110.0" prefHeight="700.0" prefWidth="1280.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <AnchorPane fx:id="withdrawPane" layoutX="10.0" layoutY="110.0" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="716.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
@@ -361,7 +361,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#confirmWithdrawPressed" prefHeight="55.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="✓" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                    <Button mnemonicParsing="false" onAction="#numPadTickClicked" prefHeight="55.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-border-color: #800000; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: #FFFFFF;" text="✓" textFill="MAROON" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -461,7 +461,7 @@
                 </Label>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="insufficientFundsPane" layoutX="340.0" layoutY="200.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
+      <AnchorPane fx:id="insufficientFundsPane" layoutX="340.0" layoutY="200.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
          <children>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>

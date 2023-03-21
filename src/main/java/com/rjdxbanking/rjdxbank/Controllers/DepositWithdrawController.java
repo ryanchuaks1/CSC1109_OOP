@@ -102,7 +102,11 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private void cancelPressed(ActionEvent event) throws IOException {
-        Navigator.logout();
+        if (SessionClient.isOwnBank()) {
+            Navigator.setRoot("MainDashBoard");
+        } else {
+            Navigator.logout();
+        }
     }
 
     @FXML
@@ -113,30 +117,34 @@ public class DepositWithdrawController implements Initializable {
         Navigator.logout();
     }
 
-    @FXML
-    private void confirmWithdrawPressed(ActionEvent event) throws FileNotFoundException, IOException {
-        Account account = SessionClient.getAccount();
-        try {
-            account.Withdraw(Double.parseDouble(withdrawTextField.getText()));
-            PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField.getText()));
-            Navigator.logout();
-        } catch (InsufficientFundsException e) {
-            insufficientFundsPane.setVisible(true);
+    private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
+        if (SessionClient.isOwnBank()) {
+            Account account = SessionClient.getAccount();
+            try {
+                account.Withdraw(amount);
+                PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));
+                Navigator.logout();
+            } catch (InsufficientFundsException e) {
+                insufficientFundsPane.setVisible(true);
+            }
         }
+        else {
+            // PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField)); 
+            Navigator.logout();
+        }
+    }
+
+    @FXML
+    private void numPadTickClicked(ActionEvent event) throws FileNotFoundException, IOException {
+        Double amount = Double.parseDouble(withdrawTextField.getText());
+        confirmWithdrawPressed(amount);
     }
 
     @FXML
     private void quickAmountClicked(ActionEvent event) throws IOException {
         String text = ((Button) event.getSource()).getText();
         Double amount = Double.parseDouble(text.substring(1, text.length()));
-        Account account = SessionClient.getAccount();
-        try {
-            account.Withdraw(amount);
-            PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(amount));
-            Navigator.logout();
-        } catch (InsufficientFundsException e) {
-            insufficientFundsPane.setVisible(true);
-        }
+        confirmWithdrawPressed(amount);
     }
 
     @FXML

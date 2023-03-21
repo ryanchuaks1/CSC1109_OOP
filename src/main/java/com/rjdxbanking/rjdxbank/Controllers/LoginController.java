@@ -98,22 +98,14 @@ public class LoginController implements Initializable {
 
     // THIS IS HARD CODED FOR NOW, BAD FORMATTING
     @FXML
-    void onInsertCard(ActionEvent event) throws InterruptedException {
+    void onInsertCard(ActionEvent event) {
         LoginPage.setVisible(false);
         LoadingPage.setVisible(true);
         loadingLabel.setVisible(true);
-        if (event.getSource() == card1) {
-            enterCardNumber("6229259821434671");
-        } else if (event.getSource() == card2) {
-            enterCardNumber("1234567890123456");
-        } else if (event.getSource() == card3) {
-            enterCardNumber("6219259821434673");
-        }
-    }
-
-    private void enterCardNumber(String fullCardNumbe) {
+        String cardNum = ((Button) event.getSource()).getText().replaceAll("\\s+","");
+        System.out.println(cardNum);
         try {
-            checkCardNumber(fullCardNumbe);
+            checkCardNumber(cardNum);
         } catch (Exception e) {
             LoginPage.setVisible(true);
             loadingLabel.setVisible(false);

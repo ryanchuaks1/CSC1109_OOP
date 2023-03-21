@@ -45,17 +45,18 @@
                         </Label>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Button fx:id="card1" mnemonicParsing="false" onAction="#onInsertCard" text="6229 2598 2143 4678">
-                                    <HBox.margin>
-                                        <Insets right="20.0" />
-                                    </HBox.margin>
-                                </Button>
+                        <VBox prefHeight="100.0" prefWidth="211.0">
+                           <children>
+                                      <Button fx:id="card1" mnemonicParsing="false" onAction="#onInsertCard" text="6229 2598 2143 4671" />
+                              <Button mnemonicParsing="false" onAction="#onInsertCard" text="6229 2512 8263 9302" />
+                           </children>
+                        </VBox>
                                 <Button fx:id="card2" mnemonicParsing="false" onAction="#onInsertCard" text="1234 5678 9012 3456">
                                     <HBox.margin>
                                         <Insets right="20.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button fx:id="card3" mnemonicParsing="false" onAction="#onInsertCard" text="6219 2598 2143 4678" />
+                                <Button fx:id="card3" mnemonicParsing="false" onAction="#onInsertCard" text="6219 2598 2143 4673" />
                             </children>
                         </HBox>
                     </children>

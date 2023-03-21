@@ -1,7 +1,6 @@
 package com.rjdxbanking.rjdxbank.Helpers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
-import com.rjdxbanking.rjdxbank.Controllers.LoginController;
 import com.rjdxbanking.rjdxbank.MainApplication;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;

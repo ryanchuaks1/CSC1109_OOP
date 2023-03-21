@@ -68,6 +68,15 @@ public abstract class Account implements IAccount {
         return internationalTransferLimit;
     }
 
+    @Override
+    public double getATMWithdrawalLimit() {
+        return this.atmWithdrawalLimit;
+    }
+
+    public String getPinNo() {
+        return pinNo;
+    }
+
     // TODO: Develop algorithm to determine if accountNo is international
     // TODO: International Transfer should always be pending.
     public void InternationalTransfer(double amount, String accountNo) {
@@ -114,9 +123,7 @@ public abstract class Account implements IAccount {
         }
     }
 
-    public String getPinNo() {
-        return pinNo;
-    }
+    
 
     public void Deposit(double amount) {
         LocalDateTime now = LocalDateTime.now();
@@ -231,10 +238,7 @@ public abstract class Account implements IAccount {
         return pendingBalance;
     }
 
-    @Override
-    public double getATMWithdrawalLimit() {
-        return this.atmWithdrawalLimit;
-    }
+    
 
     public abstract double getYearlyProjectedInterestRate();
 

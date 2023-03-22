@@ -137,7 +137,9 @@ public class MainDashboardController implements Initializable {
         } else if (event.getSource() == withdrawPane) {
             SessionClient.setNavState("Withdraw");
             Navigator.setRoot("DepositWithdraw");
-        }  else if (event.getSource() == settingsPane) {
+        }  else if (event.getSource() == transferPane) {
+            Navigator.setRoot("Transfer");
+        } else if (event.getSource() == settingsPane) {
             Navigator.setRoot("Settings");
         } else if (event.getSource() == exitPane) {
             Navigator.logout();

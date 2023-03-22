@@ -49,7 +49,6 @@ public class CreditCardHelper {
 
     public static boolean checkLuhn(String cardNo)
     {
-        int nDigits = cardNo.length();
         int nSum = 0;
         boolean isSecond = false;
 

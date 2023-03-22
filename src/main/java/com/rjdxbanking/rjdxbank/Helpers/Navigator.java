@@ -1,7 +1,6 @@
 package com.rjdxbanking.rjdxbank.Helpers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
-import com.rjdxbanking.rjdxbank.Controllers.LoginController;
 import com.rjdxbanking.rjdxbank.MainApplication;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +50,6 @@ public class Navigator {
         }
     }
 
-    // TODO: Create transition, i tried but had problems with static variables
     public static void logout() throws IOException {
         // route to logout, card eject, and sessionvalues remove
         SessionClient.setAccount(null);

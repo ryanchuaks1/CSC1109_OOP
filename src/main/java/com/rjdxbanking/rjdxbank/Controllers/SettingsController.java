@@ -8,9 +8,6 @@ import com.rjdxbanking.rjdxbank.Entity.User;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.UserService;
-import com.rjdxbanking.rjdxbank.Services.AccountService;
-import com.rjdxbanking.rjdxbank.Services.UserService;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -256,7 +253,6 @@ public class SettingsController implements Initializable{
             try {
                 Navigator.logout();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } catch (Exception e) {

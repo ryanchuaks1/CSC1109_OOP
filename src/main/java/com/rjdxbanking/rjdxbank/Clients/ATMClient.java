@@ -13,11 +13,11 @@ public class ATMClient {
 
     public ATMClient()
     {
-        this.twoDollars = 500;
-        this.fiveDollars = 600;
-        this.tenDollars = 300;
-        this.fiftyDollars = 400;
-        this.hundredDollars = 100;
+        this.twoDollars = 4;
+        this.fiveDollars = 4;
+        this.tenDollars = 0;
+        this.fiftyDollars = 0;
+        this.hundredDollars = 0;
     }
 
     public ATMChange WithdrawCash(int dollars) throws BillsNotEnoughException {

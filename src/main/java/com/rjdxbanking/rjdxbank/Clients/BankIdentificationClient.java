@@ -1,12 +1,7 @@
 package com.rjdxbanking.rjdxbank.Clients;
 
 public class BankIdentificationClient {
-    public Boolean CheckBIN(String BIN) {
-        if (BIN.equals("622925")) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    public static Boolean CheckBIN(String BIN) {
+        return BIN.equals("622925");
     }
 }

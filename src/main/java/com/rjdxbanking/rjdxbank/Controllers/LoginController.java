@@ -130,10 +130,9 @@ public class LoginController implements Initializable {
         if (!(CreditCardHelper.checkLuhn(fullCardNumber))) {
             throw new Exception("Bad card reading, Please try again (Luhn Failed)");
         }
-        BankIdentificationClient BinClient = new BankIdentificationClient();
         String binNum = fullCardNumber.substring(0, 6);
 
-        if (BinClient.CheckBIN(binNum)) {
+        if (BankIdentificationClient.CheckBIN(binNum)) {
             SessionClient.setCardNum(fullCardNumber);
             SessionClient.setOwnBank(true);
             PinPage.setVisible(true);

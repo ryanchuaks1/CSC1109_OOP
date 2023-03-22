@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Remove the need to manually serialize datetime. Everything is done on the class model.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/ATMClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Exception/BillsNotEnoughException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Models/ATMChange.java" afterDir="false" />
+    <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added ATMClient to withdraw cash with a fixed amount of bills in the ATM system.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/ATMClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/ATMClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/BankIdentificationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/BankIdentificationClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,8 @@
       <workItem from="1679293577875" duration="2961000" />
       <workItem from="1679296860708" duration="1342000" />
       <workItem from="1679315572426" duration="4884000" />
-      <workItem from="1679410041423" duration="2097000" />
+      <workItem from="1679410041423" duration="2267000" />
+      <workItem from="1679412579531" duration="1589000" />
     </task>
     <task id="LOCAL-00001" summary="Added a lot of things :O">
       <created>1679227980391</created>
@@ -115,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679360402845</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added ATMClient to withdraw cash with a fixed amount of bills in the ATM system.">
+      <created>1679412310288</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679412310288</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +143,7 @@
     <MESSAGE value="Added a lot of things :O" />
     <MESSAGE value="Added account holder name to the dashboard." />
     <MESSAGE value="Remove the need to manually serialize datetime. Everything is done on the class model." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove the need to manually serialize datetime. Everything is done on the class model." />
+    <MESSAGE value="Added ATMClient to withdraw cash with a fixed amount of bills in the ATM system." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ATMClient to withdraw cash with a fixed amount of bills in the ATM system." />
   </component>
 </project>

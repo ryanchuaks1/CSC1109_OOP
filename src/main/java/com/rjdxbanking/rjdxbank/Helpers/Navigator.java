@@ -1,15 +1,14 @@
 package com.rjdxbanking.rjdxbank.Helpers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
+import com.rjdxbanking.rjdxbank.Clients.TimeoutClient;
 import com.rjdxbanking.rjdxbank.MainApplication;
-import javafx.animation.PauseTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -17,6 +16,12 @@ import java.util.ResourceBundle;
 public class Navigator {
     private static Scene scene;
     private static Locale currentLocale;
+    private static TimeoutClient timeout = new TimeoutClient();
+    static EventHandler<InputEvent> inputHandler = new EventHandler<InputEvent>() {
+        public void handle(InputEvent event) {
+            timeout.resetTimer();
+        }
+    };
 
     public static void initUserInterface(Stage stage) throws IOException {
         currentLocale = Locale.forLanguageTag("en");
@@ -28,25 +33,13 @@ public class Navigator {
 
     public static void setRoot(String fxml) throws IOException {
         if (fxml.equals("Login")) {
+            timeout.stopTimer();
+            scene.removeEventFilter(InputEvent.ANY, inputHandler);
             scene.setRoot(loadFXML(fxml));
         } else {
+            timeout.startTimer();
+            scene.addEventFilter(InputEvent.ANY, inputHandler);
             scene.setRoot(loadFXML(fxml));
-
-            // create transition for logout (Normally should be more than that but for now I
-            // put with 10 for showcase purposes)
-            Duration delay = Duration.seconds(30);
-            PauseTransition transition = new PauseTransition(delay);
-            transition.setOnFinished(evt -> {
-                try {
-                    logout();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-
-            // restart transition on user interaction
-            scene.addEventFilter(InputEvent.ANY, evt -> transition.playFromStart());
-            transition.play();
         }
     }
 

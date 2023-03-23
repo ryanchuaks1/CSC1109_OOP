@@ -101,13 +101,13 @@ public abstract class Account implements IAccount {
             LocalDateTime now = LocalDateTime.now();
             CreateTransaction transferorTransaction = new CreateTransaction(dtf.format(now), amount,
                     "SGD",
-                    TransactionType.InternalTransfer,
+                    TransactionType.LocalTransfer,
                     TransactionStatus.Completed,
                     this.Id);
 
             CreateTransaction transfereeTransaction = new CreateTransaction(dtf.format(now), amount,
                     "SGD",
-                    TransactionType.InternalTransfer,
+                    TransactionType.LocalTransfer,
                     TransactionStatus.Completed,
                     accountNo);
 
@@ -131,9 +131,9 @@ public abstract class Account implements IAccount {
                     TransactionType.Deposit,
                     TransactionStatus.Completed,
                     this.Id);
-            
+
             transactionService.createTransaction(transaction);
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -164,8 +164,8 @@ public abstract class Account implements IAccount {
         return transactionService.getTransactionsByAccountId(this.Id);
     }
 
-    public List<Transaction> getTransactionsbyToday(){
-        return transactionService.getTransactionsByDate(this.Id);
+    public List<Transaction> getTransactionsToday(TransactionType type) {
+        return transactionService.getWithdrawTransactionsToday(this.Id, type);
     }
 
     @Override
@@ -240,52 +240,22 @@ public abstract class Account implements IAccount {
         return pendingBalance;
     }
 
-    public double getCurrentWithdrawalLimit(){
-        List<Transaction> transactions = getTransactionsbyToday();
-        double atmWithdrawalLimit = this.atmWithdrawalLimit;
-        
+    public double getCurrentLimit(TransactionType type) {
+        double limit = 0;
+        List<Transaction> transactions = getTransactionsToday(type);
+        switch (type) {
+            case Withdrawal:
+                limit = this.atmWithdrawalLimit;
+            case LocalTransfer:
+                limit = this.localTransferLimit;
+            case OverseasTransfer:
+                limit = this.internationalTransferLimit;
+        }
         for (Transaction transaction : transactions) {
-            TransactionType transactionType = transaction.getTransactionType();
+            limit -= transaction.getTransactionAmount();
+        }
 
-                // Can only be Withdrawal
-                if (transactionType == TransactionType.Withdrawal) {
-                    atmWithdrawalLimit -= transaction.getTransactionAmount();
-                }
-            }
-
-        return atmWithdrawalLimit;
-    }
-
-    public double getCurrentLocalTransferLimit(){
-        List<Transaction> transactions = getTransactionsbyToday();
-        double localTransferLimit = this.localTransferLimit;
-        
-        for (Transaction transaction : transactions) {
-            TransactionType transactionType = transaction.getTransactionType();
-
-                // Can only be Withdrawal
-                if (transactionType == TransactionType.InternalTransfer) {
-                    localTransferLimit -= transaction.getTransactionAmount();
-                }
-            }
-
-        return localTransferLimit;
-    }
-
-    public double getCurrentInternationalTransferLimit(){
-        List<Transaction> transactions = getTransactionsbyToday();
-        double internationalTransferLimit = this.internationalTransferLimit;
-        
-        for (Transaction transaction : transactions) {
-            TransactionType transactionType = transaction.getTransactionType();
-
-                // Can only be Withdrawal
-                if (transactionType == TransactionType.OverseasTransfer) {
-                    internationalTransferLimit -= transaction.getTransactionAmount();
-                }
-            }
-
-        return internationalTransferLimit;
+        return limit;
     }
 
     public abstract double getYearlyProjectedInterestRate();

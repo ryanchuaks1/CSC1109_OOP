@@ -8,11 +8,14 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import com.rjdxbanking.rjdxbank.Entity.Transaction;
 import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
+import com.rjdxbanking.rjdxbank.Models.TransactionType;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +32,6 @@ public class TransactionService {
         }
         return transaction;
     }
-
 
     public void createTransaction(CreateTransaction createTransaction) {
         try {
@@ -65,19 +67,23 @@ public class TransactionService {
         return transactions;
     }
 
-    public List<Transaction> getTransactionsByDate(String accountId) {
+    public List<Transaction> getWithdrawTransactionsToday(String accountId, TransactionType type) {
         List<Transaction> transactions = new ArrayList<Transaction>();
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formatDateTime = now.format(format);
         try {
-            var apiFuture = db.collection("transactions").whereEqualTo("accountId", accountId).get();
-            QuerySnapshot snapshots = apiFuture.get();
-            List<Transaction> transactionsList = snapshots.toObjects(Transaction.class);
-            LocalDate now = LocalDate.now();
-            for (int i = 0;i<transactionsList.size(); i++){
-                if(transactionsList.get(i).getTimeStamp().toLocalDate().equals(now)){
-                    transactions.add(transactionsList.get(i));
-                }
-            }
+            System.out.println(formatDateTime);
             
+            var apiFuture = db.collection("transactions").whereEqualTo("accountId", accountId)
+                    .whereEqualTo("transactionType", type)
+                    .whereGreaterThanOrEqualTo("timeStamp", formatDateTime)
+                    .whereLessThanOrEqualTo("timeStamp", formatDateTime + '~').get();
+
+            QuerySnapshot snapshots = apiFuture.get();
+            var transactionsList = snapshots.toObjects(Transaction.class);
+            transactions.addAll(transactionsList);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

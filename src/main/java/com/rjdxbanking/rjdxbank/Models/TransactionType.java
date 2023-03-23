@@ -1,7 +1,7 @@
 package com.rjdxbanking.rjdxbank.Models;
 
 public enum TransactionType {
-    InternalTransfer,
+    LocalTransfer,
     OverseasTransfer,
     Withdrawal,
     Deposit,

@@ -1,7 +1,5 @@
 package com.rjdxbanking.rjdxbank;
 
-import com.rjdxbanking.rjdxbank.Clients.ATMClient;
-import com.rjdxbanking.rjdxbank.Exception.BillsNotEnoughException;
 import com.rjdxbanking.rjdxbank.Helpers.FirebaseInitialize;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import javafx.application.Application;

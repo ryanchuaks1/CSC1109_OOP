@@ -2,10 +2,12 @@ package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
+import com.rjdxbanking.rjdxbank.Entity.Transaction;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
+import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -59,6 +62,8 @@ public class DepositWithdrawController implements Initializable {
     private TextField withdrawTextField;
 
     private Double amountInCashCompartment = 0.0;
+
+    TransactionService ts = new TransactionService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -120,6 +125,9 @@ public class DepositWithdrawController implements Initializable {
     private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
         if (SessionClient.isOwnBank()) {
             Account account = SessionClient.getAccount();
+            // if (account.getCurrentLimit(TransactionType.Withdrawal) < amount) {
+                
+            // }
             try {
                 account.Withdraw(amount);
                 PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));

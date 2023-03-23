@@ -11,9 +11,7 @@ module com.rjdxbanking.rjdxbank {
     requires html2pdf;
     requires twilio;
     requires kernel;
-    requires com.fasterxml.jackson.databind;
-    requires com.fasterxml.jackson.datatype.jsr310;
-
+    requires com.google.gson;
 
     opens com.rjdxbanking.rjdxbank to javafx.fxml;
 

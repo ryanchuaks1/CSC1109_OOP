@@ -6,26 +6,26 @@ import com.rjdxbanking.rjdxbank.Services.ATMService;
 
 public class ATMClient {
     // The private values here determine how much cash count we have.
-    private int twoDollars;
-    private int fiveDollars;
-    private int tenDollars;
-    private int fiftyDollars;
-    private int hundredDollars;
+    private static int twoDollars;
+    private static int fiveDollars;
+    private static int tenDollars;
+    private static int fiftyDollars;
+    private static int hundredDollars;
 
     private ATMService aService = new ATMService();
     ATMChange achange = aService.getATMChange();
 
-    public ATMClient()
-    {
-        this.twoDollars = achange.getTwoDollars();
-        this.fiveDollars = achange.getFiveDollars();
-        this.tenDollars = achange.getTenDollars();
-        this.fiftyDollars = achange.getFiftyDollars();
-        this.hundredDollars = achange.getHundredDollars();
+    public ATMClient() {
+        ATMClient.twoDollars = achange.getTwoDollars();
+        ATMClient.fiveDollars = achange.getFiveDollars();
+        ATMClient.tenDollars = achange.getTenDollars();
+        ATMClient.fiftyDollars = achange.getFiftyDollars();
+        ATMClient.hundredDollars = achange.getHundredDollars();
     }
 
-    public ATMChange WithdrawCash(int dollars) throws BillsNotEnoughException {
-        // Calculate the number of bills of each denomination needed to make up the withdrawal amount
+    public static ATMChange WithdrawCash(int dollars) throws BillsNotEnoughException {
+        // Calculate the number of bills of each denomination needed to make up the
+        // withdrawal amount
         int hundredCount = Math.min(hundredDollars, dollars / 100);
         dollars -= (hundredCount * 100);
 
@@ -45,7 +45,10 @@ public class ATMClient {
         if (dollars != 0) {
             throw new BillsNotEnoughException("Not enough bills available to withdraw requested amount.");
         }
-        ATMChange remainder = new ATMChange(this.twoDollars-twoCount, this.fiveDollars-fiveCount, this.tenDollars-tenCount, this.fiftyDollars-fiftyCount, this.hundredDollars-hundredCount);
+
+        ATMChange remainder = new ATMChange(ATMClient.twoDollars - twoCount, ATMClient.fiveDollars - fiveCount,
+                ATMClient.tenDollars - tenCount, ATMClient.fiftyDollars - fiftyCount,
+                ATMClient.hundredDollars - hundredCount);
         ATMService aService = new ATMService();
         aService.updateATMChange(remainder);
         return new ATMChange(twoCount, fiveCount, tenCount, fiftyCount, hundredCount);

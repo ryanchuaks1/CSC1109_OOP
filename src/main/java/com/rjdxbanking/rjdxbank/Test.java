@@ -29,8 +29,9 @@ public class Test {
         FirebaseInitialize.initDatabase();
 
         AccountService ac = new AccountService();
-        Account acc = ac.getAccountsByNumber("982143467");
+        Account acc = ac.getAccountsByNumber("128263930");
         System.out.println(acc.getCurrentLimit(TransactionType.Withdrawal));
+        System.out.println(acc.getATMWithdrawalLimit());
         
         // FXService s = new FXService();
         // try {

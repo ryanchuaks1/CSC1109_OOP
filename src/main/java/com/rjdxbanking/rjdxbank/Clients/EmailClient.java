@@ -18,7 +18,7 @@ public class EmailClient {
     
     static long totalMiliseconds;
     
-    public void emailUpdate(){
+    public static void emailUpdate(){
         // Sender's email ID needs to be mentioned
         String from = SecretKeyStore.getKey("emailId");
 

@@ -246,15 +246,17 @@ public abstract class Account implements IAccount {
         switch (type) {
             case Withdrawal:
                 limit = this.atmWithdrawalLimit;
+                break;
             case LocalTransfer:
                 limit = this.localTransferLimit;
+                break;
             case OverseasTransfer:
                 limit = this.internationalTransferLimit;
+                break;
         }
         for (Transaction transaction : transactions) {
             limit -= transaction.getTransactionAmount();
         }
-
         return limit;
     }
 

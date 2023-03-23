@@ -144,7 +144,8 @@ public class DepositWithdrawController implements Initializable {
                 limitReachedPane.setVisible(true);
             } else {
                 try {
-                    ATMClient.WithdrawCash(amount.intValue());
+                    ATMClient atmClient = new ATMClient();
+                    atmClient.WithdrawCash(amount.intValue());
                     account.Withdraw(amount);
                     PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));
                     Navigator.logout();

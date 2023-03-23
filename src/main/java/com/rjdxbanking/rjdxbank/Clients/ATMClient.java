@@ -1,7 +1,8 @@
 package com.rjdxbanking.rjdxbank.Clients;
 
+import com.rjdxbanking.rjdxbank.Entity.ATMChange;
 import com.rjdxbanking.rjdxbank.Exception.BillsNotEnoughException;
-import com.rjdxbanking.rjdxbank.Models.ATMChange;
+import com.rjdxbanking.rjdxbank.Services.ATMService;
 
 public class ATMClient {
     // The private values here determine how much cash count we have.
@@ -11,13 +12,16 @@ public class ATMClient {
     private int fiftyDollars;
     private int hundredDollars;
 
+    private ATMService aService = new ATMService();
+    ATMChange achange = aService.getATMChange();
+
     public ATMClient()
     {
-        this.twoDollars = 4;
-        this.fiveDollars = 4;
-        this.tenDollars = 0;
-        this.fiftyDollars = 0;
-        this.hundredDollars = 0;
+        this.twoDollars = achange.getTwoDollars();
+        this.fiveDollars = achange.getFiveDollars();
+        this.tenDollars = achange.getTenDollars();
+        this.fiftyDollars = achange.getFiftyDollars();
+        this.hundredDollars = achange.getHundredDollars();
     }
 
     public ATMChange WithdrawCash(int dollars) throws BillsNotEnoughException {
@@ -41,6 +45,9 @@ public class ATMClient {
         if (dollars != 0) {
             throw new BillsNotEnoughException("Not enough bills available to withdraw requested amount.");
         }
+        ATMChange remainder = new ATMChange(this.twoDollars-twoCount, this.fiveDollars-fiveCount, this.tenDollars-tenCount, this.fiftyDollars-fiftyCount, this.hundredDollars-hundredCount);
+        ATMService aService = new ATMService();
+        aService.updateATMChange(remainder);
         return new ATMChange(twoCount, fiveCount, tenCount, fiftyCount, hundredCount);
     }
 }

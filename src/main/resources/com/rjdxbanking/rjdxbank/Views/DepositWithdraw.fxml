@@ -208,7 +208,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="withdrawPane" layoutX="10.0" layoutY="110.0" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <AnchorPane fx:id="withdrawPane" layoutX="10.0" layoutY="110.0" prefHeight="700.0" prefWidth="1280.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="716.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
@@ -470,7 +470,34 @@
                         <Font name="Calibri" size="36.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="Close" textFill="MAROON">
+                  <Button fx:id="insufficientBtn" mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="Close" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="billsInsufficientPane" layoutX="340.0" layoutY="200.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;">
+         <children>
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="9.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="Lack of physical cash">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="lackOfcashBtn" mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="Close" textFill="MAROON">
                      <font>
                         <Font name="Calibri" size="36.0" />
                      </font>

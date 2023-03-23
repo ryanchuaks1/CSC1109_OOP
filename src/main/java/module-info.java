@@ -12,6 +12,7 @@ module com.rjdxbanking.rjdxbank {
     requires twilio;
     requires kernel;
     requires com.google.gson;
+    requires java.mail;
 
     opens com.rjdxbanking.rjdxbank to javafx.fxml;
 
@@ -25,4 +26,5 @@ module com.rjdxbanking.rjdxbank {
     opens com.rjdxbanking.rjdxbank.Entity to google.cloud.firestore, com.fasterxml.jackson.databind;
     opens com.rjdxbanking.rjdxbank.Models to google.cloud.firestore;
     opens com.rjdxbanking.rjdxbank.Controllers to javafx.fxml;
+    opens com.rjdxbanking.rjdxbank.Clients to java.mail;
 }

@@ -123,8 +123,6 @@ public abstract class Account implements IAccount {
         }
     }
 
-    
-
     public void Deposit(double amount) {
         LocalDateTime now = LocalDateTime.now();
         try {
@@ -164,6 +162,10 @@ public abstract class Account implements IAccount {
 
     public List<Transaction> getTransactions() {
         return transactionService.getTransactionsByAccountId(this.Id);
+    }
+
+    public List<Transaction> getTransactionsbyToday(){
+        return transactionService.getTransactionsByDate(this.Id);
     }
 
     @Override
@@ -238,7 +240,53 @@ public abstract class Account implements IAccount {
         return pendingBalance;
     }
 
-    
+    public double getCurrentWithdrawalLimit(){
+        List<Transaction> transactions = getTransactionsbyToday();
+        double atmWithdrawalLimit = this.atmWithdrawalLimit;
+        
+        for (Transaction transaction : transactions) {
+            TransactionType transactionType = transaction.getTransactionType();
+
+                // Can only be Withdrawal
+                if (transactionType == TransactionType.Withdrawal) {
+                    atmWithdrawalLimit -= transaction.getTransactionAmount();
+                }
+            }
+
+        return atmWithdrawalLimit;
+    }
+
+    public double getCurrentLocalTransferLimit(){
+        List<Transaction> transactions = getTransactionsbyToday();
+        double localTransferLimit = this.localTransferLimit;
+        
+        for (Transaction transaction : transactions) {
+            TransactionType transactionType = transaction.getTransactionType();
+
+                // Can only be Withdrawal
+                if (transactionType == TransactionType.InternalTransfer) {
+                    localTransferLimit -= transaction.getTransactionAmount();
+                }
+            }
+
+        return localTransferLimit;
+    }
+
+    public double getCurrentInternationalTransferLimit(){
+        List<Transaction> transactions = getTransactionsbyToday();
+        double internationalTransferLimit = this.internationalTransferLimit;
+        
+        for (Transaction transaction : transactions) {
+            TransactionType transactionType = transaction.getTransactionType();
+
+                // Can only be Withdrawal
+                if (transactionType == TransactionType.OverseasTransfer) {
+                    internationalTransferLimit -= transaction.getTransactionAmount();
+                }
+            }
+
+        return internationalTransferLimit;
+    }
 
     public abstract double getYearlyProjectedInterestRate();
 

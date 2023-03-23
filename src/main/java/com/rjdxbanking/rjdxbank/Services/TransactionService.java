@@ -10,6 +10,9 @@ import com.rjdxbanking.rjdxbank.Entity.Transaction;
 import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +59,25 @@ public class TransactionService {
             QuerySnapshot snapshots = apiFuture.get();
             var transactionsList = snapshots.toObjects(Transaction.class);
             transactions.addAll(transactionsList);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return transactions;
+    }
+
+    public List<Transaction> getTransactionsByDate(String accountId) {
+        List<Transaction> transactions = new ArrayList<Transaction>();
+        try {
+            var apiFuture = db.collection("transactions").whereEqualTo("accountId", accountId).get();
+            QuerySnapshot snapshots = apiFuture.get();
+            List<Transaction> transactionsList = snapshots.toObjects(Transaction.class);
+            LocalDate now = LocalDate.now();
+            for (int i = 0;i<transactionsList.size(); i++){
+                if(transactionsList.get(i).getTimeStamp().toLocalDate().equals(now)){
+                    transactions.add(transactionsList.get(i));
+                }
+            }
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

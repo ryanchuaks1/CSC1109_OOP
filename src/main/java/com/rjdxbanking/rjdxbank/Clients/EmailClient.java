@@ -42,7 +42,6 @@ public class EmailClient {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(from, password);
             }
-
         });
 
         // Used to debug SMTP issues
@@ -56,13 +55,12 @@ public class EmailClient {
             message.setFrom(new InternetAddress(from));
 
             // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("rjdxbanking@gmail.com"));
-            
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress("rjdxbanking@gmail.com"));           
             
             // Set Subject: header field
             message.setSubject("ATM Running out!");
 
-            String msg = "ATM needs to be refueled. ";
+            String msg = "ATM needs to be refilled. ";
 
             // Now set the actual message
             message.setText(msg);

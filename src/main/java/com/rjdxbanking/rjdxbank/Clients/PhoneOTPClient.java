@@ -61,4 +61,25 @@ public class PhoneOTPClient {
         alert.showAndWait();
         return false;
     }
+
+    public void warningOTP(Account account) {
+        cuser = userService.getUserByUserId(account.getUserId());
+        Twilio.init(SecretKeyStore.getKey("ACCOUNT_SID"), SecretKeyStore.getKey("AUTH_TOKEN"));
+
+        String msg = "Hello " + cuser.getFirstName() + " " + cuser.getLastName() + "\n\n";
+        msg += "There is suspicious activity on your account, it will be temporary locked. Please change your pin and unlock your account through the official branch.\n\n";
+
+        msg += "\n\nRegards,\n";
+        msg += "RDJX Bank";
+        try{
+            Message message = Message.creator(new PhoneNumber(cuser.getPhoneNo()),
+                new PhoneNumber(
+                        "+15674122358"),
+                msg).create();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        // System.out.println(message.getSid());
+    }
 }

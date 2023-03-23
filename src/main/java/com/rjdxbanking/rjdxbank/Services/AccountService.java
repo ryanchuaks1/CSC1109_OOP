@@ -81,6 +81,15 @@ public class AccountService {
         }
     }
 
+    public void updateAccountStatus(Account account, boolean value){
+        try {
+            DocumentReference docref = db.collection("accounts").document(account.getId());
+            docref.update("status", value);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     //value in argon format
     public void changePin(Account account, String value){
         try {

@@ -116,10 +116,20 @@ public class LoginController implements Initializable {
         } else {
             BankIdentificationClient BinClient = new BankIdentificationClient();
             String binNum = fullCardNumber.substring(0, 6);
-            SessionClient.setCardNum(fullCardNumber);
-            SessionClient.setOwnBank(BinClient.CheckBIN(binNum));
-            PinPage.setVisible(true);
-            pinField.requestFocus();
+            String accountNum = fullCardNumber.substring(6, 15);
+            AccountService accountService = new AccountService();
+            //temp set to false for status
+            if(accountService.getAccountsByNumber(accountNum).getStatus()){
+                SessionClient.setCardNum(fullCardNumber);
+                SessionClient.setOwnBank(BinClient.CheckBIN(binNum));
+                PinPage.setVisible(true);
+                pinField.requestFocus();
+            }
+            else{
+                //to be updated
+                System.out.println("Fail");
+                dispenseCard();
+            }
         }
     }
 
@@ -140,10 +150,13 @@ public class LoginController implements Initializable {
                 pinField.requestFocus();
                 invalidPinLabel.setVisible(true);
             } else {
+                // set cardNum probably can simplify
                 PhoneOTPClient phoneOTP = new PhoneOTPClient();
-                String cardNum = SessionClient.getCardNum().substring(6, 15);
+                String accountNum = SessionClient.getCardNum().substring(6, 15);
                 AccountService accountService = new AccountService();
-                phoneOTP.warningOTP(accountService.getAccountsByNumber(cardNum));
+                phoneOTP.warningOTP(accountService.getAccountsByNumber(accountNum));
+                //temp set to false for status
+                accountService.updateAccountStatus(accountService.getAccountsByNumber(accountNum), false);
 
                 invalidPinLabel.setVisible(false);
                 SessionClient.setCardNum(null);

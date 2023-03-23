@@ -11,6 +11,7 @@ public class CreateAccount {
     private String AccountNumber;
     private int atmWithdrawalLimit;
     private String pinNo;
+    private boolean status;
 
     Random rand = new Random();
     public CreateAccount(String userId, String accountType, String pinNo)
@@ -22,6 +23,7 @@ public class CreateAccount {
         this.internationalTransferLimit = 5000;
         this.localTransferLimit = 5000;
         this.userId = userId;
+        this.status = true;
     }
 
     public double getInternationalTransferLimit() {

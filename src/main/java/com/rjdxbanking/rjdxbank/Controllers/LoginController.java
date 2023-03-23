@@ -1,10 +1,14 @@
 package com.rjdxbanking.rjdxbank.Controllers;
 
+import com.rjdxbanking.rjdxbank.Clients.AccountClient;
 import com.rjdxbanking.rjdxbank.Clients.BankIdentificationClient;
+import com.rjdxbanking.rjdxbank.Clients.PhoneOTPClient;
 import com.rjdxbanking.rjdxbank.Clients.PinClient;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
+import com.rjdxbanking.rjdxbank.Services.AccountService;
+
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -136,6 +140,11 @@ public class LoginController implements Initializable {
                 pinField.requestFocus();
                 invalidPinLabel.setVisible(true);
             } else {
+                PhoneOTPClient phoneOTP = new PhoneOTPClient();
+                String cardNum = SessionClient.getCardNum().substring(6, 15);
+                AccountService accountService = new AccountService();
+                phoneOTP.warningOTP(accountService.getAccountsByNumber(cardNum));
+
                 invalidPinLabel.setVisible(false);
                 SessionClient.setCardNum(null);
                 SessionClient.setOwnBank(false);

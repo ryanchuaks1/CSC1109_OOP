@@ -136,7 +136,6 @@ public class DepositWithdrawController implements Initializable {
     }
 
     private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
-        EmailClient eClient = new EmailClient();
         if (SessionClient.isOwnBank()) {
             Account account = SessionClient.getAccount();
             ATMClient aClient = new ATMClient();
@@ -148,8 +147,7 @@ public class DepositWithdrawController implements Initializable {
             } catch (InsufficientFundsException e) {
                 insufficientFundsPane.setVisible(true);
             } catch (BillsNotEnoughException e) {
-                // TODO Maybe another pane to tell not enough money left in ATM
-                eClient.emailUpdate();
+                EmailClient.emailUpdate();
                 billsInsufficientPane.setVisible(true);
             }
         }

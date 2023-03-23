@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.JsonElement;
@@ -13,7 +12,7 @@ import com.google.gson.JsonParser;
 import com.rjdxbanking.rjdxbank.Helpers.SecretKeyStore;
 
 public class FXService {
-    public JsonObject fxpull() throws IOException {
+    public double foreignXchange(String currencyCode) throws IOException {
         try {
             // Setting URL
             String url_str = "https://v6.exchangerate-api.com/v6/" + SecretKeyStore.getKey("FXAPI_Key") + "/latest/SGD";
@@ -30,11 +29,13 @@ public class FXService {
 
             // Accessing object
             var req_result = jsonobj.get("conversion_rates").getAsJsonObject();
-
-            return req_result;
+            double conversionRate = req_result.get(currencyCode).getAsDouble();
+            return conversionRate;
         } catch (IOException e) {
             System.out.println(e.getStackTrace());
         }
-        return null;
+        //return 0
+
+        return 0;
     }
 }

@@ -45,9 +45,11 @@ public class ATMClient {
         if (dollars != 0) {
             throw new BillsNotEnoughException("Not enough bills available to withdraw requested amount.");
         }
-        ATMChange remainder = new ATMChange(this.twoDollars-twoCount, this.fiveDollars-fiveCount, this.tenDollars-tenCount, this.fiftyDollars-fiftyCount, this.hundredDollars-hundredCount);
-        ATMService aService = new ATMService();
-        aService.updateATMChange(remainder);
+        else{
+            ATMChange remainder = new ATMChange(this.twoDollars-twoCount, this.fiveDollars-fiveCount, this.tenDollars-tenCount, this.fiftyDollars-fiftyCount, this.hundredDollars-hundredCount);
+            ATMService aService = new ATMService();
+            aService.updateATMChange(remainder);
+        }
         return new ATMChange(twoCount, fiveCount, tenCount, fiftyCount, hundredCount);
     }
 }

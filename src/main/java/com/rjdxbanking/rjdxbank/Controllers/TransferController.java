@@ -28,7 +28,7 @@ import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
 
-public class TransferController implements Initializable{
+public class TransferController implements Initializable {
 
     @FXML
     private TextField accountIDField;

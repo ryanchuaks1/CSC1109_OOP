@@ -7,7 +7,7 @@ import java.io.IOException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 
 public class TimeoutClient {
-    private static final int TIMEOUT_SECONDS = 3;
+    private static final int TIMEOUT_SECONDS = 30;
     Duration delay = Duration.seconds(TIMEOUT_SECONDS);
     PauseTransition transition = new PauseTransition(delay);
     

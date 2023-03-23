@@ -1,11 +1,31 @@
-package com.rjdxbanking.rjdxbank.Models;
+package com.rjdxbanking.rjdxbank.Entity;
+
+import com.google.cloud.firestore.annotation.DocumentId;
+import com.google.cloud.firestore.annotation.PropertyName;
 
 public class ATMChange {
+
+    @DocumentId
+    private String Id;
+
+    @PropertyName("twoDollars")
     private int twoDollars;
+
+    @PropertyName("fiveDollars")
     private int fiveDollars;
+
+    @PropertyName("tenDollars")
     private int tenDollars;
+
+    @PropertyName("fiftyDollars")
     private int fiftyDollars;
+    
+    @PropertyName("hundredDollars")
     private int hundredDollars;
+
+    //Required empty constructor for firestore
+    public ATMChange()
+    {}
 
     public ATMChange(int twoDollars, int fiveDollars, int tenDollars, int fiftyDollars, int hundredDollars) {
         this.twoDollars = twoDollars;

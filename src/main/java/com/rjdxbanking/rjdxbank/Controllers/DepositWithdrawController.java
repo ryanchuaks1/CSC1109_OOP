@@ -1,7 +1,10 @@
 package com.rjdxbanking.rjdxbank.Controllers;
 
+import com.rjdxbanking.rjdxbank.Clients.ATMClient;
+import com.rjdxbanking.rjdxbank.Clients.EmailClient;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
+import com.rjdxbanking.rjdxbank.Exception.BillsNotEnoughException;
 import com.rjdxbanking.rjdxbank.Entity.Transaction;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
@@ -35,6 +38,9 @@ public class DepositWithdrawController implements Initializable {
     private AnchorPane actionPane;
 
     @FXML
+    private AnchorPane billsInsufficientPane;
+
+    @FXML
     private Button btnChinese;
 
     @FXML
@@ -53,10 +59,16 @@ public class DepositWithdrawController implements Initializable {
     private ImageView iconPrimary;
 
     @FXML
-    private AnchorPane withdrawPane;
+    private Button insufficientBtn;
 
     @FXML
     private AnchorPane insufficientFundsPane;
+
+    @FXML
+    private Button lackOfcashBtn;
+
+    @FXML
+    private AnchorPane withdrawPane;
 
     @FXML
     private TextField withdrawTextField;
@@ -73,6 +85,7 @@ public class DepositWithdrawController implements Initializable {
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
         insufficientFundsPane.setVisible(false);
+        billsInsufficientPane.setVisible(false);
         withdrawPane.setVisible(false);
         depositPane.setVisible(false);
 
@@ -123,17 +136,21 @@ public class DepositWithdrawController implements Initializable {
     }
 
     private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
+        EmailClient eClient = new EmailClient();
         if (SessionClient.isOwnBank()) {
             Account account = SessionClient.getAccount();
-            // if (account.getCurrentLimit(TransactionType.Withdrawal) < amount) {
-                
-            // }
+            ATMClient aClient = new ATMClient();
             try {
+                aClient.WithdrawCash(amount.intValue());
                 account.Withdraw(amount);
                 PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));
                 Navigator.logout();
             } catch (InsufficientFundsException e) {
                 insufficientFundsPane.setVisible(true);
+            } catch (BillsNotEnoughException e) {
+                // TODO Maybe another pane to tell not enough money left in ATM
+                eClient.emailUpdate();
+                billsInsufficientPane.setVisible(true);
             }
         }
         else {
@@ -167,7 +184,11 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private void closePressed(ActionEvent event) {
-        insufficientFundsPane.setVisible(false);
+        if (event.getSource() == insufficientBtn) {
+            insufficientFundsPane.setVisible(false);
+        } else if (event.getSource() == lackOfcashBtn) {
+            billsInsufficientPane.setVisible(false);
+        }
     }
 
     // NOTE: Code below here is for dev purposes only

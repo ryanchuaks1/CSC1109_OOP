@@ -60,9 +60,9 @@ public class EmailClient {
             
             
             // Set Subject: header field
-            message.setSubject("ATM Empty!");
+            message.setSubject("ATM Running out!");
 
-            String msg = "ATM needs to be refueled.";
+            String msg = "ATM needs to be refueled. ";
 
             // Now set the actual message
             message.setText(msg);

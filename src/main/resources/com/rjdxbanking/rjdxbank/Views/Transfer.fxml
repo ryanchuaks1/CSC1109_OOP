@@ -238,7 +238,7 @@
                                     <Insets bottom="40.0" top="40.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="accountIDField">
+                              <TextField fx:id="accountNumField">
                                  <VBox.margin>
                                     <Insets left="120.0" right="120.0" />
                                  </VBox.margin>

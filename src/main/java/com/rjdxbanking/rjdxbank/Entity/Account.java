@@ -95,39 +95,34 @@ public abstract class Account implements IAccount {
     // TODO: Reminder that there will be 2 transactions inserted.
     // TODO: Both transferee and transferor should have transaction logs.
     // TODO: Check for valid accountNo
-    public void Transfer(double amount, String accountNo) {
-        try {
-            // Firstly check available balance to see if user has sufficient amount to
-            // transfer else throw exception
-            // TODO: Custom exception
-            if (getAvailableBalance() < amount)
-                // TODO: Use custom exceptions
-                throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
-            else if (!accountService.checkAccountExist(accountNo))
-                throw new Exception("The account does not exist");
-            LocalDateTime now = LocalDateTime.now();
-            CreateTransaction transferorTransaction = new CreateTransaction(dtf.format(now), amount,
-                    "SGD",
-                    TransactionType.LocalTransfer,
-                    TransactionStatus.Completed,
-                    this.Id);
+    public void Transfer(double amount, String toAcc) throws Exception {
+        // Firstly check available balance to see if user has sufficient amount to
+        // transfer else throw exception
+        // TODO: Custom exception
+        if (getAvailableBalance() < amount)
+            throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
+        LocalDateTime now = LocalDateTime.now();
 
-            CreateTransaction transfereeTransaction = new CreateTransaction(dtf.format(now), amount,
-                    "SGD",
-                    TransactionType.LocalTransfer,
-                    TransactionStatus.Completed,
-                    accountNo);
+        CreateTransaction senderTransaction = new CreateTransaction(dtf.format(now), amount,
+                "SGD",
+                TransactionType.LocalTransfer,
+                TransactionStatus.Completed,
+                this.Id);
+        senderTransaction.setFrom(this.Id);
+        senderTransaction.setTo(toAcc);
+        System.out.println(senderTransaction.getTo());
+        System.out.println(senderTransaction.getFrom());
 
-            // Set respective to/from
-            transferorTransaction.setTo(accountNo);
-            transfereeTransaction.setFrom(this.Id);
+        CreateTransaction recieverTransaction = new CreateTransaction(dtf.format(now), amount,
+                "SGD",
+                TransactionType.LocalTransfer,
+                TransactionStatus.Completed,
+                toAcc);
+        recieverTransaction.setFrom(this.Id);
+        recieverTransaction.setTo(toAcc);
 
-            transactionService.createTransaction(transferorTransaction);
-            transactionService.createTransaction(transfereeTransaction);
-
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+        transactionService.createTransaction(senderTransaction);
+        transactionService.createTransaction(recieverTransaction);
     }
 
     public void Deposit(double amount) {

@@ -22,12 +22,13 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
+import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
 
 public class TransferController implements Initializable {
 
     @FXML
-    private TextField accountIDField;
+    private TextField accountNumField;
 
     @FXML
     private Button btnChinese;
@@ -47,11 +48,8 @@ public class TransferController implements Initializable {
     @FXML
     private TextField transferTextField;
 
-    private Double amountInCashCompartment = 0.0;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        amountInCashCompartment = 0.0;
         Path iconPrimaryPath = FileSystems.getDefault().getPath(
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
@@ -72,15 +70,29 @@ public class TransferController implements Initializable {
 
     @FXML
     private void cancelPressed(ActionEvent event) throws IOException {
-        Navigator.logout();
+        Navigator.setRoot("MainDashBoard");
     }
 
     @FXML
     private void confirmTransferPressed(ActionEvent event) throws FileNotFoundException, IOException {
         Account account = SessionClient.getAccount();
-        account.Transfer(amountInCashCompartment, accountIDField.getText());
-        PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amountInCashCompartment));
-        Navigator.logout();
+        Double amount = Double.parseDouble(transferTextField.getText());
+        AccountService accService = new AccountService();
+        Account accountTo = accService.getAccountsByNumber(accountNumField.getText());
+
+        // account not found
+        if (accountTo == null) {
+            System.out.println("Targtet acc not found");
+        } else {
+            try {
+                account.Transfer(amount, accountTo.getId());
+                PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amount));
+                Navigator.logout();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 
     @FXML

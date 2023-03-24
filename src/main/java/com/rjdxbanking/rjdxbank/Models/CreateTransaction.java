@@ -29,6 +29,14 @@ public class CreateTransaction {
         this.from = from;
     }
 
+    public String getTo() {
+        return to;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
     public String getTimeStamp() {
         return timeStamp;
     }

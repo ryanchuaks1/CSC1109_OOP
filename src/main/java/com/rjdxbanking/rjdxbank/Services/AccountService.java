@@ -53,7 +53,7 @@ public class AccountService {
 
     public boolean checkAccountExist(String accountNo) {
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNo", accountNo).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNumber", accountNo).get();
             QuerySnapshot snapshots = apiFuture.get();
             if (snapshots.isEmpty())
                 return false;

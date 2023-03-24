@@ -10,6 +10,7 @@ import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.UserService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,13 +83,13 @@ public class SettingsController implements Initializable {
     private AnchorPane limitSettingsPane;
 
     @FXML
-    private ComboBox<Double> atmWithdrawalLimit;
+    private ComboBox<Integer> atmWithdrawalLimit;
 
     @FXML
-    private ComboBox<Double> internationalTransferLimit;
+    private ComboBox<Integer> internationalTransferLimit;
 
     @FXML
-    private ComboBox<Double> localTransferLimit;
+    private ComboBox<Integer> localTransferLimit;
 
     @FXML
     private Label nameLabel;
@@ -157,13 +158,14 @@ public class SettingsController implements Initializable {
         addTextLimiter(oldPin, 6);
         addTextLimiter(newPin, 6);
 
-        localTransferLimit.getItems().addAll(0.00, 500.00, 1000.00, 2000.00, 3000.00, 5000.00, 7000.00, 9000.00);
-        localTransferLimit.setValue(SessionClient.getAccount().getATMWithdrawalLimit());
-        atmWithdrawalLimit.getItems().addAll(0.00, 500.00, 1000.00, 2000.00, 3000.00, 5000.00, 7000.00, 9000.00);
-        atmWithdrawalLimit.setValue(SessionClient.getAccount().getATMWithdrawalLimit());
-        internationalTransferLimit.getItems().addAll(0.00, 500.00, 1000.00, 2000.00, 3000.00, 5000.00, 7000.00,
-                9000.00);
-        internationalTransferLimit.setValue(SessionClient.getAccount().getATMWithdrawalLimit());
+        Integer[] list = { 0, 500, 1000, 2000, 3000, 5000, 7000, 9000 };
+
+        localTransferLimit.getItems().addAll(list);
+        localTransferLimit.setValue((int) SessionClient.getAccount().getATMWithdrawalLimit());
+        atmWithdrawalLimit.getItems().addAll(list);
+        atmWithdrawalLimit.setValue((int) SessionClient.getAccount().getLocalTransferLimit());
+        internationalTransferLimit.getItems().addAll(list);
+        internationalTransferLimit.setValue((int) SessionClient.getAccount().getInternationalTransferLimit());
         // localTransferLimit.getItems(String.format("%.2f",
         // essionClient.getAccount().getLocalTransferLimit()));
         // atmWithdrawalLimit.setText(String.format("%.2f",
@@ -253,11 +255,11 @@ public class SettingsController implements Initializable {
     public void changeLimitMethod() {
         try {
             aService.updateAccountLimits(SessionClient.getAccount(), "localTransferLimit",
-                    localTransferLimit.getValue());
+                    Double.valueOf(localTransferLimit.getValue()));
             aService.updateAccountLimits(SessionClient.getAccount(), "internationalTransferLimit",
-                    internationalTransferLimit.getValue());
+                    Double.valueOf(internationalTransferLimit.getValue()));
             aService.updateAccountLimits(SessionClient.getAccount(), "atmWithdrawalLimit",
-                    atmWithdrawalLimit.getValue());
+                    Double.valueOf(atmWithdrawalLimit.getValue()));
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Limits Updated");
             alert.setHeaderText(null);

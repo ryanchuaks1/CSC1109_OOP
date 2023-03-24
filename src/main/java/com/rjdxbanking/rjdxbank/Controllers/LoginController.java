@@ -118,15 +118,14 @@ public class LoginController implements Initializable {
             String binNum = fullCardNumber.substring(0, 6);
             String accountNum = fullCardNumber.substring(6, 15);
             AccountService accountService = new AccountService();
-            //temp set to false for status
-            if(accountService.getAccountsByNumber(accountNum).getStatus()){
+            // temp set to false for status
+            if (!accountService.getAccountsByNumber(accountNum).getIsLocked()) {
                 SessionClient.setCardNum(fullCardNumber);
                 SessionClient.setOwnBank(BinClient.CheckBIN(binNum));
                 PinPage.setVisible(true);
                 pinField.requestFocus();
-            }
-            else{
-                //to be updated
+            } else {
+                // to be updated
                 System.out.println("Fail");
                 dispenseCard();
             }
@@ -155,8 +154,8 @@ public class LoginController implements Initializable {
                 String accountNum = SessionClient.getCardNum().substring(6, 15);
                 AccountService accountService = new AccountService();
                 phoneOTP.warningOTP(accountService.getAccountsByNumber(accountNum));
-                //temp set to false for status
-                accountService.updateAccountStatus(accountService.getAccountsByNumber(accountNum), false);
+                // temp set to true to locked
+                accountService.updateAccountStatus(accountService.getAccountsByNumber(accountNum), true);
 
                 invalidPinLabel.setVisible(false);
                 SessionClient.setCardNum(null);

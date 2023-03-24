@@ -152,8 +152,8 @@ public class DepositWithdrawController implements Initializable {
                 } catch (InsufficientFundsException e) {
                     insufficientFundsPane.setVisible(true);
                 } catch (BillsNotEnoughException e) {
-                    EmailClient.emailUpdate();
                     billsInsufficientPane.setVisible(true);
+                    EmailClient.emailUpdate();
                 }
             }
         } else {

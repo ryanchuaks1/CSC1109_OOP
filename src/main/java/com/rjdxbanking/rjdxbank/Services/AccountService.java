@@ -16,7 +16,7 @@ import java.util.List;
 public class AccountService {
     Firestore db = FirestoreClient.getFirestore();
 
-    //Given a userId find the list of accounts associated with it.
+    // Given a userId find the list of accounts associated with it.
     public List<Account> getAccounts(String userId) {
         List<Account> account = null;
         try {
@@ -31,7 +31,8 @@ public class AccountService {
     public Account getAccountsByNumber(String accountNumber) {
         Account account = null;
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNumber", accountNumber).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNumber", accountNumber)
+                    .get();
             QuerySnapshot snapshots = apiFuture.get();
             if (!snapshots.getDocuments().isEmpty()) {
                 var accountSnapshot = snapshots.getDocuments().get(0);
@@ -72,7 +73,7 @@ public class AccountService {
         }
     }
 
-    public void updateAccountLimits(Account account, String field, Double value){
+    public void updateAccountLimits(Account account, String field, Double value) {
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());
             docref.update(field, value);
@@ -81,17 +82,17 @@ public class AccountService {
         }
     }
 
-    public void updateAccountStatus(Account account, boolean value){
+    public void updateAccountStatus(Account account, boolean value) {
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());
-            docref.update("status", value);
+            docref.update("isLocked", value);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    //value in argon format
-    public void changePin(Account account, String value){
+    // value in argon format
+    public void changePin(Account account, String value) {
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());
             docref.update("pinNo", value);

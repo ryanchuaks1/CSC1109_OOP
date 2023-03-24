@@ -39,8 +39,8 @@ public abstract class Account implements IAccount {
     @PropertyName("accountNumber")
     private String accountNumber;
 
-    @PropertyName("status")
-    private Boolean status;
+    @PropertyName("isLocked")
+    private Boolean isLocked;
 
     // TODO : Hide the rest of the password field maybe?
     public String getaccountNumber() {
@@ -63,8 +63,8 @@ public abstract class Account implements IAccount {
         return userId;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getIsLocked() {
+        return isLocked;
     }
 
     public double getLocalTransferLimit() {
@@ -268,6 +268,5 @@ public abstract class Account implements IAccount {
     }
 
     public abstract double getYearlyProjectedInterestRate();
-
 
 }

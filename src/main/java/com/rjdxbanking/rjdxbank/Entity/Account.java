@@ -4,6 +4,7 @@ import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Interfaces.IAccount;
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
+import com.rjdxbanking.rjdxbank.Models.Balance;
 import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
 import com.rjdxbanking.rjdxbank.Models.TransactionStatus;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
@@ -99,7 +100,7 @@ public abstract class Account implements IAccount {
         // Firstly check available balance to see if user has sufficient amount to
         // transfer else throw exception
         // TODO: Custom exception
-        if (getAvailableBalance() < amount)
+        if (this.getBalance().getAvailableBalance() < amount)
             throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
         LocalDateTime now = LocalDateTime.now();
 
@@ -151,7 +152,7 @@ public abstract class Account implements IAccount {
                     TransactionStatus.Completed,
                     this.Id);
 
-            if (this.getAvailableBalance() < amount) {
+            if (this.getBalance().getAvailableBalance() < amount) {
                 throw new InsufficientFundsException("Insufficient funds in account");
             } else {
                 transactionService.createTransaction(transaction);
@@ -171,52 +172,57 @@ public abstract class Account implements IAccount {
     }
 
     @Override
-    public double getAvailableBalance() {
+    public Balance getBalance() {
         List<Transaction> transactions = getTransactions();
-        double pendingBalance = 0;
-        double availableBalance = 0;
+        Balance balance = new Balance();
+        // double pendingBalance = 0;
+        // double availableBalance = 0;
 
         for (Transaction transaction : transactions) {
             TransactionType transactionType = transaction.getTransactionType();
             TransactionStatus transactionStatus = transaction.getTransactionStatus();
 
-            if (transaction.getTo() == this.Id) {
-                // To means deduction
-                switch (transactionStatus) {
-                    case Pending:
-                        pendingBalance += transaction.getTransactionAmount();
-                        break;
-                    case Completed:
-                        availableBalance += transaction.getTransactionAmount();
-                        break;
-                    case Rejected:
-                        break;
-                }
-            } else if (transaction.getFrom() == this.Id) {
-                switch (transactionStatus) {
-                    case Pending:
-                        pendingBalance -= transaction.getTransactionAmount();
-                        break;
-                    case Completed:
-                        availableBalance -= transaction.getTransactionAmount();
-                        break;
-                    case Rejected:
-                        break;
-                }
-            } else {
-                // Can only be Withdrawal/Deposit
-                if (transactionType == TransactionType.Withdrawal) {
-                    availableBalance -= transaction.getTransactionAmount();
-                } else if (transactionType == TransactionType.Deposit) {
-                    availableBalance += transaction.getTransactionAmount();
-                }
+            switch (transactionType) {
+                case Deposit:
+                    balance.addToAvailableBalance(transaction.getTransactionAmount());
+                    break;
+                case Withdrawal:
+                    balance.deductFromAvailableBalance(transaction.getTransactionAmount());
+                    break;
+                case LocalTransfer:
+                    if (transaction.getTo().equals(this.Id)) {
+                        switch (transactionStatus) {
+                            case Pending:
+                                balance.deductFromPendingeBalance(transaction.getTransactionAmount());
+                                break;
+                            case Completed:
+                                balance.addToAvailableBalance(transaction.getTransactionAmount());
+                                break;
+                            case Rejected:
+                                break;
+                        }
+                    } else if (transaction.getFrom().equals(this.Id)) {
+                        switch (transactionStatus) {
+                            case Pending:
+                                balance.deductFromPendingeBalance(transaction.getTransactionAmount());
+                                break;
+                            case Completed:
+                                balance.deductFromAvailableBalance(transaction.getTransactionAmount());
+                                break;
+                            case Rejected:
+                                break;
+                        }
+                    }
+                    break;
+                case OverseasTransfer:
+                    break;
             }
         }
         // Available balance is defined balance that you can move around. (Liquidity)
         // Pending funds are considered not available (Those are called balance)
-        System.out.println("available bal: " + availableBalance);
-        System.out.println("pending bal: " + pendingBalance);
-        return availableBalance;
+        // System.out.println("available bal: " + availableBalance);
+        // System.out.println("pending bal: " + pendingBalance);
+        return balance;
     }
 
     public double getCurrentLimit(TransactionType type) {

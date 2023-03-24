@@ -74,8 +74,6 @@ public class TransactionService {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formatDateTime = now.format(format);
         try {
-            // System.out.println(formatDateTime);
-            
             var apiFuture = db.collection("transactions").whereEqualTo("accountId", accountId)
                     .whereEqualTo("transactionType", type)
                     .whereGreaterThanOrEqualTo("timeStamp", formatDateTime)

@@ -48,13 +48,15 @@ public class TransferController implements Initializable {
     @FXML
     private TextField transferTextField;
 
+    double limit = 0.0;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Path iconPrimaryPath = FileSystems.getDefault().getPath(
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
-
+        limit = SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
     }
 
     @FXML
@@ -83,6 +85,10 @@ public class TransferController implements Initializable {
         // account not found
         if (accountTo == null) {
             System.out.println("Targtet acc not found");
+        }
+        else if (limit < amount) {
+            System.out.println(limit);
+            System.out.println("Transfer Limit Reached");
         } else {
             try {
                 account.Transfer(amount, accountTo.getId());

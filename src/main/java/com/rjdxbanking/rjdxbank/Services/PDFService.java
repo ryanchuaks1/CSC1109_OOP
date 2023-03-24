@@ -26,7 +26,7 @@ public class PDFService {
                         + "<p style='line-height:1.0'>Date: " + dtf.format(now) + "<p>"
                         + "<p style='line-height:1.0'>Transaction type: " + TransactionType + "<br/>"
                         + "<p style='line-height:1.0'>Amount: " + amount + "<br/>"
-                        + "<p style='line-height:1.0'>Remaining Balance: " + account.getAvailableBalance() + "<br/>";
+                        + "<p style='line-height:1.0'>Remaining Balance: " + account.getBalance().getAvailableBalance() + "<br/>";
         
         try{
             HtmlConverter.convertToPdf(htmlString, new FileOutputStream(

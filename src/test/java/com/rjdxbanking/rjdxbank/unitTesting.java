@@ -46,7 +46,7 @@ public class unitTesting {
         //static
         try {
             Account account = accountClient.Login(cardNumber, "123456");
-            if (account.getAvailableBalance() < 99999999) {
+            if (account.getBalance().getAvailableBalance() < 99999999) {
                 throw new InsufficientFundsException("Insufficient funds in account");
             } 
         } catch (Exception ex) {

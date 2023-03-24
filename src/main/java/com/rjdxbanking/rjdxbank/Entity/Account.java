@@ -180,18 +180,28 @@ public abstract class Account implements IAccount {
             TransactionType transactionType = transaction.getTransactionType();
             TransactionStatus transactionStatus = transaction.getTransactionStatus();
 
-            if (transaction.getTo() != null) {
+            if (transaction.getTo() == this.Id) {
                 // To means deduction
-                if (transactionStatus == TransactionStatus.Pending) {
-                    pendingBalance -= transaction.getTransactionAmount();
-                } else if (transactionStatus == TransactionStatus.Completed) {
-                    availableBalance -= transaction.getTransactionAmount();
+                switch (transactionStatus) {
+                    case Pending:
+                        pendingBalance += transaction.getTransactionAmount();
+                        break;
+                    case Completed:
+                        availableBalance += transaction.getTransactionAmount();
+                        break;
+                    case Rejected:
+                        break;
                 }
-            } else if (transaction.getFrom() != null) {
-                if (transactionStatus == TransactionStatus.Pending) {
-                    pendingBalance += transaction.getTransactionAmount();
-                } else if (transactionStatus == TransactionStatus.Completed) {
-                    availableBalance += transaction.getTransactionAmount();
+            } else if (transaction.getFrom() == this.Id) {
+                switch (transactionStatus) {
+                    case Pending:
+                        pendingBalance -= transaction.getTransactionAmount();
+                        break;
+                    case Completed:
+                        availableBalance -= transaction.getTransactionAmount();
+                        break;
+                    case Rejected:
+                        break;
                 }
             } else {
                 // Can only be Withdrawal/Deposit
@@ -204,42 +214,9 @@ public abstract class Account implements IAccount {
         }
         // Available balance is defined balance that you can move around. (Liquidity)
         // Pending funds are considered not available (Those are called balance)
-        return availableBalance + pendingBalance;
-    }
-
-    @Override
-    public double getPendingAmount() {
-        List<Transaction> transactions = getTransactions();
-        double pendingBalance = 0;
-        double availableBalance = 0;
-
-        for (Transaction transaction : transactions) {
-            TransactionType transactionType = transaction.getTransactionType();
-            TransactionStatus transactionStatus = transaction.getTransactionStatus();
-
-            if (transaction.getTo() != null) {
-                // To means deduction
-                if (transactionStatus == TransactionStatus.Pending) {
-                    pendingBalance -= transaction.getTransactionAmount();
-                } else if (transactionStatus == TransactionStatus.Completed) {
-                    availableBalance -= transaction.getTransactionAmount();
-                }
-            } else if (transaction.getFrom() != null) {
-                if (transactionStatus == TransactionStatus.Pending) {
-                    pendingBalance += transaction.getTransactionAmount();
-                } else if (transactionStatus == TransactionStatus.Completed) {
-                    availableBalance += transaction.getTransactionAmount();
-                }
-            } else {
-                // Can only be Withdrawal/Deposit
-                if (transactionType == TransactionType.Withdrawal) {
-                    availableBalance -= transaction.getTransactionAmount();
-                } else if (transactionType == TransactionType.Deposit) {
-                    availableBalance += transaction.getTransactionAmount();
-                }
-            }
-        }
-        return pendingBalance;
+        System.out.println("available bal: " + availableBalance);
+        System.out.println("pending bal: " + pendingBalance);
+        return availableBalance;
     }
 
     public double getCurrentLimit(TransactionType type) {

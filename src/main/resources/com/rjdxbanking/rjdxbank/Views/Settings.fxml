@@ -3,9 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -349,7 +349,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
                <children>
@@ -381,21 +381,9 @@
                                     <Font name="Calibri" size="36.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="localTransferLimit" style="-fx-background-color: #FFFFFF; -fx-border-color: black;" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font name="Calibri Bold" size="48.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="internationalTransferLimit" style="-fx-background-color: #FFFFFF; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="Calibri Bold" size="48.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="atmWithdrawalLimit" style="-fx-background-color: #FFFFFF; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="Calibri Bold" size="48.0" />
-                                 </font>
-                              </TextField>
+                              <ComboBox fx:id="internationalTransferLimit" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="localTransferLimit" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="atmWithdrawalLimit" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <HBox.margin>
                               <Insets />

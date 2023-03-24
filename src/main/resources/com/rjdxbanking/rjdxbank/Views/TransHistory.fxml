@@ -140,9 +140,9 @@
                                 <Insets bottom="50.0" top="20.0" />
                             </HBox.margin>
                             <children>
-                                <ScrollPane prefHeight="535.0" prefWidth="958.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <ScrollPane prefHeight="387.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-40.0" AnchorPane.topAnchor="0.0">
                                     <content>
-                                        <TableView fx:id="transHistoryTable" prefHeight="532.0" prefWidth="956.0" style="-fx-background-color: #FFFFFF;" />
+                                        <TableView fx:id="transHistoryTable" prefHeight="532.0" prefWidth="981.0" style="-fx-background-color: #FFFFFF;" />
                                     </content>
                                 </ScrollPane>
                             </children>

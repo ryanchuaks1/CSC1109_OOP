@@ -238,6 +238,11 @@
                                     <Insets bottom="40.0" top="40.0" />
                                  </VBox.margin>
                               </Label>
+                              <Label fx:id="rateLabel">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                      </children>

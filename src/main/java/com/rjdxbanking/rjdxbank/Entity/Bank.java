@@ -19,6 +19,37 @@ public class Bank {
     @PropertyName("currencyCode")
     private String currencyCode;
 
+    public Bank(){
+        
+    }
+
+    public Bank(String id, String bankName, String bankRoute, boolean isLocal, String currencyCode) {
+        this.Id = id;
+        this.bankName = bankName;
+        this.bankRoute = bankRoute;
+        this.isLocal = isLocal;
+        this.currencyCode = currencyCode;
+    }
+
+    public void setId(String id) {
+        this.Id = id;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public void setBankRoute(String bankRoute) {
+        this.bankRoute = bankRoute;
+    }
+
+    public void setLocal(boolean isLocal) {
+        this.isLocal = isLocal;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 
     public String getCurrencyCode() {
         return currencyCode;

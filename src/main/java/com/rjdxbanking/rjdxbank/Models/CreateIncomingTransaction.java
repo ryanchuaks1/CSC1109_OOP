@@ -8,6 +8,16 @@ public class CreateIncomingTransaction {
     private String fromAccountNumber;
     private TransactionStatus transactionStatus;
 
+    public CreateIncomingTransaction(String timeStamp, double transactionAmount, String currencyCode,
+            String fromBankRoute, String fromAccountNumber, TransactionStatus transactionStatus) {
+        this.timeStamp = timeStamp;
+        this.transactionAmount = transactionAmount;
+        this.currencyCode = currencyCode;
+        this.fromBankRoute = fromBankRoute;
+        this.fromAccountNumber = fromAccountNumber;
+        this.transactionStatus = transactionStatus;
+    }
+
     public String getTimeStamp() {
         return timeStamp;
     }

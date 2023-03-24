@@ -11,7 +11,7 @@ public class IncomingTransactionService {
 
     public void createTransaction(CreateIncomingTransaction transaction) {
         try {
-            ApiFuture<WriteResult> apiFuture = db.collection("transactions").document().set(transaction);
+            ApiFuture<WriteResult> apiFuture = db.collection("incoming_transactions").document().set(transaction);
             System.out.printf("Successfully created transaction at %s \n", apiFuture.get().getUpdateTime());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

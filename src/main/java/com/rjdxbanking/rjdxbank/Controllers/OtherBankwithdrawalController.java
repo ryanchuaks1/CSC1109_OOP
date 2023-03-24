@@ -55,8 +55,13 @@ public class OtherBankwithdrawalController implements Initializable {
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-        // FXService.foreignXchange("USD");
+
+        try {
+            FXService.foreignXchange(SessionClient.getCurrency());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @FXML

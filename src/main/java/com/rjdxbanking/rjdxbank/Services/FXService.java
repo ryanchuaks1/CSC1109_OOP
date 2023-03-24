@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
 import com.rjdxbanking.rjdxbank.Helpers.SecretKeyStore;
 
 public class FXService {
-    public double foreignXchange(String currencyCode) throws IOException {
+    public static double foreignXchange(String currencyCode) throws IOException {
         try {
             // Setting URL
             String url_str = "https://v6.exchangerate-api.com/v6/" + SecretKeyStore.getKey("FXAPI_Key") + "/latest/SGD";

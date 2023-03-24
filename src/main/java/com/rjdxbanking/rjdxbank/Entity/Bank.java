@@ -11,10 +11,18 @@ public class Bank {
     private String bankName;
 
     @PropertyName("bankRoute")
-    private double bankRoute;
+    private String bankRoute;
 
     @PropertyName("isLocal")
     private boolean isLocal;
+    
+    @PropertyName("currencyCode")
+    private String currencyCode;
+
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
 
     public String getId() {
         return Id;
@@ -24,7 +32,7 @@ public class Bank {
         return bankName;
     }
 
-    public double getBankRoute() {
+    public String getBankRoute() {
         return bankRoute;
     }
 

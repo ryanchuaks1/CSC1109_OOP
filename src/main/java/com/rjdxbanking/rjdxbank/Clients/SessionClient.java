@@ -7,6 +7,15 @@ public class SessionClient {
     public static String cardNum;
     public static boolean ownBank;
     public static String navState;
+    public static String currency;
+
+    public static String getCurrency() {
+        return currency;
+    }
+
+    public static void setCurrency(String currency) {
+        SessionClient.currency = currency;
+    }
 
     public static String getNavState() {
         return navState;

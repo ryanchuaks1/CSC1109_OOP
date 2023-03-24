@@ -16,7 +16,7 @@ public class PinClient {
                 return false;
             }
         } else {
-            return true;
+            return true; // Assume we call other bank API and they reuturn PIN true.
         }
     }
 

@@ -99,7 +99,7 @@ public class LoginController implements Initializable {
         // Play reading card screen (simulate delay for machine to read card)
         LoadingPage.setVisible(true);
         readingCardLabel.setVisible(true);
-        Duration delay = Duration.seconds(2);
+        Duration delay = Duration.seconds(1);
         PauseTransition transition = new PauseTransition(delay);
         transition.setOnFinished(evt -> {
             LoadingPage.setVisible(false);
@@ -110,24 +110,22 @@ public class LoginController implements Initializable {
     }
 
     private void checkCardNumber(String fullCardNumber) {
-        if (!(CreditCardHelper.checkLuhn(fullCardNumber))) {
-            dispenseCard();
-        } else {
-            BankIdentificationClient BinClient = new BankIdentificationClient();
-            String binNum = fullCardNumber.substring(0, 6);
-            String accountNum = fullCardNumber.substring(6, 15);
-            AccountService accountService = new AccountService();
+        BankIdentificationClient BinClient = new BankIdentificationClient();
+        AccountService accountService = new AccountService();
+
+        SessionClient.setCardNum(fullCardNumber);
+
+        String binNum = fullCardNumber.substring(0, 6);
+        String accountNum = fullCardNumber.substring(6, 15);
+
+        if ((CreditCardHelper.checkLuhn(fullCardNumber)
+                && BinClient.isValidBank(binNum)
+                && !accountService.getAccountsByNumber(accountNum).getIsLocked())) {
             // temp set to false for status
-            if (!accountService.getAccountsByNumber(accountNum).getIsLocked()) {
-                SessionClient.setCardNum(fullCardNumber);
-                SessionClient.setOwnBank(BinClient.CheckBIN(binNum));
-                PinPage.setVisible(true);
-                pinField.requestFocus();
-            } else {
-                // to be updated
-                System.out.println("Fail");
-                dispenseCard();
-            }
+            PinPage.setVisible(true);
+            pinField.requestFocus();
+        } else {
+            dispenseCard();
         }
     }
 
@@ -136,8 +134,7 @@ public class LoginController implements Initializable {
             if (SessionClient.isOwnBank()) {
                 Navigator.setRoot("MainDashboard");
             } else {
-                SessionClient.setNavState("Withdraw");
-                Navigator.setRoot("DepositWithdraw");
+                Navigator.setRoot("OtherBankWithdrawal");
             }
         } else {
             loadingLabel.setVisible(false);

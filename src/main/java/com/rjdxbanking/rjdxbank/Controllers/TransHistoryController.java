@@ -63,19 +63,19 @@ public class TransHistoryController implements Initializable {
     @FXML
     void setLanguage(ActionEvent event) throws IOException {
         if (event.getSource() == btnEnglish) {
-                Navigator.setLocale(Locale.forLanguageTag("en"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("en"), "MainDashboard");
         } else if (event.getSource() == btnChinese) {
-                Navigator.setLocale(Locale.forLanguageTag("zh"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("zh"), "MainDashboard");
         } else if (event.getSource() == btnMalay) {
-                Navigator.setLocale(Locale.forLanguageTag("ms"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("ms"), "MainDashboard");
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Path iconPrimaryPath = FileSystems.getDefault().getPath(
-                        "src/main/resources/com/rjdxbanking/rjdxbank/Images/",
-                        "WhiteIconPrimary.png");
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/",
+                "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
@@ -91,57 +91,68 @@ public class TransHistoryController implements Initializable {
     void intializeTable() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         ObservableList<Transaction> listTrans = tranService
-                        .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
+                .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
 
         // System.out.println(listTrans.get(0).getId());
 
         TableColumn<Transaction, LocalDateTime> transTimeCol = new TableColumn<Transaction, LocalDateTime>(
-                        "Transaction Time");
+                "Transaction Time");
         transTimeCol.setMinWidth(200);
         transTimeCol.setCellValueFactory(
-                        new PropertyValueFactory<Transaction, LocalDateTime>("timeStamp"));
+                new PropertyValueFactory<Transaction, LocalDateTime>("timeStamp"));
         transTimeCol.setCellFactory(col -> new TableCell<Transaction, LocalDateTime>() {
-                @Override
-                protected void updateItem(LocalDateTime item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty)
-                                setText(null);
-                        else
-                                setText(dtf.format(item).toString());
-                }
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty)
+                    setText(null);
+                else
+                    setText(dtf.format(item).toString());
+            }
         });
         transTimeCol.setSortType(TableColumn.SortType.DESCENDING);
 
         TableColumn<Transaction, String> transactionTypeCol = new TableColumn<Transaction, String>(
-                        "Transaction Type");
-        transactionTypeCol.setMinWidth(200);
+                "Transaction Type");
+        transactionTypeCol.setMinWidth(100);
         transactionTypeCol.setCellValueFactory(
-                        new PropertyValueFactory<Transaction, String>("transactionType"));
+                new PropertyValueFactory<Transaction, String>("transactionType"));
 
         TableColumn<Transaction, String> currencyCodeCol = new TableColumn<Transaction, String>(
-                        "Currency Code");
-        currencyCodeCol.setMinWidth(200);
+                "Currency Code");
+        currencyCodeCol.setMinWidth(100);
         currencyCodeCol.setCellValueFactory(
-                        new PropertyValueFactory<Transaction, String>("currencyCode"));
+                new PropertyValueFactory<Transaction, String>("currencyCode"));
 
         TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>(
-                        "Transaction Amount");
-        transactionAmountCol.setMinWidth(200);
+                "Transaction Amount");
+        transactionAmountCol.setMinWidth(150);
         transactionAmountCol.setCellValueFactory(
-                        new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
+                new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
 
         TableColumn<Transaction, String> statusCol = new TableColumn<Transaction, String>("Status");
-        statusCol.setMinWidth(180);
+        statusCol.setMinWidth(100);
         statusCol.setCellValueFactory(
-                        new PropertyValueFactory<Transaction, String>("transactionStatus"));
+                new PropertyValueFactory<Transaction, String>("transactionStatus"));
+
+        TableColumn<Transaction, String> fromCol = new TableColumn<Transaction, String>("From");
+        fromCol.setMinWidth(125);
+        fromCol.setCellValueFactory(
+                new PropertyValueFactory<Transaction, String>("from"));
+
+        TableColumn<Transaction, String> toCol = new TableColumn<Transaction, String>("To");
+        toCol.setMinWidth(125);
+        toCol.setCellValueFactory(
+                new PropertyValueFactory<Transaction, String>("to"));
+
         if (listTrans.size() == 0) {
 
         } else {
-                transHistoryTable.setItems(listTrans);
+            transHistoryTable.setItems(listTrans);
         }
         transHistoryTable.getColumns().addAll(
-                        transTimeCol, transactionTypeCol, currencyCodeCol,
-                        transactionAmountCol, statusCol);
+                transTimeCol, transactionTypeCol, currencyCodeCol,
+                transactionAmountCol, statusCol, toCol, fromCol);
         transHistoryTable.getSortOrder().add(transTimeCol);
         transHistoryTable.sort();
 
@@ -149,6 +160,6 @@ public class TransHistoryController implements Initializable {
 
     @FXML
     void btnBackPressed(ActionEvent event) throws IOException {
-            Navigator.setRoot("MainDashboard");
+        Navigator.setRoot("MainDashboard");
     }
 }

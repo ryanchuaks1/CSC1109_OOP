@@ -68,7 +68,6 @@ public class PhoneOTPClient {
 
         String msg = "Hello " + cuser.getFirstName() + " " + cuser.getLastName() + "\n\n";
         msg += "There is suspicious activity on your account, it will be temporary locked. Please change your pin and unlock your account through the official branch.\n\n";
-
         msg += "\n\nRegards,\n";
         msg += "RDJX Bank";
         try {

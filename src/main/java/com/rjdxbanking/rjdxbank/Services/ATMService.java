@@ -7,11 +7,10 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.rjdxbanking.rjdxbank.Entity.ATMChange;
 
-
 public class ATMService {
     Firestore db = FirestoreClient.getFirestore();
 
-    //Given a userId find the list of accounts associated with it.
+    // Given a userId find the list of accounts associated with it.
     public ATMChange getATMChange() {
         ATMChange atmChange = null;
         try {
@@ -24,11 +23,9 @@ public class ATMService {
         return atmChange;
     }
 
-    public void updateATMChange(ATMChange atmcash){
+    public void updateATMChange(ATMChange atmcash) {
         try {
             DocumentReference docref = db.collection("atmcash").document("nsyQIbYFXQDviqTEicrU");
-            docref.update("twoDollars", atmcash.getTwoDollars());
-            docref.update("fiveDollars", atmcash.getFiveDollars());
             docref.update("tenDollars", atmcash.getTenDollars());
             docref.update("fiftyDollars", atmcash.getFiftyDollars());
             docref.update("hundredDollars", atmcash.getHundredDollars());

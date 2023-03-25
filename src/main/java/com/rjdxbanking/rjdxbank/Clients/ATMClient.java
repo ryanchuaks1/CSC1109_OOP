@@ -6,8 +6,6 @@ import com.rjdxbanking.rjdxbank.Services.ATMService;
 
 public class ATMClient {
     // The private values here determine how much cash count we have.
-    private int twoDollars;
-    private int fiveDollars;
     private int tenDollars;
     private int fiftyDollars;
     private int hundredDollars;
@@ -16,8 +14,6 @@ public class ATMClient {
     ATMChange achange = aService.getATMChange();
 
     public ATMClient() {
-        twoDollars = achange.getTwoDollars();
-        fiveDollars = achange.getFiveDollars();
         tenDollars = achange.getTenDollars();
         fiftyDollars = achange.getFiftyDollars();
         hundredDollars = achange.getHundredDollars();
@@ -35,22 +31,16 @@ public class ATMClient {
         int tenCount = Math.min(tenDollars, dollars / 10);
         dollars -= (tenCount * 10);
 
-        int fiveCount = Math.min(fiveDollars, dollars / 5);
-        dollars -= (fiveCount * 5);
-
-        int twoCount = Math.min(twoDollars, dollars / 2);
-        dollars -= (twoCount * 2);
-
         // If there is still an amount remaining, throw an exception
         if (dollars != 0) {
             throw new BillsNotEnoughException("Not enough bills available to withdraw requested amount.");
-        }
-        else{
-            ATMChange remainder = new ATMChange(this.twoDollars - twoCount, this.fiveDollars - fiveCount, this.tenDollars - tenCount, 
-            this.fiftyDollars - fiftyCount, this.hundredDollars - hundredCount);
+        } else {
+            ATMChange remainder = new ATMChange(
+                    this.tenDollars - tenCount,
+                    this.fiftyDollars - fiftyCount, this.hundredDollars - hundredCount);
             ATMService aService = new ATMService();
             aService.updateATMChange(remainder);
         }
-        return new ATMChange(twoCount, fiveCount, tenCount, fiftyCount, hundredCount);
+        return new ATMChange(tenCount, fiftyCount, hundredCount);
     }
 }

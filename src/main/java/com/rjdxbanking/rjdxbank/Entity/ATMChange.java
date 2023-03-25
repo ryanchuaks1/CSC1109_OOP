@@ -8,39 +8,23 @@ public class ATMChange {
     @DocumentId
     private String Id;
 
-    @PropertyName("twoDollars")
-    private int twoDollars;
-
-    @PropertyName("fiveDollars")
-    private int fiveDollars;
-
     @PropertyName("tenDollars")
     private int tenDollars;
 
     @PropertyName("fiftyDollars")
     private int fiftyDollars;
-    
+
     @PropertyName("hundredDollars")
     private int hundredDollars;
 
-    //Required empty constructor for firestore
-    public ATMChange()
-    {}
+    // Required empty constructor for firestore
+    public ATMChange() {
+    }
 
-    public ATMChange(int twoDollars, int fiveDollars, int tenDollars, int fiftyDollars, int hundredDollars) {
-        this.twoDollars = twoDollars;
-        this.fiveDollars = fiveDollars;
+    public ATMChange(int tenDollars, int fiftyDollars, int hundredDollars) {
         this.tenDollars = tenDollars;
         this.fiftyDollars = fiftyDollars;
         this.hundredDollars = hundredDollars;
-    }
-
-    public int getTwoDollars() {
-        return twoDollars;
-    }
-
-    public int getFiveDollars() {
-        return fiveDollars;
     }
 
     public int getTenDollars() {

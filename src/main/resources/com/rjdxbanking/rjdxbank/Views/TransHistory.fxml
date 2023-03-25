@@ -120,9 +120,9 @@
                       </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1280.0">
                      <children>
-                        <Label alignment="TOP_RIGHT" text="Yearly Interest:">
+                        <Label alignment="TOP_RIGHT" text="Est. Yearly Interest: ">
                            <font>
-                              <Font name="Calibri" size="36.0" />
+                              <Font name="Century Gothic" size="36.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="720.0" />

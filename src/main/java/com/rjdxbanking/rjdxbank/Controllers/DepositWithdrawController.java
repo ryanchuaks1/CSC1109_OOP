@@ -141,6 +141,9 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         if (limit < amount) {
             limitReachedPane.setVisible(true);
+        }
+        else if (!(amount % 10 == 0)) {
+            limitReachedPane.setVisible(true);
         } else {
             try {
                 ATMClient atmClient = new ATMClient();

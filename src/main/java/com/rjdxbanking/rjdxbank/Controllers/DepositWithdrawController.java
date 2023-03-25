@@ -146,7 +146,7 @@ public class DepositWithdrawController implements Initializable {
                 ATMClient atmClient = new ATMClient();
                 atmClient.WithdrawCash(amount.intValue());
                 account.Withdraw(amount);
-                PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));
+                PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField.getText()));
                 Navigator.logout();
             } catch (InsufficientFundsException e) {
                 insufficientFundsPane.setVisible(true);

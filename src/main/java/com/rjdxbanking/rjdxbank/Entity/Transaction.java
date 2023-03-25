@@ -64,7 +64,7 @@ public class Transaction {
 
     public void setTimeStamp(String strTimeStamp) {
         // Convert a string to a LocalDateTime
-        this.timeStamp =  LocalDateTime.parse(strTimeStamp, TIMESTAMP_FORMATTER);
+        this.timeStamp = LocalDateTime.parse(strTimeStamp, TIMESTAMP_FORMATTER);
     }
 
     public TransactionStatus getTransactionStatus() {

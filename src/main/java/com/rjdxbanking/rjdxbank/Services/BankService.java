@@ -12,6 +12,7 @@ import com.rjdxbanking.rjdxbank.Entity.Bank;
 public class BankService {
     Firestore db = FirestoreClient.getFirestore();
 
+    // Get list of all banks
     public List<Bank> getBanks() {
         List<Bank> banks = null;
         try {
@@ -23,6 +24,7 @@ public class BankService {
         return banks;
     }
 
+    // Get a single bank based of bankId
     public Bank getBankById(String bankId) {
         Bank bank = null;
         try {
@@ -35,6 +37,7 @@ public class BankService {
         return bank;
     }
 
+    // Get a single bank based of bankRouting number
     public Bank getBankByRoute(String route) {
         Bank bank = null;
         try {

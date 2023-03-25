@@ -28,6 +28,7 @@ public class AccountService {
         return account;
     }
 
+    // Given a accountNumber find the account associated with it.
     public Account getAccountsByNumber(String accountNumber) {
         Account account = null;
         try {
@@ -51,9 +52,11 @@ public class AccountService {
         return account;
     }
 
+    // Check if account existed
     public boolean checkAccountExist(String accountNo) {
         try {
-            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNumber", accountNo).get();
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("accounts").whereEqualTo("accountNumber", accountNo)
+                    .get();
             QuerySnapshot snapshots = apiFuture.get();
             if (snapshots.isEmpty())
                 return false;
@@ -64,6 +67,7 @@ public class AccountService {
         return false;
     }
 
+    // create Account, not used in our GUI
     public void createAccount(CreateAccount createAccount) {
         try {
             ApiFuture<WriteResult> apiFuture = db.collection("accounts").document().set(createAccount);
@@ -73,6 +77,8 @@ public class AccountService {
         }
     }
 
+    // Update account limit, field {atmWithdrawalField, localTransferLimit,
+    // internationalTransferLimit}
     public void updateAccountLimits(Account account, String field, Double value) {
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());
@@ -82,6 +88,8 @@ public class AccountService {
         }
     }
 
+    // Update account status,
+    // use for login - if user key wrongly for 5 times, lock the account temporary
     public void updateAccountStatus(Account account, boolean value) {
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());
@@ -91,7 +99,7 @@ public class AccountService {
         }
     }
 
-    // value in argon format
+    // Settings Change pin of account in firebase. value in argon format
     public void changePin(Account account, String value) {
         try {
             DocumentReference docref = db.collection("accounts").document(account.getId());

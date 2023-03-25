@@ -21,8 +21,8 @@ import com.rjdxbanking.rjdxbank.Models.TransactionStatus;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.BankService;
 import com.rjdxbanking.rjdxbank.Services.FXService;
-import com.rjdxbanking.rjdxbank.Services.IncomingTransactionService;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
+import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,7 +56,9 @@ public class OtherBankwithdrawalController implements Initializable {
     @FXML
     private Label rateLabel;
 
-    private final IncomingTransactionService itService = new IncomingTransactionService();
+    private final TransactionService itService = new TransactionService();
+    private final ATMClient atmClient = new ATMClient();
+    private final BankService bankService = new BankService();
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     @FXML
@@ -81,7 +83,6 @@ public class OtherBankwithdrawalController implements Initializable {
             rateLabel.setText(
                     "1 SGD = " + FXService.foreignXchange(SessionClient.currency) + " " + SessionClient.currency);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -104,74 +105,70 @@ public class OtherBankwithdrawalController implements Initializable {
 
     // Method on confirmwithdraw button is pressed
     private void confirmWithdrawPressed(Double amountWithdrawn) throws FileNotFoundException, IOException {
-        // itService
-        try {
-            ATMClient atmClient = new ATMClient();
-            String cardNo = SessionClient.cardNum;
-            String binNum = cardNo.substring(0, 6);
-            String bankNumber = cardNo.substring(6, 15);
-            BankService bankService = new BankService();
-            Bank bank = bankService.getBankByRoute(binNum);
-            LocalDateTime now = LocalDateTime.now();
-
-            if (!bank.getIsLocal()) {
-                // for other banks that is not local
-                double conversionValue = FXService.foreignXchange(SessionClient.currency);
-                atmClient.WithdrawCash((int) (amountWithdrawn.intValue()));
-
-                CreateIncomingTransaction incTransaction = new CreateIncomingTransaction(dtf.format(now),
-                        amountWithdrawn,
-                        amountWithdrawn * conversionValue,
-                        SessionClient.currency,
-                        bank.getBankRoute(),
-                        bank.getBankName(),
-                        bankNumber,
-                        TransactionStatus.Pending);
-
-                itService.createTransaction(incTransaction);
-
-                PDFService.otherReceipt(bank, TransactionType.Withdrawal,
-                        String.valueOf(String.format("%.2f",
-                                amountWithdrawn)),
-                        String.valueOf(String.format("%.2f", amountWithdrawn.intValue() * conversionValue)),
-                        String.valueOf(String.format("%.2f", conversionValue)));
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successful");
-                alert.setHeaderText(null);
-                alert.setContentText("Successful");
-            } else {
-
-                // for local banks
-                atmClient.WithdrawCash((int) (amountWithdrawn.intValue()));
-                CreateIncomingTransaction incTransaction = new CreateIncomingTransaction(dtf.format(now),
-                        amountWithdrawn,
-                        amountWithdrawn,
-                        SessionClient.currency,
-                        bank.getBankRoute(),
-                        bank.getBankName(),
-                        bankNumber,
-                        TransactionStatus.Pending);
-
-                itService.createTransaction(incTransaction);
-                // for local banks receipt
-                PDFService.otherReceipt(bank, TransactionType.Withdrawal,
-                        String.valueOf(String.format("%.2f", amountWithdrawn.intValue())));
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successful");
-                alert.setHeaderText(null);
-                alert.setContentText("Successful");
-            }
-
-            Navigator.logout();
-        } catch (BillsNotEnoughException e) {
-            System.out.println("Insufficient Bills");
+        // amount withdrawal less than 20
+        if (amountWithdrawn < 20) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Insufficient Bills");
+            alert.setTitle("Invalid value, Please key in more than $20");
             alert.setHeaderText(null);
-            alert.setContentText("Insufficient Bills");
-            alert.showAndWait();
-            EmailClient.emailUpdate();
+            alert.setContentText("Invalid value, Please key in more than or equal to $20");
+        } else {
+            // else check the current card belongs to local or overseas
+            try {
+                String cardNo = SessionClient.getCardNum();
+                String binNum = cardNo.substring(0, 6);
+                String bankNumber = cardNo.substring(6, 15);
+
+                Bank bank = bankService.getBankByRoute(binNum);
+                LocalDateTime now = LocalDateTime.now();
+                double conversionValue = FXService.foreignXchange(SessionClient.getCurrency());
+
+                double amountDebited = (bank.getIsLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
+                // Create transaction in DB
+
+                // if ATMClient do not have enough bills left, throw a billInsufficientException
+                atmClient.WithdrawCash((int) (amountWithdrawn.intValue()));
+
+                CreateIncomingTransaction incTransaction = new CreateIncomingTransaction(dtf.format(now),
+                        amountWithdrawn,
+                        amountDebited,
+                        SessionClient.getCurrency(),
+                        bank.getBankRoute(),
+                        bank.getBankName(),
+                        bankNumber,
+                        TransactionStatus.Pending);
+
+                itService.createTransaction(incTransaction);
+
+                if (!bank.getIsLocal()) {
+                    // for other banks that is not local
+                    // create PDF
+                    PDFService.otherReceipt(bank, TransactionType.Withdrawal,
+                            String.valueOf(String.format("%.2f",
+                                    amountWithdrawn)),
+                            String.valueOf(String.format("%.2f", amountDebited)),
+                            String.valueOf(conversionValue));
+                } else {
+                    // for local banks
+                    // for local banks receipt
+                    PDFService.otherReceipt(bank, TransactionType.Withdrawal,
+                            String.valueOf(amountDebited));
+                }
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Successful");
+                Navigator.logout();
+
+            } catch (BillsNotEnoughException e) {
+                System.out.println("Insufficient Bills");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Insufficient Bills");
+                alert.setHeaderText(null);
+                alert.setContentText("Insufficient Bills");
+                alert.showAndWait();
+                EmailClient.emailUpdate();
+            }
         }
     }
 

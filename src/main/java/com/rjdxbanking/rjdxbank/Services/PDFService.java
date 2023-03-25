@@ -5,7 +5,6 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Entity.Bank;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
-import com.twilio.rest.proxy.v1.service.Session;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,7 +42,7 @@ public class PDFService {
         }
     }
 
-    // Other overseas banks
+    // Other overseas banks for otherBankWithdrawalController
     public static void otherReceipt(Bank bank, TransactionType TransactionType, String SGDamount,
             String ConvertedAmount, String fxRate)
             throws FileNotFoundException, IOException {
@@ -71,11 +70,12 @@ public class PDFService {
                             + dtf2.format(now) + ".pdf"));
             System.out.println("PDF Created!");
         } catch (FileNotFoundException e) {
+
             System.out.println("Print Error");
         }
     }
 
-    // for localbanks
+    // for localbanks for otherBankWithdrawalController
     public static void otherReceipt(Bank bank, TransactionType TransactionType, String SGDamount)
             throws FileNotFoundException, IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

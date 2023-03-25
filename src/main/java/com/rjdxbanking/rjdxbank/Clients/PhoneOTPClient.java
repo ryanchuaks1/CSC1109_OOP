@@ -62,7 +62,7 @@ public class PhoneOTPClient {
         return false;
     }
 
-    public void warningOTP(Account account) {
+    public void warning(Account account) {
         cuser = userService.getUserByUserId(account.getUserId());
         Twilio.init(SecretKeyStore.getKey("ACCOUNT_SID"), SecretKeyStore.getKey("AUTH_TOKEN"));
 

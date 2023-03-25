@@ -149,7 +149,7 @@ public class LoginController implements Initializable {
                 PhoneOTPClient phoneOTP = new PhoneOTPClient();
                 String accountNum = SessionClient.getCardNum().substring(6, 15);
                 AccountService accountService = new AccountService();
-                phoneOTP.warningOTP(accountService.getAccountsByNumber(accountNum));
+                phoneOTP.warning(accountService.getAccountsByNumber(accountNum));
                 // temp set to true to locked
                 accountService.updateAccountStatus(accountService.getAccountsByNumber(accountNum), true);
 

@@ -21,7 +21,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rjdxbanking.rjdxbank.Controllers.SettingsController">
     <children>
-        <AnchorPane prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: #800000;" AnchorPane.bottomAnchor="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: #800000;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="909.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="351.0" AnchorPane.topAnchor="10.0">
                     <children>
@@ -351,14 +351,14 @@
       </AnchorPane>
       <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.topAnchor="0.0">
+            <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="500.0" prefWidth="1002.0">
                      <children>
                         <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="500.0" prefWidth="892.0">
                            <columnConstraints>
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="549.0" minWidth="10.0" prefWidth="537.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="355.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -381,9 +381,12 @@
                                     <Font name="Calibri" size="36.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="internationalTransferLimit" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="localTransferLimit" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="atmWithdrawalLimit" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="internationalTransferLimit" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="localTransferLimit" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" GridPane.columnIndex="1">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets></ComboBox>
+                              <ComboBox fx:id="atmWithdrawalLimit" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <HBox.margin>
                               <Insets />

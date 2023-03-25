@@ -17,7 +17,7 @@ public class PhoneOTPClient {
     static long totalMiliseconds;
     UserService userService = new UserService();
 
-    public User getUser(){
+    public User getUser() {
         return cuser;
     }
 
@@ -71,13 +71,12 @@ public class PhoneOTPClient {
 
         msg += "\n\nRegards,\n";
         msg += "RDJX Bank";
-        try{
+        try {
             Message message = Message.creator(new PhoneNumber(cuser.getPhoneNo()),
-                new PhoneNumber(
-                        "+15674122358"),
-                msg).create();
-        }
-        catch (Exception e){
+                    new PhoneNumber(
+                            "+15674122358"),
+                    msg).create();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         // System.out.println(message.getSid());

@@ -20,7 +20,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rjdxbanking.rjdxbank.Controllers.DepositWithdrawController">
     <children>
-        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: #800000;" AnchorPane.bottomAnchor="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: #800000;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="909.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="351.0" AnchorPane.topAnchor="10.0">
                     <children>

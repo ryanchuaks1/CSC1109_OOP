@@ -138,28 +138,22 @@ public class DepositWithdrawController implements Initializable {
     }
 
     private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
-        if (SessionClient.isOwnBank()) {
-            Account account = SessionClient.getAccount();
-            if (limit < amount) {
-                limitReachedPane.setVisible(true);
-            } else {
-                try {
-                    ATMClient atmClient = new ATMClient();
-                    atmClient.WithdrawCash(amount.intValue());
-                    account.Withdraw(amount);
-                    PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));
-                    Navigator.logout();
-                } catch (InsufficientFundsException e) {
-                    insufficientFundsPane.setVisible(true);
-                } catch (BillsNotEnoughException e) {
-                    billsInsufficientPane.setVisible(true);
-                    EmailClient.emailUpdate();
-                }
-            }
+        Account account = SessionClient.getAccount();
+        if (limit < amount) {
+            limitReachedPane.setVisible(true);
         } else {
-            // PDFService.Receipt(account, TransactionType.Withdrawal,
-            // String.valueOf(withdrawTextField));
-            Navigator.logout();
+            try {
+                ATMClient atmClient = new ATMClient();
+                atmClient.WithdrawCash(amount.intValue());
+                account.Withdraw(amount);
+                PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField));
+                Navigator.logout();
+            } catch (InsufficientFundsException e) {
+                insufficientFundsPane.setVisible(true);
+            } catch (BillsNotEnoughException e) {
+                billsInsufficientPane.setVisible(true);
+                EmailClient.emailUpdate();
+            }
         }
     }
 

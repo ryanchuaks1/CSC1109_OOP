@@ -60,10 +60,10 @@ public class DepositWithdrawController implements Initializable {
     private AnchorPane insufficientFundsPane;
 
     @FXML
-    private Button lackOfcashBtn1;
+    private AnchorPane limitReachedPane;
 
     @FXML
-    private AnchorPane limitReachedPane;
+    private AnchorPane invalidAmountPane;
 
     @FXML
     private AnchorPane withdrawPane;
@@ -87,6 +87,7 @@ public class DepositWithdrawController implements Initializable {
         closePressed(null);
         withdrawPane.setVisible(false);
         depositPane.setVisible(false);
+        invalidAmountPane.setVisible(false);
 
         switch (SessionClient.getNavState()) {
             case "Deposit":
@@ -142,8 +143,8 @@ public class DepositWithdrawController implements Initializable {
         if (limit < amount) {
             limitReachedPane.setVisible(true);
         }
-        else if (!(amount % 10 == 0)) {
-            limitReachedPane.setVisible(true);
+        else if (!(amount % 10 == 0 && amount >= 20)) {
+            invalidAmountPane.setVisible(true);
         } else {
             try {
                 ATMClient atmClient = new ATMClient();
@@ -188,6 +189,7 @@ public class DepositWithdrawController implements Initializable {
         insufficientFundsPane.setVisible(false);
         billsInsufficientPane.setVisible(false);
         limitReachedPane.setVisible(false);
+        invalidAmountPane.setVisible(false);
     }
 
     // NOTE: Code below here is for dev purposes only

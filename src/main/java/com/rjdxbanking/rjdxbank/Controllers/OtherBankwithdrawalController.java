@@ -51,6 +51,12 @@ public class OtherBankwithdrawalController implements Initializable {
     private AnchorPane withdrawPane;
 
     @FXML
+    private AnchorPane billsInsufficientPane;
+
+    @FXML
+    private AnchorPane invalidAmountPane;
+
+    @FXML
     private TextField withdrawTextField;
 
     @FXML
@@ -85,6 +91,8 @@ public class OtherBankwithdrawalController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        invalidAmountPane.setVisible(false);
+        billsInsufficientPane.setVisible(false);
     }
 
     @FXML
@@ -106,11 +114,8 @@ public class OtherBankwithdrawalController implements Initializable {
     // Method on confirmwithdraw button is pressed
     private void confirmWithdrawPressed(Double amountWithdrawn) throws FileNotFoundException, IOException {
         // amount withdrawal less than 20
-        if (amountWithdrawn < 20) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid value, Please key in more than $20");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid value, Please key in more than or equal to $20");
+        if (!(amountWithdrawn % 10 == 0 && amountWithdrawn >= 20)) {
+            invalidAmountPane.setVisible(true);
         } else {
             // else check the current card belongs to local or overseas
             try {
@@ -161,12 +166,7 @@ public class OtherBankwithdrawalController implements Initializable {
                 Navigator.logout();
 
             } catch (BillsNotEnoughException e) {
-                System.out.println("Insufficient Bills");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Insufficient Bills");
-                alert.setHeaderText(null);
-                alert.setContentText("Insufficient Bills");
-                alert.showAndWait();
+                billsInsufficientPane.setVisible(true);
                 EmailClient.emailUpdate();
             }
         }

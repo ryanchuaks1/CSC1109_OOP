@@ -1,7 +1,7 @@
 package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.password4j.Password;
-import com.rjdxbanking.rjdxbank.Clients.PhoneOTPClient;
+import com.rjdxbanking.rjdxbank.Clients.PhoneClient;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Entity.User;
@@ -121,7 +121,7 @@ public class SettingsController implements Initializable {
     @FXML
     private AnchorPane verificationPane;
 
-    PhoneOTPClient otpClient = new PhoneOTPClient();
+    PhoneClient otpClient = new PhoneClient();
     AccountService accService = new AccountService();
 
     @Override

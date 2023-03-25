@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PhoneOTPClient {
+public class PhoneClient {
     static private int randomVerifier;
     static private User cuser;
     static long totalMiliseconds;

@@ -1,7 +1,7 @@
 package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.rjdxbanking.rjdxbank.Clients.BankIdentificationClient;
-import com.rjdxbanking.rjdxbank.Clients.PhoneOTPClient;
+import com.rjdxbanking.rjdxbank.Clients.PhoneClient;
 import com.rjdxbanking.rjdxbank.Clients.PinClient;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
@@ -146,7 +146,7 @@ public class LoginController implements Initializable {
                 invalidPinLabel.setVisible(true);
             } else {
                 // set cardNum probably can simplify
-                PhoneOTPClient phoneOTP = new PhoneOTPClient();
+                PhoneClient phoneOTP = new PhoneClient();
                 String accountNum = SessionClient.getCardNum().substring(6, 15);
                 AccountService accountService = new AccountService();
                 phoneOTP.warning(accountService.getAccountsByNumber(accountNum));

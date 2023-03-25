@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -88,7 +89,7 @@
                <children>
                       <HBox alignment="CENTER_LEFT">
                           <children>
-                              <Button mnemonicParsing="false" onAction="#btnBackPressed" style="-fx-background-color: FFFFFF;" text="%backLabel" textFill="MAROON">
+                              <Button mnemonicParsing="false" onAction="#btnBackPressed" style="-fx-background-color: #FFFFFF;" text="%backLabel" textFill="MAROON">
                                   <font>
                                       <Font name="Calibri" size="36.0" />
                                   </font>
@@ -98,6 +99,9 @@
                                   <HBox.margin>
                                       <Insets left="20.0" top="10.0" />
                                   </HBox.margin>
+                           <effect>
+                              <DropShadow height="10.0" radius="4.5" width="10.0" />
+                           </effect>
                               </Button>
                               <Label fx:id="accLabel" alignment="TOP_RIGHT">
                                   <font>

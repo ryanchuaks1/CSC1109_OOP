@@ -112,7 +112,7 @@ public class OtherBankwithdrawalController implements Initializable {
                 BankService bankService = new BankService();
                 Bank bank = bankService.getBankByRoute(binNum);
                 LocalDateTime now = LocalDateTime.now();
-                if(!bank.isLocal()){
+                if(!bank.getIsLocal()){
                     
                     double conversionValue = FXService.foreignXchange(SessionClient.currency);
                     atmClient.WithdrawCash((int)(amount.intValue()*conversionValue));

@@ -101,11 +101,15 @@ public class DepositWithdrawController implements Initializable {
                 transition.play();
                 break;
             case "Withdraw":
-                if (SessionClient.isOwnBank()) {
-                    limit = SessionClient.account.getCurrentLimit(TransactionType.Withdrawal);
-                }
+                limit = SessionClient.account.getCurrentLimit(TransactionType.Withdrawal);
                 withdrawPane.setVisible(true);
                 break;
+            default:
+                try {
+                    Navigator.setRoot("MainDashboard");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
@@ -122,11 +126,7 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private void cancelPressed(ActionEvent event) throws IOException {
-        if (SessionClient.isOwnBank()) {
-            Navigator.setRoot("MainDashBoard");
-        } else {
-            Navigator.logout();
-        }
+        Navigator.setRoot("MainDashboard");
     }
 
     @FXML

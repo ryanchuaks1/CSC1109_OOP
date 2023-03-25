@@ -240,7 +240,7 @@
                               </Label>
                               <Label fx:id="rateLabel">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="Century Gothic" size="36.0" />
                                  </font>
                               </Label>
                            </children>

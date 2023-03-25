@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
         LoadingPage.setVisible(false);
         if (SessionClient.getNavState() == "Logout") {
             dispenseCard();
-            SessionClient.setNavState(null);
+            SessionClient.setNavState("none");
         }
     }
 

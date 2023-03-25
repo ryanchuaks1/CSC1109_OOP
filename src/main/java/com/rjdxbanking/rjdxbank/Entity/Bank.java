@@ -15,12 +15,12 @@ public class Bank {
 
     @PropertyName("isLocal")
     private boolean isLocal;
-    
+
     @PropertyName("currencyCode")
     private String currencyCode;
 
-    public Bank(){
-        
+    public Bank() {
+
     }
 
     public Bank(String id, String bankName, String bankRoute, boolean isLocal, String currencyCode) {
@@ -43,7 +43,11 @@ public class Bank {
         this.bankRoute = bankRoute;
     }
 
-    public void setLocal(boolean isLocal) {
+    public boolean getIsLocal() {
+        return isLocal;
+    }
+
+    public void setIsLocal(boolean isLocal) {
         this.isLocal = isLocal;
     }
 
@@ -66,10 +70,5 @@ public class Bank {
     public String getBankRoute() {
         return bankRoute;
     }
-
-    public boolean isLocal() {
-        return isLocal;
-    }
-
 
 }

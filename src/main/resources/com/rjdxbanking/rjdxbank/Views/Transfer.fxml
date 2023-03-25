@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
@@ -256,7 +255,7 @@
                                     <Insets top="20.0" />
                                  </VBox.margin>
                               </Label>
-                              <ComboBox fx:id="bankComboBox" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" visibleRowCount="5">
+                              <ComboBox fx:id="bankComboBox" onAction="#changeTargetBank" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" visibleRowCount="5">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -264,7 +263,7 @@
                                     <Insets top="20.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <Label fx:id="fxRateLabel" text="%fxRateLabel">
+                              <Label fx:id="fxRateLabel" text="%fxRateLabel" visible="false">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -288,121 +287,5 @@
             </VBox>
          </children>
       </AnchorPane>
-      <VBox fx:id="transferBox" layoutX="10.0" layoutY="117.0" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <HBox alignment="CENTER_LEFT">
-               <children>
-                  <Label text="%MainDashboardLabel">
-                     <font>
-                        <Font name="Calibri" size="48.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="20.0" top="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="nameLabel">
-                     <font>
-                        <Font name="Calibri" size="48.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="256.0" prefWidth="1280.0">
-               <children>
-                  <Pane fx:id="localTransfer" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
-                     <children>
-                        <VBox alignment="CENTER" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0">
-                           <children>
-                              <ImageView fx:id="iconChangePin" fitHeight="151.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Images/DepositIcon.png" />
-                                 </image>
-                              </ImageView>
-                              <Label text="%localTransferLabel" textFill="MAROON">
-                                 <font>
-                                    <Font name="Calibri Bold" size="34.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Pane>
-                  <Pane fx:id="overseasTransfer" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
-                           <children>
-                              <ImageView fx:id="iconLimit" fitHeight="162.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Images/SettingsIcon.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </ImageView>
-                              <Label text="%overseasTransferLabel" textFill="MAROON">
-                                 <font>
-                                    <Font name="Calibri Bold" size="34.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Pane>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="256.0" prefWidth="1280.0">
-               <children>
-                  <Pane fx:id="exitPane" maxHeight="248.0" maxWidth="248.0" minHeight="248.0" minWidth="248.0" onMouseClicked="#onMouseNavigate" prefHeight="248.0" prefWidth="248.0" style="-fx-border-color: #800000; -fx-border-width: 4; -fx-border-radius: 5;">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="248.0" prefWidth="248.0">
-                           <children>
-                              <ImageView fx:id="iconExit1" fitHeight="162.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Images/ExitIcon.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </ImageView>
-                              <Label text="%backLabel" textFill="MAROON">
-                                 <font>
-                                    <Font name="Calibri Bold" size="34.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <HBox.margin>
-                        <Insets top="40.0" />
-                     </HBox.margin>
-                  </Pane>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
     </children>
 </AnchorPane>

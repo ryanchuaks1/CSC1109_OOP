@@ -49,4 +49,19 @@ public class BankService {
         }
         return bank;
     }
+
+    public Bank getBankByName(String bankName) {
+        Bank bank = null;
+        try {
+            ApiFuture<QuerySnapshot> apiFuture = db.collection("banks").whereEqualTo("bankName", bankName).get();
+            QuerySnapshot snapshots = apiFuture.get();
+            if (!snapshots.getDocuments().isEmpty()) {
+                var bankSnapshot = snapshots.getDocuments().get(0);
+                bank = bankSnapshot.toObject(Bank.class);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return bank;
+    }
 }

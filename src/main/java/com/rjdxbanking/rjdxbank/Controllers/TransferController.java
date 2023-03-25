@@ -31,6 +31,7 @@ import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.BankService;
+import com.rjdxbanking.rjdxbank.Services.FXService;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
 
 public class TransferController implements Initializable {
@@ -51,37 +52,13 @@ public class TransferController implements Initializable {
     private Button btnMalay;
 
     @FXML
-    private Pane exitPane;
-
-    @FXML
-    private ImageView iconChangePin;
-
-    @FXML
-    private ImageView iconExit1;
-
-    @FXML
-    private ImageView iconLimit;
+    private Label fxRateLabel;
 
     @FXML
     private ImageView iconPrimary;
 
     @FXML
-    private Pane localTransfer;
-
-    @FXML
-    private Label nameLabel;
-
-    @FXML
-    private Pane overseasTransfer;
-
-    @FXML
     private Label rateLabel;
-
-    @FXML
-    private Label fxRateLabel;
-
-    @FXML
-    private VBox transferBox;
 
     @FXML
     private AnchorPane transferPane;
@@ -93,6 +70,7 @@ public class TransferController implements Initializable {
     double overseasLimit = 0.0;
     TransactionType transType = null;
     BankService bankService = new BankService();
+    List<Bank> banks;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -100,9 +78,34 @@ public class TransferController implements Initializable {
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
-        transferBox.setVisible(true);
         localLimit = SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
         overseasLimit = SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
+
+        banks = bankService.getBanks();
+        for (Bank bank : banks) {
+            if (bank.getIsLocal()) {
+                bankComboBox.getItems().add(bank.getBankName() + " - Local");
+            } else {
+                bankComboBox.getItems().add(bank.getBankName() + " - Overseas");
+            }
+        }
+        fxRateLabel.setVisible(false);
+        rateLabel.setVisible(false);
+    }
+
+    @FXML
+    void changeTargetBank(ActionEvent event) throws IOException {
+        if (bankComboBox.getValue().contains("Overseas")) {
+            String[] name = bankComboBox.getValue().split("-");
+            String Currency = bankService.getBankByName(name[0].substring(0, name[0].length() - 1)).getCurrencyCode();
+            fxRateLabel.setVisible(true);
+            rateLabel.setVisible(true);
+            rateLabel.setText("1 SGD = " + FXService.foreignXchange(Currency) + " " + Currency);
+        } else {
+            fxRateLabel.setVisible(false);
+            rateLabel.setVisible(false);
+        }
+
     }
 
     @FXML
@@ -119,35 +122,6 @@ public class TransferController implements Initializable {
     @FXML
     private void cancelPressed(ActionEvent event) throws IOException {
         Navigator.setRoot("MainDashBoard");
-    }
-
-    @FXML
-    private void onMouseNavigate(MouseEvent event) throws IOException {
-        if (event.getSource() == exitPane) {
-            Navigator.setRoot("MainDashboard");
-        } else if (event.getSource() == localTransfer) {
-            List<Bank> banks = bankService.getBanks();
-            for (Bank bank : banks) {
-                if (bank.getIsLocal()) {
-                    bankComboBox.getItems().add(bank.getBankName());
-                }
-            }
-            transType = TransactionType.LocalTransfer;
-            transferBox.setVisible(false);
-            fxRateLabel.setVisible(false);
-            rateLabel.setVisible(false);
-        } else if (event.getSource() == overseasTransfer) {
-            List<Bank> banks = bankService.getBanks();
-            for (Bank bank : banks) {
-                if (!bank.getIsLocal()) {
-                    bankComboBox.getItems().add(bank.getBankName());
-                }
-            }
-            transType = TransactionType.OverseasTransfer;
-            transferBox.setVisible(false);
-            fxRateLabel.setVisible(true);
-            rateLabel.setVisible(true);
-        }
     }
 
     @FXML

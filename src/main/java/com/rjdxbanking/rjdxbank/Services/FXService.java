@@ -12,6 +12,8 @@ import com.google.gson.JsonParser;
 import com.rjdxbanking.rjdxbank.Helpers.SecretKeyStore;
 
 public class FXService {
+    // Foreign exchange API that return Json object but filter based of string
+    // currencyCode
     public static double foreignXchange(String currencyCode) throws IOException {
         try {
             // Setting URL
@@ -34,7 +36,7 @@ public class FXService {
         } catch (IOException e) {
             System.out.println(e.getStackTrace());
         }
-        //return 0
+        // return 0
 
         return 0;
     }

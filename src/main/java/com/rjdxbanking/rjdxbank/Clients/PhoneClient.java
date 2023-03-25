@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PhoneOTPClient {
+public class PhoneClient {
     static private int randomVerifier;
     static private User cuser;
     static long totalMiliseconds;
@@ -62,7 +62,7 @@ public class PhoneOTPClient {
         return false;
     }
 
-    public void warningOTP(Account account) {
+    public void warning(Account account) {
         cuser = userService.getUserByUserId(account.getUserId());
         Twilio.init(SecretKeyStore.getKey("ACCOUNT_SID"), SecretKeyStore.getKey("AUTH_TOKEN"));
 

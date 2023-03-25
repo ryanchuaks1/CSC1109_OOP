@@ -10,7 +10,7 @@ import com.rjdxbanking.rjdxbank.Entity.ATMChange;
 public class ATMService {
     Firestore db = FirestoreClient.getFirestore();
 
-    // Given a userId find the list of accounts associated with it.
+    // return ATMChange value, Static document in firebase that store the details
     public ATMChange getATMChange() {
         ATMChange atmChange = null;
         try {
@@ -23,6 +23,7 @@ public class ATMService {
         return atmChange;
     }
 
+    // Update the ATM cash field in the firebase
     public void updateATMChange(ATMChange atmcash) {
         try {
             DocumentReference docref = db.collection("atmcash").document("nsyQIbYFXQDviqTEicrU");

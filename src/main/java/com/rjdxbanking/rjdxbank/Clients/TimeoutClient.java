@@ -10,7 +10,7 @@ public class TimeoutClient {
     private static final int TIMEOUT_SECONDS = 30;
     Duration delay = Duration.seconds(TIMEOUT_SECONDS);
     PauseTransition transition = new PauseTransition(delay);
-    
+
     public void resetTimer() {
         stopTimer();
         startTimer();

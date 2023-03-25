@@ -7,6 +7,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import com.rjdxbanking.rjdxbank.Entity.Transaction;
+import com.rjdxbanking.rjdxbank.Models.CreateIncomingTransaction;
 import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 
@@ -32,6 +33,7 @@ public class TransactionService {
         return transaction;
     }
 
+    // create Transaction
     public void createTransaction(CreateTransaction createTransaction) {
         try {
             ApiFuture<WriteResult> apiFuture = db.collection("transactions").document().set(createTransaction);
@@ -41,6 +43,17 @@ public class TransactionService {
         }
     }
 
+    // createTransaction for oversea and local banks that do not belong to the bank
+    public void createTransaction(CreateIncomingTransaction transaction) {
+        try {
+            ApiFuture<WriteResult> apiFuture = db.collection("incoming_transactions").document().set(transaction);
+            System.out.printf("Successfully created transaction at %s \n", apiFuture.get().getUpdateTime());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // get list<transaction> based of accountID
     public List<Transaction> getTransactionsByAccountId(String accountId) {
         List<Transaction> transactions = new ArrayList<Transaction>();
         try {
@@ -53,6 +66,7 @@ public class TransactionService {
         return transactions;
     }
 
+    // get transaction based of accountID limited to the latest 100 value.
     public ObservableList<Transaction> getTransactionsByAccountIdLimit100(String accountId) {
         ObservableList<Transaction> transactions = FXCollections.observableArrayList();
         try {

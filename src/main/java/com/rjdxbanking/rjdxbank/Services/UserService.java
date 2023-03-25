@@ -11,9 +11,11 @@ import com.rjdxbanking.rjdxbank.Models.CreateUser;
 
 import java.util.List;
 
+//User Service is not utilized fully.
 public class UserService {
     Firestore db = FirestoreClient.getFirestore();
 
+    // get all user
     public List<User> getUsers() {
         List<User> user = null;
         try {
@@ -25,6 +27,7 @@ public class UserService {
         return user;
     }
 
+    // get User by UserId
     public User getUserByUserId(String userId) {
         User account = null;
         try {
@@ -37,6 +40,7 @@ public class UserService {
         return account;
     }
 
+    // get User by Username
     public User getUserByUsername(String username) {
         User account = null;
         try {
@@ -52,6 +56,7 @@ public class UserService {
         return account;
     }
 
+    // get user by email
     public User getUserByEmail(String email) {
         User account = null;
         try {
@@ -65,6 +70,7 @@ public class UserService {
         return account;
     }
 
+    // get user by phonenumber
     public User getUserByPhoneNumber(String phoneNumber) {
         User account = null;
         try {
@@ -80,6 +86,7 @@ public class UserService {
         return account;
     }
 
+    // not used
     public void createUser(CreateUser createUser) {
         try {
             ApiFuture<WriteResult> apiFuture = db.collection("users").document().set(createUser);

@@ -1,7 +1,7 @@
 package com.rjdxbanking.rjdxbank.Controllers;
 
 import com.password4j.Password;
-import com.rjdxbanking.rjdxbank.Clients.PhoneOTPClient;
+import com.rjdxbanking.rjdxbank.Clients.PhoneClient;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Entity.User;
@@ -121,8 +121,8 @@ public class SettingsController implements Initializable {
     @FXML
     private AnchorPane verificationPane;
 
-    PhoneOTPClient otpClient = new PhoneOTPClient();
-    AccountService aService = new AccountService();
+    PhoneClient otpClient = new PhoneClient();
+    AccountService accService = new AccountService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -166,17 +166,10 @@ public class SettingsController implements Initializable {
         atmWithdrawalLimit.setValue((int) SessionClient.getAccount().getLocalTransferLimit());
         internationalTransferLimit.getItems().addAll(list);
         internationalTransferLimit.setValue((int) SessionClient.getAccount().getInternationalTransferLimit());
-        // localTransferLimit.getItems(String.format("%.2f",
-        // essionClient.getAccount().getLocalTransferLimit()));
-        // atmWithdrawalLimit.setText(String.format("%.2f",
-        // SessionClient.getAccount().getATMWithdrawalLimit()));
-        // internationalTransferLimit
-        // .setText(String.format("%.2f",
-        // SessionClient.getAccount().getInternationalTransferLimit()));
     }
 
     @FXML
-    void onButtonPress(ActionEvent event) {
+    void onButtonPress(ActionEvent event) throws Exception {
         if (event.getSource() == changePin) {
             changePinMethod();
         } else if (event.getSource() == changeLimitBtn) {
@@ -232,7 +225,6 @@ public class SettingsController implements Initializable {
                     try {
                         Navigator.logout();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 } else {
@@ -252,28 +244,21 @@ public class SettingsController implements Initializable {
         }
     }
 
-    public void changeLimitMethod() {
-        try {
-            aService.updateAccountLimits(SessionClient.getAccount(), "localTransferLimit",
-                    Double.valueOf(localTransferLimit.getValue()));
-            aService.updateAccountLimits(SessionClient.getAccount(), "internationalTransferLimit",
-                    Double.valueOf(internationalTransferLimit.getValue()));
-            aService.updateAccountLimits(SessionClient.getAccount(), "atmWithdrawalLimit",
-                    Double.valueOf(atmWithdrawalLimit.getValue()));
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Limits Updated");
-            alert.setHeaderText(null);
-            alert.setContentText("Limits Updated, please reinsert card");
-            alert.showAndWait();
-            try {
-                Navigator.logout();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-        }
+    // change limit settings updates
+    public void changeLimitMethod() throws Exception {
+        accService.updateAccountLimits(SessionClient.getAccount(), "localTransferLimit",
+                Double.valueOf(localTransferLimit.getValue()));
+        accService.updateAccountLimits(SessionClient.getAccount(), "internationalTransferLimit",
+                Double.valueOf(internationalTransferLimit.getValue()));
+        accService.updateAccountLimits(SessionClient.getAccount(), "atmWithdrawalLimit",
+                Double.valueOf(atmWithdrawalLimit.getValue()));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Limits Updated");
+        alert.setHeaderText(null);
+        alert.setContentText("Limits Updated, please reinsert card");
+        alert.showAndWait();
 
+        Navigator.logout();
     }
 
     public static void addTextLimiter(final PasswordField tf, final int maxLength) {

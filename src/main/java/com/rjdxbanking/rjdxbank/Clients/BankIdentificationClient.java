@@ -4,7 +4,6 @@ import com.rjdxbanking.rjdxbank.Entity.Bank;
 import com.rjdxbanking.rjdxbank.Services.BankService;
 
 public class BankIdentificationClient {
-
     public boolean isValidBank(String BIN) {
         BankService bankService = new BankService();
         Bank bank = bankService.getBankByRoute(BIN);

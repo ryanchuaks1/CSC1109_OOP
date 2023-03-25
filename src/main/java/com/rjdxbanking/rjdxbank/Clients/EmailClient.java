@@ -10,15 +10,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
 import com.rjdxbanking.rjdxbank.Helpers.SecretKeyStore;
 
-
 public class EmailClient {
-    
-    static long totalMiliseconds;
-    
-    public static void emailUpdate(){
+
+    public static void emailUpdate() {
         // Sender's email ID needs to be mentioned
         String from = SecretKeyStore.getKey("emailId");
 
@@ -55,8 +51,8 @@ public class EmailClient {
             message.setFrom(new InternetAddress(from));
 
             // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("rjdxbanking@gmail.com"));           
-            
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress("rjdxbanking@gmail.com"));
+
             // Set Subject: header field
             message.setSubject("ATM Running out!");
 
@@ -64,18 +60,14 @@ public class EmailClient {
 
             // Now set the actual message
             message.setText(msg);
-            
-            System.out.println("sending...");
+
             // Send message
             Transport.send(message);
-            System.out.println("Sent message successfully....");
-            totalMiliseconds = System.currentTimeMillis();
 
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-        
-    }
-    
-}
 
+    }
+
+}

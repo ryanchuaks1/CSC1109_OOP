@@ -71,7 +71,7 @@ public class PhoneClient {
         msg += "\n\nRegards,\n";
         msg += "RDJX Bank";
         try {
-            Message message = Message.creator(new PhoneNumber(cuser.getPhoneNo()),
+            Message.creator(new PhoneNumber(cuser.getPhoneNo()),
                     new PhoneNumber(
                             "+15674122358"),
                     msg).create();

@@ -8,7 +8,6 @@ import com.rjdxbanking.rjdxbank.Models.Balance;
 import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
 import com.rjdxbanking.rjdxbank.Models.TransactionStatus;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
-import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
 import java.time.LocalDateTime;
@@ -53,7 +52,6 @@ public abstract class Account implements IAccount {
     }
 
     private final TransactionService transactionService = new TransactionService();
-    private final AccountService accountService = new AccountService();
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     public String getId() {
@@ -237,6 +235,8 @@ public abstract class Account implements IAccount {
                 break;
             case OverseasTransfer:
                 limit = this.internationalTransferLimit;
+                break;
+            default:
                 break;
         }
         for (Transaction transaction : transactions) {

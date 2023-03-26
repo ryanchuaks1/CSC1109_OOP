@@ -80,7 +80,7 @@ public class TransferController implements Initializable {
 
         banks = bankService.getBanks();
         for (Bank bank : banks) {
-            if (bank.getIsLocal()) {
+            if (bank.isLocal()) {
                 bankComboBox.getItems().add(bank.getBankName() + " - Local");
             } else {
                 bankComboBox.getItems().add(bank.getBankName() + " - Overseas");

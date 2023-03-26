@@ -14,8 +14,8 @@ public class CreateAccount {
     private boolean status;
 
     Random rand = new Random();
-    public CreateAccount(String userId, String accountType, String pinNo)
-    {
+
+    public CreateAccount(String userId, String accountType, String pinNo) {
         this.accountType = accountType;
         this.AccountNumber = Integer.toString(100000000 + rand.nextInt(900000000));
         this.atmWithdrawalLimit = 5000;
@@ -52,5 +52,13 @@ public class CreateAccount {
 
     public String getPinNo() {
         return pinNo;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

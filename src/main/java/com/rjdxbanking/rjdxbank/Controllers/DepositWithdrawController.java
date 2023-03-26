@@ -102,7 +102,7 @@ public class DepositWithdrawController implements Initializable {
                 break;
             case "Withdraw":
                 limit = SessionClient.account.getCurrentLimit(TransactionType.Withdrawal);
-                System.out.println("withdrawal limit is " + limit);
+                System.out.println("Withdrawal limit is " + limit);
                 withdrawPane.setVisible(true);
                 break;
             default:

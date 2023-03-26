@@ -305,5 +305,14 @@
             </VBox>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="successPane" prefHeight="808.0" prefWidth="1293.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Label alignment="CENTER" layoutY="365.0" prefHeight="70.0" prefWidth="1280.0" text="%successActionLabel" textAlignment="CENTER">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

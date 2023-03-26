@@ -4,6 +4,7 @@ import com.rjdxbanking.rjdxbank.Entity.Account;
 
 public class PinClient {
 
+    //checkPin is correct, if correct login.
     public static boolean checkPin(String pin) {
         if (SessionClient.isOwnBank()) {
             AccountClient accountClient = new AccountClient();

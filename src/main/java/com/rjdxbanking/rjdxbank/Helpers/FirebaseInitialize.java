@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 
 import java.io.FileInputStream;
 
+//firebase db
 public class FirebaseInitialize {
     public static void initDatabase() {
         try {

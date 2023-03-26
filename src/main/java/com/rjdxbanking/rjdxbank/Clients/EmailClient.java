@@ -14,7 +14,10 @@ import com.rjdxbanking.rjdxbank.Helpers.SecretKeyStore;
 
 public class EmailClient {
 
+    //with usage of javax mail. SMTP IMAP
     public static void emailUpdate() {
+
+        ATMClient atmClient = new ATMClient();
         // Sender's email ID needs to be mentioned
         String from = SecretKeyStore.getKey("emailId");
 
@@ -56,7 +59,11 @@ public class EmailClient {
             // Set Subject: header field
             message.setSubject("ATM Running out!");
 
-            String msg = "ATM needs to be refilled. ";
+            String msg = "ATM needs to be refilled. \n" 
+            + "Amount left: "
+            + "\n$10: " + atmClient.getTenDollars()
+            + "\n$50: " + atmClient.getFiftyDollars()
+            + "\n$100: " + atmClient.getHundredDollars();
 
             // Now set the actual message
             message.setText(msg);

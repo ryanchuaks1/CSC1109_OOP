@@ -2,6 +2,7 @@ package com.rjdxbanking.rjdxbank.Helpers;
 
 import java.util.Random;
 
+//for checking if valid credit card number
 public class CreditCardHelper {
     private static String getLuhnCheckDigit(String number) {
         int nDigits = number.length();

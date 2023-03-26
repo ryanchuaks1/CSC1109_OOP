@@ -73,6 +73,9 @@ public class TransferController implements Initializable {
     @FXML
     private TextField transferTextField;
 
+    @FXML
+    private AnchorPane accountIDPane;
+
     double localLimit = 0.0;
     double overseasLimit = 0.0;
     TransactionType transType = null;
@@ -106,16 +109,17 @@ public class TransferController implements Initializable {
         transType = null;
         fxRateLabel.setVisible(false);
         rateLabel.setVisible(false);
+        accountIDPane.setVisible(false);
     }
 
     @FXML
     void setLanguage(ActionEvent event) throws IOException {
         if (event.getSource() == btnEnglish) {
-            Navigator.setLocale(Locale.forLanguageTag("en"), "DepositWithdraw");
+            Navigator.setLocale(Locale.forLanguageTag("en"), "Transfer");
         } else if (event.getSource() == btnChinese) {
-            Navigator.setLocale(Locale.forLanguageTag("zh"), "DepositWithdraw");
+            Navigator.setLocale(Locale.forLanguageTag("zh"), "Transfer");
         } else if (event.getSource() == btnMalay) {
-            Navigator.setLocale(Locale.forLanguageTag("ms"), "DepositWithdraw");
+            Navigator.setLocale(Locale.forLanguageTag("ms"), "Transfer");
         }
     }
 
@@ -128,6 +132,7 @@ public class TransferController implements Initializable {
     private void closePressed(ActionEvent event) {
         insufficientFundsPane.setVisible(false);
         limitReachedPane.setVisible(false);
+        accountIDPane.setVisible(false);
     }
 
     @FXML
@@ -175,24 +180,32 @@ public class TransferController implements Initializable {
                     }
                 }
             } else { // Transfer to other local banks
+                if(accountNumField.getText().length() < 16 || accountNumField.getText() == ""){
+                    accountIDPane.setVisible(false);
+                }else{
+                    try {
+                        account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
+                        // PDFService.Receipt(account, TransactionType.LocalTransfer,
+                        // String.valueOf(amount));
+                        Navigator.logout();
+                    } catch (InsufficientFundsException e) {
+                        insufficientFundsPane.setVisible(true);
+                    }
+                }
+            }
+        } else if (transType.equals(TransactionType.OverseasTransfer) && (overseasLimit > amount)) { // Transfer to
+                                                                                                     // overseas
+            if(accountNumField.getText().length() < 16 || accountNumField.getText() == ""){
+                    accountIDPane.setVisible(false);
+            }else{                                                                                         
                 try {
                     account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
-                    // PDFService.Receipt(account, TransactionType.LocalTransfer,
+                    // PDFService.Receipt(account, TransactionType.OverseasTransfer,
                     // String.valueOf(amount));
                     Navigator.logout();
                 } catch (InsufficientFundsException e) {
                     insufficientFundsPane.setVisible(true);
                 }
-            }
-        } else if (transType.equals(TransactionType.OverseasTransfer) && (overseasLimit > amount)) { // Transfer to
-                                                                                                     // overseas
-            try {
-                account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
-                // PDFService.Receipt(account, TransactionType.OverseasTransfer,
-                // String.valueOf(amount));
-                Navigator.logout();
-            } catch (InsufficientFundsException e) {
-                insufficientFundsPane.setVisible(true);
             }
         } else {
             limitReachedPane.setVisible(true);
@@ -208,5 +221,5 @@ public class TransferController implements Initializable {
     private void numPadBackClicked(ActionEvent event) {
         transferTextField.deleteText(transferTextField.getLength() - 1, transferTextField.getLength());
     }
-
+    
 }

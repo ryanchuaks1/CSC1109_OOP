@@ -43,22 +43,24 @@ public class PhoneClient {
         System.out.println(message.getSid());
     }
 
+    //to verify OTP
     public boolean verification(String value) {
-        System.out.println(randomVerifier);
+        // System.out.println(randomVerifier);
         long timeStartMin = totalMiliseconds / 1000 / 60;
         long current = System.currentTimeMillis() / 1000 / 60;
-        if ((current - timeStartMin) < 1) {
+        if ((current - timeStartMin) < 2) {
             if (Integer.toString(randomVerifier).equals(value)) {
                 randomVerifier = 0;
                 return true;
             }
         }
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Failed");
+            alert.setContentText("Timeup. Please verify again.");
+            alert.showAndWait();
+        }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Failed");
-        alert.setContentText("Timeup. Please verify again.");
-
-        alert.showAndWait();
         return false;
     }
 

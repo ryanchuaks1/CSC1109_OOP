@@ -94,16 +94,15 @@ public abstract class Account implements IAccount {
             throw new InsufficientFundsException(
                     "Unable to transfer as user does not have sufficient amount to transfer.");
         LocalDateTime now = LocalDateTime.now();
-        String currency = targetBank.getCurrencyCode();
 
         CreateTransaction senderTransaction = new CreateTransaction(
                 dtf.format(now),
                 amount,
-                currency,
+                "SGD",
                 type,
                 targetBank.getCurrencyCode() == "SGD" ? TransactionStatus.Completed : TransactionStatus.Pending,
                 this.Id);
-        senderTransaction.setTo(toAcc);
+        senderTransaction.setTo(targetBank.getBankRoute()+toAcc);
         senderTransaction.setFrom(this.Id);
         transactionService.createTransaction(senderTransaction);
 
@@ -112,9 +111,6 @@ public abstract class Account implements IAccount {
     // This is actually internal transfer. Which means that we should be able to
     // cross-check
     // with the reference in our database.
-    // TODO: Reminder that there will be 2 transactions inserted.
-    // TODO: Both transferee and transferor should have transaction logs.
-    // TODO: Check for valid accountNo
     public void internalTransfer(double amount, String toAcc) throws InsufficientFundsException {
         // Firstly check available balance to see if user has sufficient amount to
         // transfer else throw exception

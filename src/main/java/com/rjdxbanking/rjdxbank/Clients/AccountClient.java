@@ -8,6 +8,7 @@ import com.rjdxbanking.rjdxbank.Services.AccountService;
 public class AccountClient {
     final AccountService accountService = new AccountService();
 
+    //for login
     public Account Login(String accountNumber, String unhashedPassword) throws Exception
     {
         Account account = null;
@@ -18,6 +19,7 @@ public class AccountClient {
         throw new Exception("Invalid PIN");
     }
 
+    //not used current for development purposes
     public void Register(CreateAccount createAccount){
         accountService.createAccount(createAccount);
     }

@@ -8,6 +8,8 @@ import com.rjdxbanking.rjdxbank.Entity.User;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 import com.rjdxbanking.rjdxbank.Services.UserService;
+
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -118,6 +121,18 @@ public class SettingsController implements Initializable {
     @FXML
     private AnchorPane verificationPane;
 
+    @FXML
+    private AnchorPane successPane;
+
+    @FXML
+    private AnchorPane verificationFailedPane;
+
+    @FXML
+    private AnchorPane errorChangingPinPane;
+
+    @FXML
+    private AnchorPane otpPane;
+
     PhoneClient otpClient = new PhoneClient();
     AccountService accService = new AccountService();
 
@@ -150,6 +165,10 @@ public class SettingsController implements Initializable {
         changePane.setVisible(false);
         verificationPane.setVisible(false);
         limitSettingsPane.setVisible(false);
+        successPane.setVisible(false);
+        verificationFailedPane.setVisible(false);
+        errorChangingPinPane.setVisible(false);
+        otpPane.setVisible(false);
 
         addTextLimiter(confirmNewpin, 6);
         addTextLimiter(oldPin, 6);
@@ -173,29 +192,28 @@ public class SettingsController implements Initializable {
             changeLimitMethod();
         } else if (event.getSource() == verificationBtn) {
             // verification
-            if (otpClient.verification(verificationOTP.getText())) {
-                verificationPane.setVisible(false);
-                changePane.setVisible(true);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("VerificationOTP wrong");
-                alert.setHeaderText(null);
-                alert.setContentText("Wrong OTP");
-                alert.showAndWait();
-            }
+            verification();
         } else if (event.getSource() == reOTPBtn) {
             otpClient.phoneOTP(SessionClient.getAccount());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("OTP resend");
-            alert.setHeaderText(null);
-            alert.setContentText("OTP resend to your phone");
-            alert.showAndWait();
+            otpPane.setVisible(true);
         } else if (event.getSource() == returnBackBtn) {
+            //from verification page
             verificationPane.setVisible(false);
             settingBox.setVisible(true);
         } else if (event.getSource() == returnBackBtn1) {
+            //from limitchange page
             limitSettingsPane.setVisible(false);
             settingBox.setVisible(true);
+        }
+    }
+
+    public void verification(){
+        if (otpClient.verification(verificationOTP.getText())) {
+            verificationPane.setVisible(false);
+            changePane.setVisible(true);
+        } else {
+            //verification failed
+            verificationFailedPane.setVisible(true);
         }
     }
 
@@ -214,29 +232,24 @@ public class SettingsController implements Initializable {
                 if (newpin.equals(confirmNewin)) {
                     newpin = com.password4j.Password.hash(newpin).addRandomSalt().withArgon2().getResult();
                     accService.changePin(currentAcc, newpin);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Pin Updated");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Pin Updated, please login with your new pin");
-                    alert.showAndWait();
-                    try {
-                        Navigator.logout();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
+                    //Successpane to show successful change pin and log out after 2seconds
+                    successPane.setVisible(true);
+                    Duration delay = Duration.seconds(2);
+                    PauseTransition transition = new PauseTransition(delay);
+                    transition.setOnFinished(evt -> {
+                        try {
+                            Navigator.logout();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    transition.play();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("New pin and confirm new pin are not the same");
-                    alert.setHeaderText(null);
-                    alert.setContentText("New pin and confirm New Pin are not the same");
-                    alert.showAndWait();
+                    errorChangingPinPane.setVisible(true);
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Pin cannot be the same as old pin");
-                alert.setHeaderText(null);
-                alert.setContentText("Pin cannot be the same as old pin");
-                alert.showAndWait();
+                errorChangingPinPane.setVisible(true);
             }
         }
     }
@@ -249,13 +262,18 @@ public class SettingsController implements Initializable {
                 Double.valueOf(internationalTransferLimit.getValue()));
         accService.updateAccountLimits(SessionClient.getAccount(), "atmWithdrawalLimit",
                 Double.valueOf(atmWithdrawalLimit.getValue()));
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Limits Updated");
-        alert.setHeaderText(null);
-        alert.setContentText("Limits Updated, please reinsert card");
-        alert.showAndWait();
-
-        Navigator.logout();
+        
+        successPane.setVisible(true);
+        Duration delay = Duration.seconds(2);
+        PauseTransition transition = new PauseTransition(delay);
+        transition.setOnFinished(evt -> {
+            try {
+                Navigator.logout();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        transition.play();
     }
 
     public static void addTextLimiter(final PasswordField tf, final int maxLength) {
@@ -278,7 +296,9 @@ public class SettingsController implements Initializable {
         if (event.getSource() == changePinPane) {
             settingBox.setVisible(false);
             verificationPane.setVisible(true);
+            //open otp
             otpClient.phoneOTP(SessionClient.getAccount());
+            otpPane.setVisible(true);
         } else if (event.getSource() == limitPane) {
             settingBox.setVisible(false);
             limitSettingsPane.setVisible(true);
@@ -298,4 +318,10 @@ public class SettingsController implements Initializable {
         }
     }
 
+    @FXML
+    private void closePressed(ActionEvent event) {
+        verificationFailedPane.setVisible(false);
+        errorChangingPinPane.setVisible(false);
+        otpPane.setVisible(false);
+    }
 }

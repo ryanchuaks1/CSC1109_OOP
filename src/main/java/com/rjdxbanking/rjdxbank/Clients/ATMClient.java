@@ -18,7 +18,7 @@ public class ATMClient {
         fiftyDollars = achange.getFiftyDollars();
         hundredDollars = achange.getHundredDollars();
     }
-
+    
     public ATMChange WithdrawCash(int dollars) throws BillsNotEnoughException {
         // Calculate the number of bills of each denomination needed to make up the
         // withdrawal amount
@@ -43,4 +43,17 @@ public class ATMClient {
         }
         return new ATMChange(tenCount, fiftyCount, hundredCount);
     }
+
+    public int getTenDollars() {
+        return tenDollars;
+    }
+
+    public int getFiftyDollars() {
+        return fiftyDollars;
+    }
+
+    public int getHundredDollars() {
+        return hundredDollars;
+    }
+
 }

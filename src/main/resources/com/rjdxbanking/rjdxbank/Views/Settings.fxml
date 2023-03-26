@@ -349,7 +349,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <AnchorPane fx:id="limitSettingsPane" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <VBox prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -429,6 +429,96 @@
                         <Insets bottom="100.0" />
                      </VBox.margin>
                   </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="successPane" layoutX="-3.0" layoutY="-2.0" prefHeight="800.0" prefWidth="1286.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <Label alignment="CENTER" layoutY="365.0" prefHeight="70.0" prefWidth="1280.0" text="%successActionLabel" textAlignment="CENTER">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="verificationFailedPane" layoutX="390.0" layoutY="250.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%verificationFailedLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="errorChangingPinPane" layoutX="218.0" layoutY="260.0" prefHeight="400.0" prefWidth="892.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="766.0" text="%errorChangingPinLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="32.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="otpPane" layoutX="400.0" layoutY="260.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%otpSendLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
          </children>

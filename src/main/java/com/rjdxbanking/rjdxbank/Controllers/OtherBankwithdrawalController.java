@@ -22,6 +22,7 @@ import com.rjdxbanking.rjdxbank.Services.FXService;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
 import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class OtherBankwithdrawalController implements Initializable {
     @FXML
@@ -59,6 +61,9 @@ public class OtherBankwithdrawalController implements Initializable {
 
     @FXML
     private Label rateLabel;
+
+    @FXML
+    private AnchorPane successPane;
 
     private final TransactionService itService = new TransactionService();
     private final ATMClient atmClient = new ATMClient();
@@ -91,6 +96,7 @@ public class OtherBankwithdrawalController implements Initializable {
         }
         invalidAmountPane.setVisible(false);
         billsInsufficientPane.setVisible(false);
+        successPane.setVisible(false);
     }
 
     @FXML
@@ -126,11 +132,11 @@ public class OtherBankwithdrawalController implements Initializable {
                 double conversionValue = FXService.foreignXchange(SessionClient.getCurrency());
 
                 double amountDebited = (bank.getIsLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
-                // Create transaction in DB
+                
 
                 // if ATMClient do not have enough bills left, throw a billInsufficientException
                 atmClient.WithdrawCash((int) (amountWithdrawn.intValue()));
-
+                
                 CreateIncomingTransaction incTransaction = new CreateIncomingTransaction(dtf.format(now),
                         amountWithdrawn,
                         amountDebited,
@@ -141,7 +147,18 @@ public class OtherBankwithdrawalController implements Initializable {
                         TransactionStatus.Pending);
 
                 itService.createTransaction(incTransaction);
-
+                
+                //Successpane to show successful and log out after 2seconds
+                successPane.setVisible(true);
+                Duration delay = Duration.seconds(2);
+                PauseTransition transition = new PauseTransition(delay);
+                transition.setOnFinished(evt -> {
+                    try {
+                        Navigator.logout();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
                 if (!bank.getIsLocal()) {
                     // for other banks that is not local
                     // create PDF
@@ -156,12 +173,7 @@ public class OtherBankwithdrawalController implements Initializable {
                     PDFService.otherReceipt(bank, TransactionType.Withdrawal,
                             String.valueOf(amountDebited));
                 }
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successful");
-                alert.setHeaderText(null);
-                alert.setContentText("Successful");
-                Navigator.logout();
+                transition.play();
 
             } catch (BillsNotEnoughException e) {
                 billsInsufficientPane.setVisible(true);
@@ -170,4 +182,9 @@ public class OtherBankwithdrawalController implements Initializable {
         }
     }
 
+    @FXML
+    private void closePressed(ActionEvent event) {
+        billsInsufficientPane.setVisible(false);
+        invalidAmountPane.setVisible(false);
+    }
 }

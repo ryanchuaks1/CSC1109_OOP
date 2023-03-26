@@ -100,6 +100,58 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="574.0" prefWidth="640.0">
                            <children>
+                              <Label text="%accountIDLabel">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" top="40.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="accountNumField">
+                                 <VBox.margin>
+                                    <Insets left="120.0" right="120.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Calibri Bold" size="36.0" />
+                                 </font>
+                              </TextField>
+                              <Label text="%selectBankLabel">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ComboBox fx:id="bankComboBox" onAction="#changeTargetBank" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" visibleRowCount="5">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <Label fx:id="fxRateLabel" text="%fxRateLabel" visible="false">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="rateLabel">
+                                 <font>
+                                    <Font name="Century Gothic" size="36.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="574.0" prefWidth="640.0">
+                           <children>
                               <Label text="%transferAmountLabel">
                                  <font>
                                     <Font size="24.0" />
@@ -229,60 +281,89 @@
                               </GridPane>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="574.0" prefWidth="640.0">
-                           <children>
-                              <Label text="%accountIDLabel">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="30.0" top="40.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="accountNumField">
-                                 <VBox.margin>
-                                    <Insets left="120.0" right="120.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="Calibri Bold" size="36.0" />
-                                 </font>
-                              </TextField>
-                              <Label text="%selectBankLabel">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <ComboBox fx:id="bankComboBox" onAction="#changeTargetBank" prefHeight="50.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-font-size: 26px;" visibleRowCount="5">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </ComboBox>
-                              <Label fx:id="fxRateLabel" text="%fxRateLabel" visible="false">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="rateLabel">
-                                 <font>
-                                    <Font name="Century Gothic" size="36.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
                      </children>
                   </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="insufficientFundsPane" layoutX="350.0" layoutY="210.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%insufficientFundsLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="limitReachedPane" layoutX="360.0" layoutY="220.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%limitReachedLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="accountNotFoundPane" layoutX="370.0" layoutY="230.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%accountNotFoundLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
          </children>

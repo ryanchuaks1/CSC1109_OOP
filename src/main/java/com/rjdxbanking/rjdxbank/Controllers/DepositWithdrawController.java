@@ -87,7 +87,6 @@ public class DepositWithdrawController implements Initializable {
         closePressed(null);
         withdrawPane.setVisible(false);
         depositPane.setVisible(false);
-        invalidAmountPane.setVisible(false);
 
         switch (SessionClient.getNavState()) {
             case "Deposit":
@@ -103,6 +102,7 @@ public class DepositWithdrawController implements Initializable {
                 break;
             case "Withdraw":
                 limit = SessionClient.account.getCurrentLimit(TransactionType.Withdrawal);
+                System.out.println("withdrawal limit is " + limit);
                 withdrawPane.setVisible(true);
                 break;
             default:
@@ -142,8 +142,7 @@ public class DepositWithdrawController implements Initializable {
         Account account = SessionClient.getAccount();
         if (limit < amount) {
             limitReachedPane.setVisible(true);
-        }
-        else if (!(amount % 10 == 0 && amount >= 20)) {
+        } else if (!(amount % 10 == 0 && amount >= 20)) {
             invalidAmountPane.setVisible(true);
         } else {
             try {

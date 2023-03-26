@@ -158,9 +158,9 @@ public class SettingsController implements Initializable {
         Integer[] list = { 0, 500, 1000, 2000, 3000, 5000, 7000, 9000 };
 
         localTransferLimit.getItems().addAll(list);
-        localTransferLimit.setValue((int) SessionClient.getAccount().getATMWithdrawalLimit());
+        localTransferLimit.setValue((int) SessionClient.getAccount().getLocalTransferLimit());
         atmWithdrawalLimit.getItems().addAll(list);
-        atmWithdrawalLimit.setValue((int) SessionClient.getAccount().getLocalTransferLimit());
+        atmWithdrawalLimit.setValue((int) SessionClient.getAccount().getATMWithdrawalLimit());
         internationalTransferLimit.getItems().addAll(list);
         internationalTransferLimit.setValue((int) SessionClient.getAccount().getInternationalTransferLimit());
     }

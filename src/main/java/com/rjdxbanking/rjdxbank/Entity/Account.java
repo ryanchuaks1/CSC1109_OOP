@@ -8,8 +8,11 @@ import com.rjdxbanking.rjdxbank.Models.Balance;
 import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
 import com.rjdxbanking.rjdxbank.Models.TransactionStatus;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
+import com.rjdxbanking.rjdxbank.Services.BankService;
+import com.rjdxbanking.rjdxbank.Services.FXService;
 import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -83,9 +86,27 @@ public abstract class Account implements IAccount {
         return pinNo;
     }
 
-    // TODO: Develop algorithm to determine if accountNo is international
-    // TODO: International Transfer should always be pending.
-    public void InternationalTransfer(double amount, String accountNo) {
+    BankService bankService = new BankService();
+
+    public void otherBanksTransfer(double amount, TransactionType type, Bank targetBank, String toAcc)
+            throws InsufficientFundsException, IOException {
+        if (this.getBalance().getAvailableBalance() < amount)
+            throw new InsufficientFundsException(
+                    "Unable to transfer as user does not have sufficient amount to transfer.");
+        LocalDateTime now = LocalDateTime.now();
+        String currency = targetBank.getCurrencyCode();
+
+        CreateTransaction senderTransaction = new CreateTransaction(
+                dtf.format(now),
+                amount,
+                currency,
+                type,
+                targetBank.getCurrencyCode() == "SGD" ? TransactionStatus.Completed : TransactionStatus.Pending,
+                this.Id);
+        senderTransaction.setTo(toAcc);
+        senderTransaction.setFrom(this.Id);
+        transactionService.createTransaction(senderTransaction);
+
     }
 
     // This is actually internal transfer. Which means that we should be able to
@@ -94,29 +115,23 @@ public abstract class Account implements IAccount {
     // TODO: Reminder that there will be 2 transactions inserted.
     // TODO: Both transferee and transferor should have transaction logs.
     // TODO: Check for valid accountNo
-    public void Transfer(double amount, String toAcc) throws Exception {
+    public void internalTransfer(double amount, String toAcc) throws InsufficientFundsException {
         // Firstly check available balance to see if user has sufficient amount to
         // transfer else throw exception
-        // TODO: Custom exception
         if (this.getBalance().getAvailableBalance() < amount)
-            throw new Exception("Unable to transfer as user does not have sufficient amount to transfer.");
+            throw new InsufficientFundsException(
+                    "Unable to transfer as user does not have sufficient amount to transfer.");
         LocalDateTime now = LocalDateTime.now();
 
-        CreateTransaction senderTransaction = new CreateTransaction(dtf.format(now), amount,
-                "SGD",
-                TransactionType.LocalTransfer,
-                TransactionStatus.Completed,
-                this.Id);
+        CreateTransaction senderTransaction = new CreateTransaction(dtf.format(now), amount, "SGD",
+                TransactionType.LocalTransfer, TransactionStatus.Completed, this.Id);
         senderTransaction.setFrom(this.Id);
         senderTransaction.setTo(toAcc);
         System.out.println(senderTransaction.getTo());
         System.out.println(senderTransaction.getFrom());
 
-        CreateTransaction recieverTransaction = new CreateTransaction(dtf.format(now), amount,
-                "SGD",
-                TransactionType.LocalTransfer,
-                TransactionStatus.Completed,
-                toAcc);
+        CreateTransaction recieverTransaction = new CreateTransaction(dtf.format(now), amount, "SGD",
+                TransactionType.LocalTransfer, TransactionStatus.Completed, toAcc);
         recieverTransaction.setFrom(this.Id);
         recieverTransaction.setTo(toAcc);
 
@@ -191,7 +206,7 @@ public abstract class Account implements IAccount {
                     if (transaction.getTo().equals(this.Id)) {
                         switch (transactionStatus) {
                             case Pending:
-                                balance.deductFromPendingeBalance(transaction.getTransactionAmount());
+                                balance.addToPendingBalance(transaction.getTransactionAmount());
                                 break;
                             case Completed:
                                 balance.addToAvailableBalance(transaction.getTransactionAmount());
@@ -202,7 +217,8 @@ public abstract class Account implements IAccount {
                     } else if (transaction.getFrom().equals(this.Id)) {
                         switch (transactionStatus) {
                             case Pending:
-                                balance.deductFromPendingeBalance(transaction.getTransactionAmount());
+                                balance.deductFromAvailableBalance(transaction.getTransactionAmount());
+                                balance.addToPendingBalance(transaction.getTransactionAmount());
                                 break;
                             case Completed:
                                 balance.deductFromAvailableBalance(transaction.getTransactionAmount());
@@ -213,6 +229,30 @@ public abstract class Account implements IAccount {
                     }
                     break;
                 case OverseasTransfer:
+                    if (transaction.getTo().equals(this.Id)) {
+                        switch (transactionStatus) {
+                            case Pending:
+                                balance.addToPendingBalance(transaction.getTransactionAmount());
+                                break;
+                            case Completed:
+                                balance.addToAvailableBalance(transaction.getTransactionAmount());
+                                break;
+                            case Rejected:
+                                break;
+                        }
+                    } else if (transaction.getFrom().equals(this.Id)) {
+                        switch (transactionStatus) {
+                            case Pending:
+                                balance.deductFromAvailableBalance(transaction.getTransactionAmount());
+                                balance.addToPendingBalance(transaction.getTransactionAmount());
+                                break;
+                            case Completed:
+                                balance.deductFromAvailableBalance(transaction.getTransactionAmount());
+                                break;
+                            case Rejected:
+                                break;
+                        }
+                    }
                     break;
             }
         }

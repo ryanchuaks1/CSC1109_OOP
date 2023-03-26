@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Entity.Bank;
+import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
@@ -61,13 +62,25 @@ public class TransferController implements Initializable {
     private AnchorPane transferPane;
 
     @FXML
+    private AnchorPane insufficientFundsPane;
+
+    @FXML
+    private AnchorPane limitReachedPane;
+
+    @FXML
+    private AnchorPane accountNotFoundPane;
+
+    @FXML
     private TextField transferTextField;
 
     double localLimit = 0.0;
     double overseasLimit = 0.0;
     TransactionType transType = null;
     BankService bankService = new BankService();
+    AccountService accService = new AccountService();
     List<Bank> banks;
+    Bank targetBank = null;
+    String targetBankName = "";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,34 +88,24 @@ public class TransferController implements Initializable {
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
+
         localLimit = SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
         overseasLimit = SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
+        System.out.println(localLimit);
+        System.out.println(overseasLimit);
 
         banks = bankService.getBanks();
         for (Bank bank : banks) {
-            if (bank.isLocal()) {
+            if (bank.getIsLocal()) {
                 bankComboBox.getItems().add(bank.getBankName() + " - Local");
             } else {
                 bankComboBox.getItems().add(bank.getBankName() + " - Overseas");
             }
         }
+        accountNumField.setDisable(true);
+        transType = null;
         fxRateLabel.setVisible(false);
         rateLabel.setVisible(false);
-    }
-
-    @FXML
-    void changeTargetBank(ActionEvent event) throws IOException {
-        if (bankComboBox.getValue().contains("Overseas")) {
-            String[] name = bankComboBox.getValue().split("-");
-            String Currency = bankService.getBankByName(name[0].substring(0, name[0].length() - 1)).getCurrencyCode();
-            fxRateLabel.setVisible(true);
-            rateLabel.setVisible(true);
-            rateLabel.setText("1 SGD = " + FXService.foreignXchange(Currency) + " " + Currency);
-        } else {
-            fxRateLabel.setVisible(false);
-            rateLabel.setVisible(false);
-        }
-
     }
 
     @FXML
@@ -122,28 +125,78 @@ public class TransferController implements Initializable {
     }
 
     @FXML
-    private void confirmTransferPressed(ActionEvent event) throws FileNotFoundException, IOException {
-        Account account = SessionClient.getAccount();
-        Double amount = Double.parseDouble(transferTextField.getText());
-        AccountService accService = new AccountService();
-        Account accountTo = accService.getAccountsByNumber(accountNumField.getText());
+    private void closePressed(ActionEvent event) {
+        insufficientFundsPane.setVisible(false);
+        limitReachedPane.setVisible(false);
+    }
 
-        // account not found
-        if (accountTo == null) {
-            System.out.println("Targtet acc not found");
-        } else if (localLimit < amount) {
-            System.out.println(localLimit);
-            System.out.println("Transfer Limit Reached");
+    @FXML
+    private void changeTargetBank(ActionEvent event) throws IOException {
+        String[] name = bankComboBox.getValue().split("-");
+        targetBankName = name[0].substring(0, name[0].length() - 1);
+        if (bankComboBox.getValue().contains("Overseas")) {
+            targetBank = bankService.getBankByName(targetBankName);
+            String currency = targetBank.getCurrencyCode();
+            accountNumField.setDisable(false);
+            fxRateLabel.setVisible(true);
+            rateLabel.setVisible(true);
+            rateLabel.setText("1 SGD = " + FXService.foreignXchange(currency) + " " + currency);
+            transType = TransactionType.OverseasTransfer;
+        } else if (bankComboBox.getValue().contains("Local")) {
+            targetBank = bankService.getBankByName(targetBankName);
+            accountNumField.setDisable(false);
+            fxRateLabel.setVisible(false);
+            rateLabel.setVisible(false);
+            transType = TransactionType.LocalTransfer;
         } else {
-            try {
-                account.Transfer(amount, accountTo.getId());
-                PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amount));
-                Navigator.logout();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            accountNumField.setDisable(true);
+            transType = null;
         }
+    }
 
+    @FXML
+    private void confirmTransferPressed(ActionEvent event) throws FileNotFoundException, IOException {
+        // TODO: check if fields are empty
+        Double amount = Double.parseDouble(transferTextField.getText());
+        Account account = SessionClient.getAccount();
+
+        if (transType.equals(TransactionType.LocalTransfer) && (localLimit > amount)) {
+            if (targetBankName == "RJDX") { // Transfer to own bank
+                Account accountTo = accService.getAccountsByNumber(accountNumField.getText());
+                if (accountTo == null) {
+                    accountNotFoundPane.setVisible(true);
+                } else {
+                    try {
+                        account.internalTransfer(amount, accountTo.getId());
+                        PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amount));
+                        Navigator.logout();
+                    } catch (InsufficientFundsException e) {
+                        insufficientFundsPane.setVisible(true);
+                    }
+                }
+            } else { // Transfer to other local banks
+                try {
+                    account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
+                    // PDFService.Receipt(account, TransactionType.LocalTransfer,
+                    // String.valueOf(amount));
+                    Navigator.logout();
+                } catch (InsufficientFundsException e) {
+                    insufficientFundsPane.setVisible(true);
+                }
+            }
+        } else if (transType.equals(TransactionType.OverseasTransfer) && (overseasLimit > amount)) { // Transfer to
+                                                                                                     // overseas
+            try {
+                account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
+                // PDFService.Receipt(account, TransactionType.OverseasTransfer,
+                // String.valueOf(amount));
+                Navigator.logout();
+            } catch (InsufficientFundsException e) {
+                insufficientFundsPane.setVisible(true);
+            }
+        } else {
+            limitReachedPane.setVisible(true);
+        }
     }
 
     @FXML

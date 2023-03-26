@@ -43,7 +43,7 @@ public class Bank {
         this.bankRoute = bankRoute;
     }
 
-    public boolean isLocal() {
+    public boolean getIsLocal() {
         return isLocal;
     }
 

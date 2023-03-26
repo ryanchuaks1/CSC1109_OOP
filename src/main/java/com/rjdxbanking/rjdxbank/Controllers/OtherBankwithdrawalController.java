@@ -125,7 +125,7 @@ public class OtherBankwithdrawalController implements Initializable {
                 LocalDateTime now = LocalDateTime.now();
                 double conversionValue = FXService.foreignXchange(SessionClient.getCurrency());
 
-                double amountDebited = (bank.isLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
+                double amountDebited = (bank.getIsLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
                 // Create transaction in DB
 
                 // if ATMClient do not have enough bills left, throw a billInsufficientException
@@ -142,7 +142,7 @@ public class OtherBankwithdrawalController implements Initializable {
 
                 itService.createTransaction(incTransaction);
 
-                if (!bank.isLocal()) {
+                if (!bank.getIsLocal()) {
                     // for other banks that is not local
                     // create PDF
                     PDFService.otherReceipt(bank, TransactionType.Withdrawal,

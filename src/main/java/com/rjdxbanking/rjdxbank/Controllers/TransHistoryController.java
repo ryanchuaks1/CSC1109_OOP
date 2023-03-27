@@ -83,11 +83,10 @@ public class TransHistoryController implements Initializable {
                 User currentUser = userService.getUserByUserId(SessionClient.getAccount().getUserId());
                 nameLabel.setText(" " + currentUser.getFullName());
                 accLabel.setText(SessionClient.getAccount().getAccountType() + ": ");
-                balLabel.setText(String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance()));
+                balLabel.setText("S$" + String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance()));
                 System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance())));
                 System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getPendingBalance())));
-                interestRateLabel.setText(
-                                String.valueOf(((int) SessionClient.getAccount().getYearlyProjectedInterestRate())));
+                interestRateLabel.setText("S$" + String.format("%.2f" ,SessionClient.getAccount().getYearlyProjectedInterestRate()));
                 intializeTable();
         }
 

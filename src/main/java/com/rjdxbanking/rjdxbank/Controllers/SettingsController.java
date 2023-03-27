@@ -143,15 +143,15 @@ public class SettingsController implements Initializable {
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
-        Path iconDepositPath = FileSystems.getDefault().getPath(
-                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "DepositIcon.png");
-        Image iconDepositImage = new Image(iconDepositPath.toUri().toString());
-        iconChangePin.setImage(iconDepositImage);
+        Path iconChangePinPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "ChangePinIcon.png");
+        Image iconChangePinImage = new Image(iconChangePinPath.toUri().toString());
+        iconChangePin.setImage(iconChangePinImage);
 
-        Path iconTransferPath = FileSystems.getDefault().getPath(
-                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "TransferIcon.png");
-        Image iconTransferImage = new Image(iconTransferPath.toUri().toString());
-        iconLimit.setImage(iconTransferImage);
+        Path iconLimitPath = FileSystems.getDefault().getPath(
+                "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "ChangeLimitsIcon.png");
+        Image iconLimitImage = new Image(iconLimitPath.toUri().toString());
+        iconLimit.setImage(iconLimitImage);
 
         Path iconExitPath = FileSystems.getDefault().getPath(
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "ExitIcon.png");
@@ -197,22 +197,22 @@ public class SettingsController implements Initializable {
             otpClient.phoneOTP(SessionClient.getAccount());
             otpPane.setVisible(true);
         } else if (event.getSource() == returnBackBtn) {
-            //from verification page
+            // from verification page
             verificationPane.setVisible(false);
             settingBox.setVisible(true);
         } else if (event.getSource() == returnBackBtn1) {
-            //from limitchange page
+            // from limitchange page
             limitSettingsPane.setVisible(false);
             settingBox.setVisible(true);
         }
     }
 
-    public void verification(){
+    public void verification() {
         if (otpClient.verification(verificationOTP.getText())) {
             verificationPane.setVisible(false);
             changePane.setVisible(true);
         } else {
-            //verification failed
+            // verification failed
             verificationFailedPane.setVisible(true);
         }
     }
@@ -233,7 +233,7 @@ public class SettingsController implements Initializable {
                     newpin = com.password4j.Password.hash(newpin).addRandomSalt().withArgon2().getResult();
                     accService.changePin(currentAcc, newpin);
 
-                    //Successpane to show successful change pin and log out after 2seconds
+                    // Successpane to show successful change pin and log out after 2seconds
                     successPane.setVisible(true);
                     Duration delay = Duration.seconds(2);
                     PauseTransition transition = new PauseTransition(delay);
@@ -262,7 +262,7 @@ public class SettingsController implements Initializable {
                 Double.valueOf(internationalTransferLimit.getValue()));
         accService.updateAccountLimits(SessionClient.getAccount(), "atmWithdrawalLimit",
                 Double.valueOf(atmWithdrawalLimit.getValue()));
-        
+
         successPane.setVisible(true);
         Duration delay = Duration.seconds(2);
         PauseTransition transition = new PauseTransition(delay);
@@ -296,7 +296,7 @@ public class SettingsController implements Initializable {
         if (event.getSource() == changePinPane) {
             settingBox.setVisible(false);
             verificationPane.setVisible(true);
-            //open otp
+            // open otp
             otpClient.phoneOTP(SessionClient.getAccount());
             otpPane.setVisible(true);
         } else if (event.getSource() == limitPane) {

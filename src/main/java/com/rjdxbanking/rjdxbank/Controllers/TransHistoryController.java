@@ -84,10 +84,7 @@ public class TransHistoryController implements Initializable {
         nameLabel.setText(" " + currentUser.getFullName());
         accLabel.setText(SessionClient.getAccount().getAccountType() + ": ");
         balLabel.setText("S$" + String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance()));
-        // System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance())));
-        // System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getPendingBalance())));
-        interestRateLabel
-                .setText("S$" + String.format("%.2f", SessionClient.getAccount().getYearlyProjectedInterestRate()));
+        interestRateLabel.setText("S$" + String.format("%.2f", SessionClient.getAccount().getYearlyProjectedInterestRate()));
         intializeTable();
     }
 
@@ -122,8 +119,7 @@ public class TransHistoryController implements Initializable {
         currencyCodeCol.setMinWidth(100);
         currencyCodeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("currencyCode"));
 
-        TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>(
-                "Transaction Amount");
+        TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>("Transaction Amount");
         transactionAmountCol.setMinWidth(150);
         transactionAmountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
 

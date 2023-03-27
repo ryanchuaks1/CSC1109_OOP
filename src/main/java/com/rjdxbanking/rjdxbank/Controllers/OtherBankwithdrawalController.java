@@ -113,8 +113,10 @@ public class OtherBankwithdrawalController implements Initializable {
 
     @FXML
     void numPadTickClicked(ActionEvent event) throws FileNotFoundException, IOException {
-        Double amount = Double.parseDouble(withdrawTextField.getText());
-        confirmWithdrawPressed(amount);
+        if (withdrawTextField.getLength() != 0) {
+            Double amount = Double.parseDouble(withdrawTextField.getText());
+            confirmWithdrawPressed(amount);
+        }
     }
 
     // Method on confirmwithdraw button is pressed
@@ -170,7 +172,7 @@ public class OtherBankwithdrawalController implements Initializable {
                             String.valueOf(conversionValue));
                 } else {
                     // for local banks
-                    // for local banks receipt
+                    // create local banks receipt
                     PDFService.otherReceipt(bank, TransactionType.Withdrawal,
                             String.valueOf(amountDebited));
                 }

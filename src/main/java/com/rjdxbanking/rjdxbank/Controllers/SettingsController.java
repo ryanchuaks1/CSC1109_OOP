@@ -310,11 +310,11 @@ public class SettingsController implements Initializable {
     @FXML
     void setLanguage(ActionEvent event) throws IOException {
         if (event.getSource() == btnEnglish) {
-            Navigator.setLocale(Locale.forLanguageTag("en"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("en"), "Settings");
         } else if (event.getSource() == btnChinese) {
-            Navigator.setLocale(Locale.forLanguageTag("zh"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("zh"), "Settings");
         } else if (event.getSource() == btnMalay) {
-            Navigator.setLocale(Locale.forLanguageTag("ms"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("ms"), "Settings");
         }
     }
 

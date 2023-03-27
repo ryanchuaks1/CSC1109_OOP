@@ -5,9 +5,9 @@ public class FixedDepositAccount extends Account{
     public double getYearlyProjectedInterestRate() {
         // If balance is lesser than minimum deposit amount account reduce interestRate
         if (getBalance().getAvailableBalance() < 5000) {
-            return (getBalance().getAvailableBalance() * 0.01);
+            return (getBalance().getAvailableBalance() * 0.004);
         }
-        double interestRate = 0.04;
+        double interestRate = 0.01;
         return (getBalance().getAvailableBalance() * interestRate);
     }
 }

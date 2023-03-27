@@ -102,7 +102,7 @@
                               <DropShadow height="10.0" radius="4.5" width="10.0" />
                            </effect>
                               </Button>
-                              <Label fx:id="accLabel" alignment="TOP_RIGHT">
+                              <Label fx:id="accLabel" alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="270.0">
                                   <font>
                                       <Font name="Calibri" size="36.0" />
                                   </font>
@@ -119,9 +119,9 @@
                       </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1280.0">
                      <children>
-                        <Label alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="468.0" text="%interestLabel">
+                        <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="338.0" text="%interestLabel">
                            <font>
-                              <Font name="Century Gothic" size="36.0" />
+                              <Font name="Calibri" size="36.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="600.0" />

@@ -166,14 +166,14 @@ public class TransferController implements Initializable {
             Account account = SessionClient.getAccount();
 
             if (transType.equals(TransactionType.LocalTransfer)) {
-                if (targetBankName == "RJDX") { // Transfer to own bank
+                if (targetBankName.equals("RJDX")) { // Transfer to own bank
                     Account accountTo = accService.getAccountsByNumber(accountNumField.getText());
                     if (accountTo == null) { // check if account is null, show error pane
                         accountNotFoundPane.setVisible(true);
                     } else {
                         try {
                             account.internalTransfer(amount, accountTo.getId());
-                            PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amount));
+                            PDFService.Receipt(account, TransactionType.LocalTransfer, String.valueOf(amount));
                             Navigator.logout();
                         } catch (InsufficientFundsException e) { // if account do not have enough money
                             insufficientFundsPane.setVisible(true);

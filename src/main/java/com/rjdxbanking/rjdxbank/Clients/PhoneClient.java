@@ -43,7 +43,7 @@ public class PhoneClient {
         System.out.println(message.getSid());
     }
 
-    //to verify OTP
+    // to verify OTP
     public boolean verification(String value) {
         // System.out.println(randomVerifier);
         long timeStartMin = totalMiliseconds / 1000 / 60;
@@ -53,12 +53,6 @@ public class PhoneClient {
                 randomVerifier = 0;
                 return true;
             }
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Failed");
-            alert.setContentText("Timeup. Please verify again.");
-            alert.showAndWait();
         }
 
         return false;

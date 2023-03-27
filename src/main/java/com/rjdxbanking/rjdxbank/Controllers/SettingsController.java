@@ -223,7 +223,7 @@ public class SettingsController implements Initializable {
     public void changePinMethod() {
         String oldpin = oldPin.getText();
         String newpin = newPin.getText();
-        String confirmNewin = newPin.getText();
+        String cNewpin = confirmNewpin.getText();
 
         Account currentAcc = SessionClient.getAccount();
         AccountService accService = new AccountService();
@@ -232,7 +232,7 @@ public class SettingsController implements Initializable {
             // check if new pin is same as old pin, if it is not the same perform change of
             // pin
             if (!Password.check(newpin, currentAcc.getPinNo()).withArgon2()) {
-                if (newpin.equals(confirmNewin)) {
+                if (newpin.equals(cNewpin)) {
                     newpin = com.password4j.Password.hash(newpin).addRandomSalt().withArgon2().getResult();
                     accService.changePin(currentAcc, newpin);
 

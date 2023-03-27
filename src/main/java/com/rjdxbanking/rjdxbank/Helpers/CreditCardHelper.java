@@ -4,13 +4,12 @@ import java.util.Random;
 
 //for checking if valid credit card number
 public class CreditCardHelper {
-    private static String getLuhnCheckDigit(String number) {
+    public static String getLuhnCheckDigit(String number) {
         int nDigits = number.length();
         int nSum = 0;
         boolean isSecond = false;
 
-        for (int i = nDigits - 1; i >= 0; i--)
-        {
+        for (int i = nDigits - 1; i >= 0; i--) {
             int d = number.charAt(i) - '0';
             if (isSecond)
                 d = d * 2;
@@ -24,15 +23,14 @@ public class CreditCardHelper {
         }
 
         String value = "";
-        if((nSum %10) == 0){
+        if ((nSum % 10) == 0) {
             return value + 0;
-        }
-        else{
-            return value + (10-(nSum %10));
+        } else {
+            return value + (10 - (nSum % 10));
         }
     }
 
-    //Not needed just a random generated
+    // Not needed just a random generated
     public static String generateCreditCard() {
         String cardNo;
         String bankIdentifierNumber = "622925";
@@ -48,13 +46,11 @@ public class CreditCardHelper {
         return cardNo;
     }
 
-    public static boolean checkLuhn(String cardNo)
-    {
+    public static boolean checkLuhn(String cardNo) {
         int nSum = 0;
         boolean isSecond = false;
 
-        for (int i = cardNo.length()-1; i >= 0; i--)
-        {
+        for (int i = cardNo.length() - 1; i >= 0; i--) {
             int d = cardNo.charAt(i) - '0';
             if (isSecond)
                 d = d * 2;

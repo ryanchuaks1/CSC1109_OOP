@@ -3,6 +3,7 @@ package com.rjdxbanking.rjdxbank.Entity;
 import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
 import com.rjdxbanking.rjdxbank.Exception.TransferLimitExceededException;
+import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
 import com.rjdxbanking.rjdxbank.Interfaces.IAccount;
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
@@ -108,7 +109,8 @@ public abstract class Account implements IAccount {
                 type,
                 targetBank.getCurrencyCode() == "SGD" ? TransactionStatus.Completed : TransactionStatus.Pending,
                 this.Id);
-        senderTransaction.setTo(targetBank.getBankRoute() + toAcc);
+        senderTransaction.setTo(targetBank.getBankRoute() + toAcc
+                + CreditCardHelper.getLuhnCheckDigit(targetBank.getBankRoute() + toAcc + "0"));
         senderTransaction.setFrom(this.Id);
         transactionService.createTransaction(senderTransaction);
 
@@ -131,8 +133,8 @@ public abstract class Account implements IAccount {
                 TransactionType.LocalTransfer, TransactionStatus.Completed, this.Id);
         senderTransaction.setFrom(this.Id);
         senderTransaction.setTo(toAcc);
-        System.out.println(senderTransaction.getTo());
-        System.out.println(senderTransaction.getFrom());
+        // System.out.println(senderTransaction.getTo());
+        // System.out.println(senderTransaction.getFrom());
 
         CreateTransaction recieverTransaction = new CreateTransaction(dtf.format(now), amount, "SGD",
                 TransactionType.LocalTransfer, TransactionStatus.Completed, toAcc);
@@ -160,17 +162,17 @@ public abstract class Account implements IAccount {
     }
 
     public void Withdraw(double amount) throws InsufficientFundsException, TransferLimitExceededException {
-        
+
         LocalDateTime now = LocalDateTime.now();
 
         if (this.getBalance().getAvailableBalance() < amount) {
-                throw new InsufficientFundsException("Insufficient funds in account");
+            throw new InsufficientFundsException("Insufficient funds in account");
         }
         double transferLimit = SessionClient.account.getCurrentLimit(TransactionType.Withdrawal);
         if (transferLimit < amount) {
             throw new TransferLimitExceededException(transferLimit);
         }
-        
+
         try {
             CreateTransaction transaction = new CreateTransaction(dtf.format(now),
                     amount,
@@ -179,7 +181,7 @@ public abstract class Account implements IAccount {
                     TransactionStatus.Completed,
                     this.Id);
 
-                transactionService.createTransaction(transaction);
+            transactionService.createTransaction(transaction);
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

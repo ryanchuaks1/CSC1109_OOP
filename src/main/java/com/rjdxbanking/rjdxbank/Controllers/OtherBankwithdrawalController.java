@@ -134,7 +134,6 @@ public class OtherBankwithdrawalController implements Initializable {
                 Bank bank = bankService.getBankByRoute(binNum);
                 LocalDateTime now = LocalDateTime.now();
                 double conversionValue = FXService.foreignXchange(SessionClient.getCurrency());
-
                 double amountDebited = (bank.getIsLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
 
                 // if ATMClient do not have enough bills left, throw a billInsufficientException

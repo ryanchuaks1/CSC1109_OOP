@@ -79,16 +79,17 @@ public class TransHistoryController implements Initializable {
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
-                UserService userService = new UserService();
-                User currentUser = userService.getUserByUserId(SessionClient.getAccount().getUserId());
-                nameLabel.setText(" " + currentUser.getFullName());
-                accLabel.setText(SessionClient.getAccount().getAccountType() + ": ");
-                balLabel.setText("S$" + String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance()));
-                System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance())));
-                System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getPendingBalance())));
-                interestRateLabel.setText("S$" + String.format("%.2f" ,SessionClient.getAccount().getYearlyProjectedInterestRate()));
-                intializeTable();
-        }
+        UserService userService = new UserService();
+        User currentUser = userService.getUserByUserId(SessionClient.getAccount().getUserId());
+        nameLabel.setText(" " + currentUser.getFullName());
+        accLabel.setText(SessionClient.getAccount().getAccountType() + ": ");
+        balLabel.setText("S$" + String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance()));
+        System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance())));
+        System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getPendingBalance())));
+        interestRateLabel
+                .setText("S$" + String.format("%.2f", SessionClient.getAccount().getYearlyProjectedInterestRate()));
+        intializeTable();
+    }
 
     void intializeTable() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -114,50 +115,38 @@ public class TransHistoryController implements Initializable {
         });
         transTimeCol.setSortType(TableColumn.SortType.DESCENDING);
 
-                TableColumn<Transaction, String> transactionTypeCol = new TableColumn<Transaction, String>(
-                                "Transaction Type");
-                transactionTypeCol.setMinWidth(100);
-                transactionTypeCol.setCellValueFactory(
-                                new PropertyValueFactory<Transaction, String>("transactionType"));
+        TableColumn<Transaction, String> transactionTypeCol = new TableColumn<Transaction, String>("Transaction Type");
+        transactionTypeCol.setMinWidth(100);
+        transactionTypeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("transactionType"));
 
-                TableColumn<Transaction, String> currencyCodeCol = new TableColumn<Transaction, String>(
-                                "Currency Code");
-                currencyCodeCol.setMinWidth(100);
-                currencyCodeCol.setCellValueFactory(
-                                new PropertyValueFactory<Transaction, String>("currencyCode"));
+        TableColumn<Transaction, String> currencyCodeCol = new TableColumn<Transaction, String>("Currency Code");
+        currencyCodeCol.setMinWidth(100);
+        currencyCodeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("currencyCode"));
 
-                TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>(
-                                "Transaction Amount");
-                transactionAmountCol.setMinWidth(150);
-                transactionAmountCol.setCellValueFactory(
-                                new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
+        TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>("Transaction Amount");
+        transactionAmountCol.setMinWidth(150);
+        transactionAmountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
 
-                TableColumn<Transaction, String> statusCol = new TableColumn<Transaction, String>("Status");
-                statusCol.setMinWidth(100);
-                statusCol.setCellValueFactory(
-                                new PropertyValueFactory<Transaction, String>("transactionStatus"));
+        TableColumn<Transaction, String> statusCol = new TableColumn<Transaction, String>("Status");
+        statusCol.setMinWidth(100);
+        statusCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("transactionStatus"));
 
-                TableColumn<Transaction, String> fromCol = new TableColumn<Transaction, String>("From");
-                fromCol.setMinWidth(125);
-                fromCol.setCellValueFactory(
-                                new PropertyValueFactory<Transaction, String>("from"));
+        TableColumn<Transaction, String> fromCol = new TableColumn<Transaction, String>("From");
+        fromCol.setMinWidth(125);
+        fromCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("from"));
 
-                TableColumn<Transaction, String> toCol = new TableColumn<Transaction, String>("To");
-                toCol.setMinWidth(125);
-                toCol.setCellValueFactory(
-                                new PropertyValueFactory<Transaction, String>("to"));
+        TableColumn<Transaction, String> toCol = new TableColumn<Transaction, String>("To");
+        toCol.setMinWidth(125);
+        toCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("to"));
 
-                if (listTrans.size() == 0) {
-
-                } else {
-                        transHistoryTable.setItems(listTrans);
-                }
-                transHistoryTable.getColumns().addAll(transTimeCol, transactionTypeCol, currencyCodeCol,
-                                transactionAmountCol, statusCol, toCol, fromCol);
-                transHistoryTable.getSortOrder().add(transTimeCol);
-                transHistoryTable.sort();
-
+        if (!(listTrans.size() == 0)) {
+            transHistoryTable.setItems(listTrans);
         }
+        transHistoryTable.getColumns().addAll(transTimeCol, transactionTypeCol, currencyCodeCol,
+                transactionAmountCol, statusCol, toCol, fromCol);
+        transHistoryTable.getSortOrder().add(transTimeCol);
+        transHistoryTable.sort();
+    }
 
     @FXML
     void btnBackPressed(ActionEvent event) throws IOException {

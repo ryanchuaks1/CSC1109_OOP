@@ -132,11 +132,10 @@ public class OtherBankwithdrawalController implements Initializable {
                 double conversionValue = FXService.foreignXchange(SessionClient.getCurrency());
 
                 double amountDebited = (bank.getIsLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
-                
 
                 // if ATMClient do not have enough bills left, throw a billInsufficientException
                 atmClient.WithdrawCash((int) (amountWithdrawn.intValue()));
-                
+
                 CreateIncomingTransaction incTransaction = new CreateIncomingTransaction(dtf.format(now),
                         amountWithdrawn,
                         amountDebited,
@@ -147,8 +146,8 @@ public class OtherBankwithdrawalController implements Initializable {
                         TransactionStatus.Pending);
 
                 itService.createTransaction(incTransaction);
-                
-                //Successpane to show successful and log out after 2seconds
+
+                // Successpane to show successful and log out after 2seconds
                 successPane.setVisible(true);
                 Duration delay = Duration.seconds(2);
                 PauseTransition transition = new PauseTransition(delay);

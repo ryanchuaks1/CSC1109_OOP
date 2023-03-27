@@ -14,18 +14,14 @@ import com.rjdxbanking.rjdxbank.Helpers.SecretKeyStore;
 
 public class EmailClient {
 
-    //with usage of javax mail. SMTP IMAP
+    // with usage of javax mail. SMTP IMAP
     public static void emailUpdate() {
-
         ATMClient atmClient = new ATMClient();
         // Sender's email ID needs to be mentioned
         String from = SecretKeyStore.getKey("emailId");
-
         String password = SecretKeyStore.getKey("emailPass");
-
-        // Assuming you are sending email from through gmails smtp
+        // Assuming you are sending email from through gmails smtp service
         String host = "smtp.gmail.com";
-
         // Get system properties
         Properties properties = System.getProperties();
 
@@ -37,44 +33,35 @@ public class EmailClient {
 
         // Get the Session object.// and pass username and password
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(from, password);
             }
         });
-
         // Used to debug SMTP issues
         session.setDebug(true);
 
         try {
             // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-
             // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress("rjdxbanking@gmail.com"));
-
             // Set Subject: header field
             message.setSubject("ATM Running out!");
 
-            String msg = "ATM needs to be refilled. \n" 
-            + "Amount left: "
-            + "\n$10: " + atmClient.getTenDollars()
-            + "\n$50: " + atmClient.getFiftyDollars()
-            + "\n$100: " + atmClient.getHundredDollars();
+            String msg = "ATM needs to be refilled. \n"
+                    + "Amount left: "
+                    + "\n$10: " + atmClient.getTenDollars()
+                    + "\n$50: " + atmClient.getFiftyDollars()
+                    + "\n$100: " + atmClient.getHundredDollars();
 
             // Now set the actual message
             message.setText(msg);
-
             // Send message
             Transport.send(message);
-
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-
     }
-
 }

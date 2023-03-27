@@ -14,46 +14,54 @@ import org.junit.Test;
 import com.rjdxbanking.rjdxbank.Clients.AccountClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
+import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
 import com.rjdxbanking.rjdxbank.Helpers.FirebaseInitialize;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 
-
 public class unitTesting {
-    
+
     @BeforeClass
-    public static void testBase(){
+    public static void testBase() {
         FirebaseInitialize.initDatabase();
     }
 
-    //may not be the best way as possible to get the correct accountNumber
+    // may not be the best way as possible to get the correct accountNumber
     @Test
-    public void testAccount(){
+    public void testAccount() {
         Random rand = new Random();
         AccountService accService = new AccountService();
         String accountNumber = "";
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             accountNumber = Integer.toString(100000000 + rand.nextInt(900000000));
             assertFalse(accService.checkAccountExist(accountNumber));
-            assertEquals(true,accService.getAccountsByNumber(accountNumber)==null);
+            assertEquals(true, accService.getAccountsByNumber(accountNumber) == null);
         }
-        
+    }
+
+    @Test
+    public void testCheckCreditCard() {
+        String creditcardNo = "";
+        for (int i = 0; i < 10; i++) {
+            creditcardNo = CreditCardHelper.generateCreditCard();
+            assertTrue(CreditCardHelper.checkLuhn(creditcardNo));
+        }
     }
 
     @Test(expected = InsufficientFundsException.class)
-    public void testWithdraw() throws InsufficientFundsException{
+    public void testWithdraw() throws InsufficientFundsException {
         AccountClient accountClient = new AccountClient();
         String cardNumber = "6229259821434671";
-        //static
+        // static
         try {
             Account account = accountClient.Login(cardNumber, "123456");
             if (account.getBalance().getAvailableBalance() < 99999999) {
                 throw new InsufficientFundsException("Insufficient funds in account");
-            } 
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             throw new InsufficientFundsException(ex.getMessage());
         }
-            
+
     }
 
 }

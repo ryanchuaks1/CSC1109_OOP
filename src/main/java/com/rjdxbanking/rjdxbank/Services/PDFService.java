@@ -19,13 +19,14 @@ public class PDFService {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd_MM_yyyy HH_mm_ss");
         LocalDateTime now = LocalDateTime.now();
-        String substring = account.getId().substring(account.getId().length() - 4, account.getId().length());
+        String substring = account.getaccountNumber().substring(account.getaccountNumber().length() - 4,
+                account.getaccountNumber().length());
 
         String htmlString = "<img src='src/main/resources/com/rjdxbanking/rjdxbank/Images/IconPrimary.png'>"
                 + "<p style='line-height:1.4'>Founded by Ryan, Jeff, Desmond Xavier</p>"
                 + "<p>Transaction Receipt</p>"
                 + "<hr>"
-                + "<p style='line-height:1.0'>Account Id: " + "***********" + substring + "<p>"
+                + "<p style='line-height:1.0'>Account Id: " + "******" + substring + "<p>"
                 + "<p style='line-height:1.0'>Date: " + dtf.format(now) + "<p>"
                 + "<p style='line-height:1.0'>Transaction type: " + TransactionType + "<br/>"
                 + "<p style='line-height:1.0'>Amount: " + amount + "<br/>"

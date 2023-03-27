@@ -102,7 +102,7 @@ public abstract class Account implements IAccount {
                 type,
                 targetBank.getCurrencyCode() == "SGD" ? TransactionStatus.Completed : TransactionStatus.Pending,
                 this.Id);
-        senderTransaction.setTo(targetBank.getBankRoute()+toAcc);
+        senderTransaction.setTo(targetBank.getBankRoute() + toAcc);
         senderTransaction.setFrom(this.Id);
         transactionService.createTransaction(senderTransaction);
 

@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ae456636-8d90-4593-85b1-dd98b63a8992" name="Changes" comment="Added ATMClient to withdraw cash with a fixed amount of bills in the ATM system.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/ATMClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/ATMClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/BankIdentificationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Clients/BankIdentificationClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/TransHistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rjdxbanking/rjdxbank/Controllers/TransHistoryController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -48,7 +48,8 @@ public class PhoneClient {
         // System.out.println(randomVerifier);
         long timeStartMin = totalMiliseconds / 1000 / 60;
         long current = System.currentTimeMillis() / 1000 / 60;
-        if ((current - timeStartMin) < 2) {
+        //currentTime - time the OTP is send, if it still less than 2 minutes, run the program normally else just return false. 
+        if ((current - timeStartMin) <= 2) {
             if (Integer.toString(randomVerifier).equals(value)) {
                 randomVerifier = 0;
                 return true;

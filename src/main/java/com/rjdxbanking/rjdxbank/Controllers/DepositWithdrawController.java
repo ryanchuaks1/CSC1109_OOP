@@ -129,11 +129,13 @@ public class DepositWithdrawController implements Initializable {
         }
     }
 
+    // if user click on cancel, return back to mainDashboard
     @FXML
     private void cancelPressed(ActionEvent event) throws IOException {
         Navigator.setRoot("MainDashboard");
     }
 
+    // User confirm depositPressed
     @FXML
     private void confirmDepositPressed(ActionEvent event) throws FileNotFoundException, IOException {
         Account account = SessionClient.getAccount();
@@ -142,23 +144,25 @@ public class DepositWithdrawController implements Initializable {
         Navigator.logout();
     }
 
+    // Perform check on the amount inputted else, check the withdraw cash
     private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
         Account account = SessionClient.getAccount();
-        if (!(amount % 10 == 0 && amount >= 20)) {
+        if (!(amount % 10 == 0 && amount >= 20)) { // show invalid if amount not modulo by $10, and amount < 20
             invalidAmountPane.setVisible(true);
-        } else {
+        } else { // run when amount is valid and modulo by $10, update withdraw cash in DB, and
+                 // decrease the amount in user account, and PDF print out a receipt.
             try {
                 ATMClient atmClient = new ATMClient();
                 atmClient.WithdrawCash(amount.intValue());
                 account.Withdraw(amount);
                 PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField.getText()));
                 Navigator.logout();
-            } catch (InsufficientFundsException e) {
+            } catch (InsufficientFundsException e) { // if user account do not have sufficient Funds
                 insufficientFundsPane.setVisible(true);
-            } catch (TransferLimitExceededException e) {
+            } catch (TransferLimitExceededException e) { // if user has hit the limit of ATMwithdrawal
                 limitReachedPane.setVisible(true);
                 limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
-            } catch (BillsNotEnoughException e) {
+            } catch (BillsNotEnoughException e) { //  if ATM bill count do not have enough, send an email to our email to update
                 billsInsufficientPane.setVisible(true);
                 EmailClient.emailUpdate();
             }
@@ -167,8 +171,10 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private void numPadTickClicked(ActionEvent event) throws FileNotFoundException, IOException {
-        Double amount = Double.parseDouble(withdrawTextField.getText());
-        confirmWithdrawPressed(amount);
+        if (withdrawTextField.getLength() != 0) {
+            Double amount = Double.parseDouble(withdrawTextField.getText());
+            confirmWithdrawPressed(amount);
+        }
     }
 
     @FXML
@@ -185,7 +191,9 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private void numPadBackClicked(ActionEvent event) {
-        withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
+        if (withdrawTextField.getLength() != 0) {
+            withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
+        }
     }
 
     @FXML

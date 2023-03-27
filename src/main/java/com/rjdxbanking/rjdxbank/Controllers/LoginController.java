@@ -71,6 +71,10 @@ public class LoginController implements Initializable {
 
     private int attempts = 0;
 
+    BankIdentificationClient BinClient = new BankIdentificationClient();
+    AccountService accountService = new AccountService();
+    PhoneClient phoneOTP = new PhoneClient();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Path iconPrimaryPath = FileSystems.getDefault().getPath(
@@ -115,8 +119,6 @@ public class LoginController implements Initializable {
     // When user insert the card, we will check if the card is valid or in our
     // database table (Supported by our bank or not)
     private void checkCardNumber(String fullCardNumber) {
-        BankIdentificationClient BinClient = new BankIdentificationClient();
-        AccountService accountService = new AccountService();
 
         SessionClient.setCardNum(fullCardNumber);
 
@@ -143,30 +145,26 @@ public class LoginController implements Initializable {
         }
     }
 
+    // Check if the pin is correct
     private void checkPin(String pin) throws IOException {
-        if (PinClient.checkPin(pin)) {
+        if (PinClient.checkPin(pin)) { // pin valid
             if (SessionClient.isOwnBank()) {
-                Navigator.setRoot("MainDashboard");
+                Navigator.setRoot("MainDashboard"); // Go to main dashboard if is own bank
             } else {
-                Navigator.setRoot("OtherBankWithdrawal");
+                Navigator.setRoot("OtherBankWithdrawal"); // Go straight to withdrawal only for other banks
             }
-        } else {
+        } else { // pin invalid
             loadingLabel.setVisible(false);
             LoadingPage.setVisible(false);
-            if (attempts < 5) {
+            if (attempts < 5) { // Checks if user has failed less then 5 times
                 attempts++;
                 PinPage.setVisible(true);
                 pinField.requestFocus();
                 invalidPinLabel.setVisible(true);
-            } else {
-                // set cardNum probably can simplify
-                PhoneClient phoneOTP = new PhoneClient();
+            } else { // Lock account once user has failed more then 5 times
                 String accountNum = SessionClient.getCardNum().substring(6, 15);
-                AccountService accountService = new AccountService();
-                phoneOTP.warning(accountService.getAccountsByNumber(accountNum));
-                // temp set to true to locked
-                accountService.updateAccountStatus(accountService.getAccountsByNumber(accountNum), true);
-
+                phoneOTP.warning(accountService.getAccountsByNumber(accountNum)); // Send warning SMS to user
+                accountService.updateAccountStatus(accountService.getAccountsByNumber(accountNum), true); // Lock acc
                 invalidPinLabel.setVisible(false);
                 SessionClient.setCardNum(null);
                 SessionClient.setOwnBank(false);
@@ -178,15 +176,15 @@ public class LoginController implements Initializable {
 
     @FXML
     private void pinTyped(KeyEvent event) throws IOException {
-        if (pinField.getText().length() >= 6) {
+        if (pinField.getText().length() >= 6) { // Automatically check pin once user key in 6 values
             PinPage.setVisible(false);
             loadingLabel.setVisible(true);
             LoadingPage.setVisible(true);
-            Duration delay = Duration.millis(200);
+            Duration delay = Duration.millis(200); // We need to delay a short while for loading screen to show up
             PauseTransition transition = new PauseTransition(delay);
             transition.setOnFinished(evt -> {
                 try {
-                    checkPin(pinField.getText());
+                    checkPin(pinField.getText()); // Check if pin is valid
                     pinField.setText("");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -197,10 +195,10 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void dispenseCard() {
+    public void dispenseCard() { // Dispenses the card with animations
         LoadingPage.setVisible(true);
         returnCardLabel.setVisible(true);
-        Duration delay = Duration.seconds(2);
+        Duration delay = Duration.seconds(2); // 2 sec delay to simulate card dispensing
         PauseTransition transition = new PauseTransition(delay);
         transition.setOnFinished(evt -> {
             LoadingPage.setVisible(false);

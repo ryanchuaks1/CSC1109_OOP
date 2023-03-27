@@ -123,17 +123,24 @@ public class LoginController implements Initializable {
         String binNum = fullCardNumber.substring(0, 6);
         String accountNum = fullCardNumber.substring(6, 15);
 
-        if (!CreditCardHelper.checkLuhn(fullCardNumber) && !BinClient.isValidBank(binNum)) {
+        if (CreditCardHelper.checkLuhn(fullCardNumber) // Check if is a valid card using luhn algo
+                && BinClient.isValidBank(binNum)) { // Check if the bank exist in our database
+            if (SessionClient.isOwnBank()) { // Check if is our own bank
+                if (accountService.getAccountsByNumber(accountNum).getIsLocked()) { // check if account is locked
+                    InvalidCardLabel.setVisible(true);
+                    dispenseCard();
+                } else {
+                    PinPage.setVisible(true);
+                    pinField.requestFocus();
+                }
+            } else { // Dont need to check for account lock if it's not our own bank card
+                PinPage.setVisible(true);
+                pinField.requestFocus();
+            }
+        } else { // Dispense card if card luhn failed or not valid
             InvalidCardLabel.setVisible(true);
             dispenseCard();
-        } else if (SessionClient.isOwnBank() && accountService.getAccountsByNumber(accountNum).getIsLocked()) {
-            InvalidCardLabel.setVisible(true);
-            dispenseCard();
-        } else {
-            PinPage.setVisible(true);
-            pinField.requestFocus();
         }
-
     }
 
     private void checkPin(String pin) throws IOException {

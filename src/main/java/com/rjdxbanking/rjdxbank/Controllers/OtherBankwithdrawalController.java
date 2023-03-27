@@ -101,7 +101,9 @@ public class OtherBankwithdrawalController implements Initializable {
 
     @FXML
     private void numPadBackClicked(ActionEvent event) {
-        withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
+        if (withdrawTextField.getLength() != 0) {
+            withdrawTextField.deleteText(withdrawTextField.getLength() - 1, withdrawTextField.getLength());
+        }
     }
 
     @FXML

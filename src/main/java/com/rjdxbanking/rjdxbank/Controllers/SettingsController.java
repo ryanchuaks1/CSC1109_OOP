@@ -136,7 +136,7 @@ public class SettingsController implements Initializable {
     PhoneClient otpClient = new PhoneClient();
     AccountService accService = new AccountService();
 
-    @Override
+    @Override // run on load page
     public void initialize(URL location, ResourceBundle resources) {
         Path iconPrimaryPath = FileSystems.getDefault().getPath(
                 "src/main/resources/com/rjdxbanking/rjdxbank/Images/", "WhiteIconPrimary.png");
@@ -174,7 +174,8 @@ public class SettingsController implements Initializable {
         addTextLimiter(oldPin, 6);
         addTextLimiter(newPin, 6);
 
-        Integer[] list = { 0, 500, 1000, 2000, 3000, 5000, 7000, 9000 };
+        // input combo box information
+        Integer[] list = { 0, 500, 1000, 2000, 3000, 5000, 7000, 9000, 10000 };
 
         localTransferLimit.getItems().addAll(list);
         localTransferLimit.setValue((int) SessionClient.getAccount().getLocalTransferLimit());
@@ -186,11 +187,11 @@ public class SettingsController implements Initializable {
 
     @FXML
     void onButtonPress(ActionEvent event) throws Exception {
-        if (event.getSource() == changePin) {
+        if (event.getSource() == changePin) { // change pin button
             changePinMethod();
-        } else if (event.getSource() == changeLimitBtn) {
+        } else if (event.getSource() == changeLimitBtn) { // changeLimit button
             changeLimitMethod();
-        } else if (event.getSource() == verificationBtn) {
+        } else if (event.getSource() == verificationBtn) { // verification button
             // verification
             verification();
         } else if (event.getSource() == reOTPBtn) {
@@ -207,6 +208,7 @@ public class SettingsController implements Initializable {
         }
     }
 
+    // for verification of OTP
     public void verification() {
         if (otpClient.verification(verificationOTP.getText())) {
             verificationPane.setVisible(false);
@@ -217,6 +219,7 @@ public class SettingsController implements Initializable {
         }
     }
 
+    // change pin method
     public void changePinMethod() {
         String oldpin = oldPin.getText();
         String newpin = newPin.getText();
@@ -276,6 +279,7 @@ public class SettingsController implements Initializable {
         transition.play();
     }
 
+    // limit user input to only number
     public static void addTextLimiter(final PasswordField tf, final int maxLength) {
         tf.textProperty().addListener(new ChangeListener<String>() {
             @Override

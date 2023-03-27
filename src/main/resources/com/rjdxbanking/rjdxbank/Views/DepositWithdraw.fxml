@@ -365,6 +365,9 @@
                                        <font>
                                           <Font size="24.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                             </children>
                                         </GridPane>

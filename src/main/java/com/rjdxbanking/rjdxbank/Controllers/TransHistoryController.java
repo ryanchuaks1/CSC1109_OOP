@@ -63,11 +63,11 @@ public class TransHistoryController implements Initializable {
     @FXML
     void setLanguage(ActionEvent event) throws IOException {
         if (event.getSource() == btnEnglish) {
-            Navigator.setLocale(Locale.forLanguageTag("en"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("en"), "TransHistory");
         } else if (event.getSource() == btnChinese) {
-            Navigator.setLocale(Locale.forLanguageTag("zh"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("zh"), "TransHistory");
         } else if (event.getSource() == btnMalay) {
-            Navigator.setLocale(Locale.forLanguageTag("ms"), "MainDashboard");
+            Navigator.setLocale(Locale.forLanguageTag("ms"), "TransHistory");
         }
     }
 
@@ -84,19 +84,18 @@ public class TransHistoryController implements Initializable {
         nameLabel.setText(" " + currentUser.getFullName());
         accLabel.setText(SessionClient.getAccount().getAccountType() + ": ");
         balLabel.setText("S$" + String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance()));
-        System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance())));
-        System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getPendingBalance())));
+        // System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getAvailableBalance())));
+        // System.out.println((String.valueOf(SessionClient.getAccount().getBalance().getPendingBalance())));
         interestRateLabel
                 .setText("S$" + String.format("%.2f", SessionClient.getAccount().getYearlyProjectedInterestRate()));
         intializeTable();
     }
 
+    //method to initialize table
     void intializeTable() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         ObservableList<Transaction> listTrans = tranService
                 .getTransactionsByAccountIdLimit100(SessionClient.account.getId());
-
-        // System.out.println(listTrans.get(0).getId());
 
         TableColumn<Transaction, LocalDateTime> transTimeCol = new TableColumn<Transaction, LocalDateTime>(
                 "Transaction Time");
@@ -123,7 +122,8 @@ public class TransHistoryController implements Initializable {
         currencyCodeCol.setMinWidth(100);
         currencyCodeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("currencyCode"));
 
-        TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>("Transaction Amount");
+        TableColumn<Transaction, Integer> transactionAmountCol = new TableColumn<Transaction, Integer>(
+                "Transaction Amount");
         transactionAmountCol.setMinWidth(150);
         transactionAmountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("transactionAmount"));
 
@@ -139,8 +139,8 @@ public class TransHistoryController implements Initializable {
         toCol.setMinWidth(125);
         toCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("to"));
 
-        if (!(listTrans.size() == 0)) {
-            transHistoryTable.setItems(listTrans);
+        if (!(listTrans.size() == 0)) { // if no data is found, no data will be inputed to table
+            transHistoryTable.setItems(listTrans); 
         }
         transHistoryTable.getColumns().addAll(transTimeCol, transactionTypeCol, currencyCodeCol,
                 transactionAmountCol, statusCol, toCol, fromCol);

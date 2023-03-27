@@ -112,6 +112,8 @@ public class LoginController implements Initializable {
         transition.play();
     }
 
+    // When user insert the card, we will check if the card is valid or in our
+    // database table (Supported by our bank or not)
     private void checkCardNumber(String fullCardNumber) {
         BankIdentificationClient BinClient = new BankIdentificationClient();
         AccountService accountService = new AccountService();
@@ -121,16 +123,17 @@ public class LoginController implements Initializable {
         String binNum = fullCardNumber.substring(0, 6);
         String accountNum = fullCardNumber.substring(6, 15);
 
-        if ((CreditCardHelper.checkLuhn(fullCardNumber)
-                && BinClient.isValidBank(binNum)
-                && !accountService.getAccountsByNumber(accountNum).getIsLocked())) {
-            // temp set to false for status
-            PinPage.setVisible(true);
-            pinField.requestFocus();
-        } else {
+        if (!CreditCardHelper.checkLuhn(fullCardNumber) && !BinClient.isValidBank(binNum)) {
             InvalidCardLabel.setVisible(true);
             dispenseCard();
+        } else if (SessionClient.isOwnBank() && accountService.getAccountsByNumber(accountNum).getIsLocked()) {
+            InvalidCardLabel.setVisible(true);
+            dispenseCard();
+        } else {
+            PinPage.setVisible(true);
+            pinField.requestFocus();
         }
+
     }
 
     private void checkPin(String pin) throws IOException {
@@ -143,7 +146,7 @@ public class LoginController implements Initializable {
         } else {
             loadingLabel.setVisible(false);
             LoadingPage.setVisible(false);
-            if (attempts < 6) {
+            if (attempts < 5) {
                 attempts++;
                 PinPage.setVisible(true);
                 pinField.requestFocus();

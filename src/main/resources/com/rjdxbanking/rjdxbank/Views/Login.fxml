@@ -90,7 +90,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                                      <Button mnemonicParsing="false" onAction="#onInsertCard" text="1948 2398 2143 4674">
+                                      <Button mnemonicParsing="false" onAction="#onInsertCard" text="1948 2362 8391 7329">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -183,7 +183,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="LoadingPage" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="LoadingPage" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label fx:id="loadingLabel" alignment="CENTER" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" text="%loadingLabel" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <font>

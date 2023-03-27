@@ -100,6 +100,7 @@ public class LoginController implements Initializable {
         }
     }
 
+    // Runs when card is inserted
     @FXML
     void onInsertCard(ActionEvent event) {
         String cardNum = ((Button) event.getSource()).getText().replaceAll("\\s+", "");
@@ -174,6 +175,7 @@ public class LoginController implements Initializable {
         }
     }
 
+    // Checks if pin is typed
     @FXML
     private void pinTyped(KeyEvent event) throws IOException {
         if (pinField.getText().length() >= 6) { // Automatically check pin once user key in 6 values
@@ -194,6 +196,7 @@ public class LoginController implements Initializable {
         }
     }
 
+    // Dispense card out
     @FXML
     public void dispenseCard() { // Dispenses the card with animations
         LoadingPage.setVisible(true);

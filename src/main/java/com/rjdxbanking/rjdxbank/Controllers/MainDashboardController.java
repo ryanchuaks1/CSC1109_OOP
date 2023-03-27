@@ -72,7 +72,6 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     private Pane withdrawPane;
-    SessionClient sc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -314,7 +314,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="limitReachedPane" layoutX="360.0" layoutY="220.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
+      <AnchorPane fx:id="limitReachedPane" layoutX="360.0" layoutY="220.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: 3px; -fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="200.0">
          <children>
             <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -322,6 +322,14 @@
                      <font>
                         <Font name="Calibri" size="36.0" />
                      </font>
+                  </Label>
+                  <Label fx:id="limitAmountLabel" alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%limitAmountLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                   </Label>
                   <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
                      <font>

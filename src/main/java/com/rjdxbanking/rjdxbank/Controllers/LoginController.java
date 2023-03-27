@@ -66,6 +66,9 @@ public class LoginController implements Initializable {
     @FXML
     private Label readingCardLabel;
 
+    @FXML
+    private Label InvalidCardLabel;
+
     private int attempts = 0;
 
     @Override
@@ -125,6 +128,7 @@ public class LoginController implements Initializable {
             PinPage.setVisible(true);
             pinField.requestFocus();
         } else {
+            InvalidCardLabel.setVisible(true);
             dispenseCard();
         }
     }
@@ -177,7 +181,6 @@ public class LoginController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             });
             transition.play();
         }
@@ -192,6 +195,7 @@ public class LoginController implements Initializable {
         transition.setOnFinished(evt -> {
             LoadingPage.setVisible(false);
             returnCardLabel.setVisible(false);
+            InvalidCardLabel.setVisible(false);
         });
         transition.play();
     }

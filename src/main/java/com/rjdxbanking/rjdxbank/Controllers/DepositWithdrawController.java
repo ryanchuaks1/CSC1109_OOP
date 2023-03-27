@@ -6,6 +6,7 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Exception.BillsNotEnoughException;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
+import com.rjdxbanking.rjdxbank.Exception.TransferLimitExceededException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.PDFService;
@@ -49,6 +50,9 @@ public class DepositWithdrawController implements Initializable {
 
     @FXML
     private Label depositAmountLabel;
+
+    @FXML
+    private Label limitAmountLabel;
 
     @FXML
     private AnchorPane depositPane;
@@ -140,9 +144,7 @@ public class DepositWithdrawController implements Initializable {
 
     private void confirmWithdrawPressed(Double amount) throws FileNotFoundException, IOException {
         Account account = SessionClient.getAccount();
-        if (limit < amount) {
-            limitReachedPane.setVisible(true);
-        } else if (!(amount % 10 == 0 && amount >= 20)) {
+        if (!(amount % 10 == 0 && amount >= 20)) {
             invalidAmountPane.setVisible(true);
         } else {
             try {
@@ -153,6 +155,9 @@ public class DepositWithdrawController implements Initializable {
                 Navigator.logout();
             } catch (InsufficientFundsException e) {
                 insufficientFundsPane.setVisible(true);
+            } catch (TransferLimitExceededException e) {
+                limitReachedPane.setVisible(true);
+                limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
             } catch (BillsNotEnoughException e) {
                 billsInsufficientPane.setVisible(true);
                 EmailClient.emailUpdate();

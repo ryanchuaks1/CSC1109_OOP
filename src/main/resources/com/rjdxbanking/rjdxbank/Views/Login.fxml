@@ -183,19 +183,24 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="LoadingPage" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="LoadingPage" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label fx:id="loadingLabel" alignment="CENTER" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" text="%loadingLabel" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <font>
                         <Font name="Calibri" size="48.0" />
                     </font>
                 </Label>
-            <Label fx:id="returnCardLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" text="%returnCardLabel" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="returnCardLabel" alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="362.0" prefWidth="1290.0" style="-fx-background-color: #FFFFFF;" text="%returnCardLabel" visible="false" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="Calibri" size="48.0" />
                </font>
             </Label>
             <Label fx:id="readingCardLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" text="%readingCardLabel" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Calibri" size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="InvalidCardLabel" alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" text="%invalidcardLabel" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="420.0">
                <font>
                   <Font name="Calibri" size="48.0" />
                </font>

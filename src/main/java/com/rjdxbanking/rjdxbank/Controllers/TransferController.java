@@ -60,6 +60,9 @@ public class TransferController implements Initializable {
     private Label rateLabel;
 
     @FXML
+    private Label limitAmountLabel;
+
+    @FXML
     private AnchorPane transferPane;
 
     @FXML
@@ -91,13 +94,6 @@ public class TransferController implements Initializable {
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
-        // double localLimit =
-        // SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
-        // double overseasLimit =
-        // SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
-        // System.out.println(localLimit);
-        // System.out.println(overseasLimit);
-
         banks = bankService.getBanks();
         for (Bank bank : banks) {
             if (bank.getIsLocal()) {
@@ -109,6 +105,7 @@ public class TransferController implements Initializable {
         accountNumField.setDisable(true);
         transType = null;
         fxRateLabel.setVisible(false);
+        limitReachedPane.setVisible(false);
         rateLabel.setVisible(false);
         accountIDPane.setVisible(false);
     }
@@ -179,7 +176,8 @@ public class TransferController implements Initializable {
                     } catch (InsufficientFundsException e) {
                         insufficientFundsPane.setVisible(true);
                     } catch (TransferLimitExceededException e) {
-                        e.getLimit();
+                        limitReachedPane.setVisible(true);
+                        limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
                     }
                 }
             } else { // Transfer to other local banks
@@ -188,29 +186,31 @@ public class TransferController implements Initializable {
                 } else {
                     try {
                         account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
-                        // PDFService.Receipt(account, TransactionType.LocalTransfer,
-                        // String.valueOf(amount));
+                        PDFService.Receipt(account, TransactionType.LocalTransfer,
+                                String.valueOf(amount));
                         Navigator.logout();
                     } catch (InsufficientFundsException e) {
                         insufficientFundsPane.setVisible(true);
                     } catch (TransferLimitExceededException e) {
-                        e.getLimit();
+                        limitReachedPane.setVisible(true);
+                        limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
                     }
                 }
             }
         } else if (transType.equals(TransactionType.OverseasTransfer)) { // Transfer to overseas
             if (accountNumField.getText().length() < 9 || accountNumField.getText() == "") {
-                accountIDPane.setVisible(false);
+                accountIDPane.setVisible(true);
             } else {
                 try {
                     account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
-                    // PDFService.Receipt(account, TransactionType.OverseasTransfer,
-                    // String.valueOf(amount));
+                    PDFService.Receipt(account, TransactionType.OverseasTransfer,
+                            String.valueOf(amount));
                     Navigator.logout();
                 } catch (InsufficientFundsException e) {
                     insufficientFundsPane.setVisible(true);
                 } catch (TransferLimitExceededException e) {
-                    e.getLimit();
+                    limitReachedPane.setVisible(true);
+                    limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
                 }
             }
         }

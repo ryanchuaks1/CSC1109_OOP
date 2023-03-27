@@ -11,7 +11,6 @@ import com.rjdxbanking.rjdxbank.Models.CreateTransaction;
 import com.rjdxbanking.rjdxbank.Models.TransactionStatus;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.BankService;
-import com.rjdxbanking.rjdxbank.Services.FXService;
 import com.rjdxbanking.rjdxbank.Services.TransactionService;
 
 import java.io.IOException;
@@ -160,8 +159,18 @@ public abstract class Account implements IAccount {
         }
     }
 
-    public void Withdraw(double amount) throws InsufficientFundsException {
+    public void Withdraw(double amount) throws InsufficientFundsException, TransferLimitExceededException {
+        
         LocalDateTime now = LocalDateTime.now();
+
+        if (this.getBalance().getAvailableBalance() < amount) {
+                throw new InsufficientFundsException("Insufficient funds in account");
+        }
+        double transferLimit = SessionClient.account.getCurrentLimit(TransactionType.Withdrawal);
+        if (transferLimit < amount) {
+            throw new TransferLimitExceededException(transferLimit);
+        }
+        
         try {
             CreateTransaction transaction = new CreateTransaction(dtf.format(now),
                     amount,
@@ -170,11 +179,8 @@ public abstract class Account implements IAccount {
                     TransactionStatus.Completed,
                     this.Id);
 
-            if (this.getBalance().getAvailableBalance() < amount) {
-                throw new InsufficientFundsException("Insufficient funds in account");
-            } else {
                 transactionService.createTransaction(transaction);
-            }
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             throw new InsufficientFundsException(ex.getMessage());

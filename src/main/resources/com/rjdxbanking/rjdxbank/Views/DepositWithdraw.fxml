@@ -524,6 +524,14 @@
                         <Font name="Calibri" size="36.0" />
                      </font>
                   </Label>
+                  <Label fx:id="limitAmountLabel" alignment="CENTER" prefHeight="41.0" prefWidth="600.0" text="%limitAmountLabel">
+                     <font>
+                        <Font name="Calibri" size="36.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
                   <Button mnemonicParsing="false" onAction="#closePressed" style="-fx-background-color: #FFFFFF;" text="%cancelLabel" textFill="MAROON">
                      <font>
                         <Font name="Calibri" size="36.0" />

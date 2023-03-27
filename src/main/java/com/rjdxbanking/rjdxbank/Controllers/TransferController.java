@@ -198,9 +198,8 @@ public class TransferController implements Initializable {
                     }
                 }
             }
-        } else if (transType.equals(TransactionType.OverseasTransfer) && (overseasLimit > amount)) { // Transfer to
-                                                                                                     // overseas
-            if (accountNumField.getText().length() < 16 || accountNumField.getText() == "") {
+        } else if (transType.equals(TransactionType.OverseasTransfer)) { // Transfer to overseas
+            if (accountNumField.getText().length() < 9 || accountNumField.getText() == "") {
                 accountIDPane.setVisible(false);
             } else {
                 try {

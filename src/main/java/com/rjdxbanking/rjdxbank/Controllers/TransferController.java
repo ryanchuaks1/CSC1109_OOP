@@ -160,17 +160,15 @@ public class TransferController implements Initializable {
 
     @FXML
     private void confirmTransferPressed(ActionEvent event) throws FileNotFoundException, IOException {
-        // TODO: check if fields are empty
-        if(transferTextField.getLength() != 0){
+        if (transferTextField.getLength() != 0 || accountNumField.getText().length() == 9
+                || accountNumField.getText() != "") {
             Double amount = Double.parseDouble(transferTextField.getText());
             Account account = SessionClient.getAccount();
 
             if (transType.equals(TransactionType.LocalTransfer)) {
                 if (targetBankName == "RJDX") { // Transfer to own bank
                     Account accountTo = accService.getAccountsByNumber(accountNumField.getText());
-                    if (accountNumField.getText().length() < 9 || accountNumField.getText() == "") { // if accountnumfield length is less than 9 or empty
-                        accountIDPane.setVisible(true);
-                    } else if (accountTo == null) { // check if account is null, show error pane
+                    if (accountTo == null) { // check if account is null, show error pane
                         accountNotFoundPane.setVisible(true);
                     } else {
                         try {
@@ -185,37 +183,31 @@ public class TransferController implements Initializable {
                         }
                     }
                 } else { // Transfer to other local banks
-                    if (accountNumField.getText().length() < 9 || accountNumField.getText() == "") { // if accountnumfield length is less than 9 or empty
-                        accountIDPane.setVisible(true);
-                    } else {
-                        try {
-                            account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
-                            PDFService.Receipt(account, TransactionType.LocalTransfer, String.valueOf(amount));
-                            Navigator.logout();
-                        } catch (InsufficientFundsException e) { // if account do not have enough money
-                            insufficientFundsPane.setVisible(true);
-                        } catch (TransferLimitExceededException e) { // if user has hit the limit of localtransferLimit
-                            limitReachedPane.setVisible(true);
-                            limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
-                        }
-                    }
-                }
-            } else if (transType.equals(TransactionType.OverseasTransfer)) { // Transfer to overseas
-                if (accountNumField.getText().length() < 9 || accountNumField.getText() == "") { // if accountnumfield length is less than 9 or empty
-                    accountIDPane.setVisible(true);
-                } else {
                     try {
                         account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
-                        PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amount));
+                        PDFService.Receipt(account, TransactionType.LocalTransfer, String.valueOf(amount));
                         Navigator.logout();
                     } catch (InsufficientFundsException e) { // if account do not have enough money
                         insufficientFundsPane.setVisible(true);
-                    } catch (TransferLimitExceededException e) { // if user has hit the limit of internationaltransferLimit
+                    } catch (TransferLimitExceededException e) { // if user has hit the limit of localtransferLimit
                         limitReachedPane.setVisible(true);
                         limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
                     }
                 }
+            } else if (transType.equals(TransactionType.OverseasTransfer)) { // Transfer to overseas
+                try {
+                    account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
+                    PDFService.Receipt(account, TransactionType.OverseasTransfer, String.valueOf(amount));
+                    Navigator.logout();
+                } catch (InsufficientFundsException e) { // if account do not have enough money
+                    insufficientFundsPane.setVisible(true);
+                } catch (TransferLimitExceededException e) { // if user has hit the limit of internationaltransferLimit
+                    limitReachedPane.setVisible(true);
+                    limitAmountLabel.setText(limitAmountLabel.getText() + " " + e.getLimit());
+                }
             }
+        } else {
+            accountIDPane.setVisible(true);
         }
     }
 

@@ -25,6 +25,7 @@ import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Entity.Account;
 import com.rjdxbanking.rjdxbank.Entity.Bank;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
+import com.rjdxbanking.rjdxbank.Exception.TransferLimitExceededException;
 import com.rjdxbanking.rjdxbank.Helpers.Navigator;
 import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
@@ -76,8 +77,6 @@ public class TransferController implements Initializable {
     @FXML
     private AnchorPane accountIDPane;
 
-    double localLimit = 0.0;
-    double overseasLimit = 0.0;
     TransactionType transType = null;
     BankService bankService = new BankService();
     AccountService accService = new AccountService();
@@ -92,10 +91,12 @@ public class TransferController implements Initializable {
         Image iconPrimaryImage = new Image(iconPrimaryPath.toUri().toString());
         iconPrimary.setImage(iconPrimaryImage);
 
-        localLimit = SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
-        overseasLimit = SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
-        System.out.println(localLimit);
-        System.out.println(overseasLimit);
+        // double localLimit =
+        // SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
+        // double overseasLimit =
+        // SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
+        // System.out.println(localLimit);
+        // System.out.println(overseasLimit);
 
         banks = bankService.getBanks();
         for (Bank bank : banks) {
@@ -165,7 +166,7 @@ public class TransferController implements Initializable {
         Double amount = Double.parseDouble(transferTextField.getText());
         Account account = SessionClient.getAccount();
 
-        if (transType.equals(TransactionType.LocalTransfer) && (localLimit > amount)) {
+        if (transType.equals(TransactionType.LocalTransfer)) {
             if (targetBankName == "RJDX") { // Transfer to own bank
                 Account accountTo = accService.getAccountsByNumber(accountNumField.getText());
                 if (accountTo == null) {
@@ -177,6 +178,8 @@ public class TransferController implements Initializable {
                         Navigator.logout();
                     } catch (InsufficientFundsException e) {
                         insufficientFundsPane.setVisible(true);
+                    } catch (TransferLimitExceededException e) {
+                        e.getLimit();
                     }
                 }
             } else { // Transfer to other local banks
@@ -190,13 +193,14 @@ public class TransferController implements Initializable {
                         Navigator.logout();
                     } catch (InsufficientFundsException e) {
                         insufficientFundsPane.setVisible(true);
+                    } catch (TransferLimitExceededException e) {
+                        e.getLimit();
                     }
                 }
             }
-        } else if (transType.equals(TransactionType.OverseasTransfer) && (overseasLimit > amount)) { // Transfer to
-                                                                                                     // overseas
-            if (accountNumField.getText().length() < 16 || accountNumField.getText() == "") {
-                accountIDPane.setVisible(false);
+        } else { // Transfer to overseas
+            if (accountNumField.getText().length() < 9 || accountNumField.getText() == "") {
+                accountIDPane.setVisible(true);
             } else {
                 try {
                     account.otherBanksTransfer(amount, transType, targetBank, accountNumField.getText());
@@ -205,10 +209,10 @@ public class TransferController implements Initializable {
                     Navigator.logout();
                 } catch (InsufficientFundsException e) {
                     insufficientFundsPane.setVisible(true);
+                } catch (TransferLimitExceededException e) {
+                    e.getLimit();
                 }
             }
-        } else {
-            limitReachedPane.setVisible(true);
         }
     }
 

@@ -1,6 +1,8 @@
 package com.rjdxbanking.rjdxbank.Entity;
 
+import com.rjdxbanking.rjdxbank.Clients.SessionClient;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
+import com.rjdxbanking.rjdxbank.Exception.TransferLimitExceededException;
 import com.rjdxbanking.rjdxbank.Interfaces.IAccount;
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;
@@ -89,10 +91,15 @@ public abstract class Account implements IAccount {
     BankService bankService = new BankService();
 
     public void otherBanksTransfer(double amount, TransactionType type, Bank targetBank, String toAcc)
-            throws InsufficientFundsException, IOException {
+            throws InsufficientFundsException, IOException, TransferLimitExceededException {
         if (this.getBalance().getAvailableBalance() < amount)
-            throw new InsufficientFundsException(
-                    "Unable to transfer as user does not have sufficient amount to transfer.");
+            throw new InsufficientFundsException("User does not have sufficient amount to transfer.");
+        double transferLimit = type == TransactionType.LocalTransfer
+                ? SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer)
+                : SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
+        if (transferLimit < amount) {
+            throw new TransferLimitExceededException(transferLimit);
+        }
         LocalDateTime now = LocalDateTime.now();
 
         CreateTransaction senderTransaction = new CreateTransaction(
@@ -108,15 +115,17 @@ public abstract class Account implements IAccount {
 
     }
 
-    // This is actually internal transfer. Which means that we should be able to
-    // cross-check
-    // with the reference in our database.
-    public void internalTransfer(double amount, String toAcc) throws InsufficientFundsException {
+    public void internalTransfer(double amount, String toAcc)
+            throws InsufficientFundsException, TransferLimitExceededException {
         // Firstly check available balance to see if user has sufficient amount to
         // transfer else throw exception
         if (this.getBalance().getAvailableBalance() < amount)
-            throw new InsufficientFundsException(
-                    "Unable to transfer as user does not have sufficient amount to transfer.");
+            throw new InsufficientFundsException("User does not have sufficient amount to transfer.");
+        double transferLimit = SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer);
+        if (transferLimit < amount) {
+            throw new TransferLimitExceededException(transferLimit);
+        }
+
         LocalDateTime now = LocalDateTime.now();
 
         CreateTransaction senderTransaction = new CreateTransaction(dtf.format(now), amount, "SGD",

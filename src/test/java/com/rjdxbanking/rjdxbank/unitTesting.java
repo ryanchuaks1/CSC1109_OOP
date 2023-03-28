@@ -11,11 +11,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.rjdxbanking.rjdxbank.Clients.ATMClient;
 import com.rjdxbanking.rjdxbank.Clients.AccountClient;
+import com.rjdxbanking.rjdxbank.Entity.ATMChange;
 import com.rjdxbanking.rjdxbank.Entity.Account;
+import com.rjdxbanking.rjdxbank.Exception.BillsNotEnoughException;
 import com.rjdxbanking.rjdxbank.Exception.InsufficientFundsException;
+import com.rjdxbanking.rjdxbank.Exception.TransferLimitExceededException;
 import com.rjdxbanking.rjdxbank.Helpers.CreditCardHelper;
 import com.rjdxbanking.rjdxbank.Helpers.FirebaseInitialize;
+import com.rjdxbanking.rjdxbank.Models.TransactionType;
 import com.rjdxbanking.rjdxbank.Services.AccountService;
 
 public class unitTesting {
@@ -48,7 +53,7 @@ public class unitTesting {
     }
 
     @Test(expected = InsufficientFundsException.class)
-    public void testWithdraw() throws InsufficientFundsException {
+    public void testInsufficientFunds() throws InsufficientFundsException {
         AccountClient accountClient = new AccountClient();
         String cardNumber = "6229259821434671";
         // static
@@ -62,6 +67,12 @@ public class unitTesting {
             throw new InsufficientFundsException(ex.getMessage());
         }
 
+    }
+
+    @Test(expected = BillsNotEnoughException.class)
+    public void testBillsNotEnough() throws BillsNotEnoughException {
+        ATMClient atm = new ATMClient();
+        atm.checkChange(99999990);
     }
 
 }

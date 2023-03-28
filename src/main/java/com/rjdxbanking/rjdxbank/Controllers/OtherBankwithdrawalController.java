@@ -137,7 +137,8 @@ public class OtherBankwithdrawalController implements Initializable {
                 double amountDebited = (bank.getIsLocal() ? amountWithdrawn : amountWithdrawn * conversionValue);
 
                 // if ATMClient do not have enough bills left, throw a billInsufficientException
-                atmClient.WithdrawCash((int) (amountWithdrawn.intValue()));
+                atmClient.checkChange((int) (amountWithdrawn.intValue()));
+                atmClient.withdrawCash((int) (amountWithdrawn.intValue()));
 
                 CreateIncomingTransaction incTransaction = new CreateIncomingTransaction(dtf.format(now),
                         amountWithdrawn,

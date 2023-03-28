@@ -94,9 +94,9 @@ public abstract class Account implements IAccount {
             throws InsufficientFundsException, IOException, TransferLimitExceededException {
         if (this.getBalance().getAvailableBalance() < amount)
             throw new InsufficientFundsException("User does not have sufficient amount to transfer.");
-        double transferLimit = type == TransactionType.LocalTransfer
-                ? SessionClient.account.getCurrentLimit(TransactionType.LocalTransfer)
-                : SessionClient.account.getCurrentLimit(TransactionType.OverseasTransfer);
+        double transferLimit = type.equals(TransactionType.LocalTransfer)
+                ? this.getCurrentLimit(TransactionType.LocalTransfer)
+                : this.getCurrentLimit(TransactionType.OverseasTransfer);
         if (transferLimit < amount) {
             throw new TransferLimitExceededException(transferLimit);
         }

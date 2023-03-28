@@ -153,8 +153,9 @@ public class DepositWithdrawController implements Initializable {
                  // decrease the amount in user account, and PDF print out a receipt.
             try {
                 ATMClient atmClient = new ATMClient();
-                atmClient.WithdrawCash(amount.intValue());
+                atmClient.checkChange(amount.intValue());
                 account.Withdraw(amount);
+                atmClient.withdrawCash(amount.intValue());
                 PDFService.Receipt(account, TransactionType.Withdrawal, String.valueOf(withdrawTextField.getText()));
                 Navigator.logout();
             } catch (InsufficientFundsException e) { // if user account do not have sufficient Funds
